@@ -67,5 +67,10 @@ lib/generated_plugin_registrant.dart
 
 # End of https://www.toptal.com/developers/gitignore/api/flutter
 
-## 추가
+# 추가
 .DS_Store
+## for flutterfire
+**/lib/firebase_options.dart
+**/android/app/google-services.json
+**/ios/Runner/GoogleService-Info.plist
+**/ios/firebase_app_id_file.json

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/start_view.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
