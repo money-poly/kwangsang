@@ -34,4 +34,6 @@ class KwangStyle {
   static final TextStyle body3M = body3.copyWith(fontWeight: FontWeight.w500);
 
   static final TextStyle paragraph = base.copyWith(fontSize: 14, height: 24 / 14, fontWeight: FontWeight.w400, letterSpacing: -0.5);
+
+  static final TextStyle navigationLabel = base.copyWith(fontSize: 10, height: 12 / 10, fontWeight: FontWeight.w700);
 }
