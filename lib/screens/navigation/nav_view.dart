@@ -12,10 +12,11 @@ class NavView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<NavViewModel>(context);
     return Scaffold(
-      body: SafeArea(child: viewModel.currPages),
+      body: viewModel.currPages,
       bottomNavigationBar: Container(
-        margin:
+        padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
+        color: KwangColor.grey100,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: NavItems.values
