@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/navigation/nav_view.dart';
 import 'package:immersion_kwangsang/screens/navigation/nav_view_model.dart';
 import 'package:immersion_kwangsang/styles/theme.dart';
@@ -14,12 +15,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'kwangsaeng',
-      theme: KwangTheme.kwangTheme,
-      home: ChangeNotifierProvider(
-        create: (_) => NavViewModel(),
-        child: const NavView(),
-      ),
-    );
+        title: 'kwangsaeng',
+        theme: KwangTheme.kwangTheme,
+        home: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => NavViewModel()),
+            ChangeNotifierProvider(create: (_) => PositionProvider())
+          ],
+          child: const NavView(),
+        ));
   }
 }
