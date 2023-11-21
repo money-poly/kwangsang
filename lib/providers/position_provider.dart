@@ -14,6 +14,8 @@ class PositionProvider with ChangeNotifier {
       headingAccuracy: 0.0,
       speed: 0.0,
       speedAccuracy: 0.0);
+  bool _isPermissionGranted = false;
+
   Position? get myPosition => _myPosition;
 
   PositionProvider() {
@@ -25,6 +27,7 @@ class PositionProvider with ChangeNotifier {
 
     if (permission == LocationPermission.always ||
         permission == LocationPermission.whileInUse) {
+      _isPermissionGranted = true;
     } else if (permission == LocationPermission.denied ||
         permission == LocationPermission.unableToDetermine) {
       permission = await Geolocator.requestPermission();
@@ -33,15 +36,19 @@ class PositionProvider with ChangeNotifier {
     if (permission != LocationPermission.always &&
         permission != LocationPermission.whileInUse) {
       _myPosition = _kwuPosition;
+      _isPermissionGranted = false;
     } else {
       _myPosition = await Geolocator.getCurrentPosition();
     }
-    print("[TEST] ${_myPosition!.latitude}, ${_myPosition!.longitude}");
     notifyListeners();
   }
 
   Future<void> updateMyPosition() async {
-    _myPosition = await Geolocator.getCurrentPosition();
+    if (_isPermissionGranted) {
+      _myPosition = await Geolocator.getCurrentPosition();
+    } else {
+      _myPosition = _kwuPosition;
+    }
     notifyListeners();
   }
 }
