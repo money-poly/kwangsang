@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/map_main_view_model.dart';
+import 'package:immersion_kwangsang/screens/map/widgets/map_store_card.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:provider/provider.dart';
 
@@ -58,6 +59,7 @@ class MapMainView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         GestureDetector(
                           onTap: () async {
@@ -90,6 +92,11 @@ class MapMainView extends StatelessWidget {
                             ),
                           ),
                         ),
+                        if (viewModel.store != null)
+                          GestureDetector(
+                            onTap: () {},
+                            child: MapStoreCard(store: viewModel.store!),
+                          ),
                       ],
                     ),
                   ),
