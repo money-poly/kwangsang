@@ -38,7 +38,6 @@ class MapMainView extends StatelessWidget {
           ? const Center(
               child: CircularProgressIndicator(
               color: KwangColor.primary400,
-              value: 20,
             ))
           : Stack(
               children: [
@@ -46,11 +45,12 @@ class MapMainView extends StatelessWidget {
                   initialCameraPosition: CameraPosition(
                       target: LatLng(positionProvider.myPosition!.latitude,
                           positionProvider.myPosition!.longitude),
-                      zoom: 18),
+                      zoom: 16),
                   onMapCreated: (controller) =>
                       viewModel.initController(controller),
                   myLocationButtonEnabled: false,
                   zoomControlsEnabled: false,
+                  markers: viewModel.markers.toSet(),
                 ),
                 Positioned(
                   right: 0,
