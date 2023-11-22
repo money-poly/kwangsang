@@ -26,10 +26,12 @@ class MapMainViewModel with ChangeNotifier {
 
   void initMarkerIcon() async {
     await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(30, 35)), "assets/imgs/img_30_marker_offorigin.png")
+            const ImageConfiguration(size: Size(30, 35)),
+            "assets/imgs/img_30_marker_offorigin.png")
         .then((value) => _markerOffIcon = value);
     await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(50, 58)), "assets/imgs/img_50_marker_onorigin.png")
+            const ImageConfiguration(size: Size(50, 58)),
+            "assets/imgs/img_50_marker_onorigin.png")
         .then((value) => _markerOnIcon = value);
     getMarkers();
     notifyListeners();
