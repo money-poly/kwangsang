@@ -14,6 +14,12 @@ class Store {
   String description;
   int maxDiscountRate;
   List<StoreTag> tags;
+  String imgUrl;
 
-  Store({required this.name, required this.description, required this.maxDiscountRate, required this.tags});
+  Store(
+      {required this.name,
+      required this.description,
+      required this.maxDiscountRate,
+      required this.tags,
+      required this.imgUrl});
 }

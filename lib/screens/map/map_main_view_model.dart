@@ -82,7 +82,9 @@ class MapMainViewModel with ChangeNotifier {
         maxDiscountRate: 30,
         tags: [
           StoreTag(icon: "time", name: "마감할인", color: KwangColor.green),
-        ]);
+        ],
+        imgUrl:
+            "https://i.namu.wiki/i/aN7eMJzy4XAy1yqpL3kHb41MBsSdfPjt1ZqMfDXYk6J3-je6M8dNVOMldpbxhZ-IlO9IfHXMzpZc1tVvat5IjQ.webp");
     _store = tempStore;
     notifyListeners();
   }

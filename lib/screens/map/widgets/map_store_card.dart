@@ -109,7 +109,7 @@ class MapStoreCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: ExtendedImage.network(
-                "https://i.namu.wiki/i/aN7eMJzy4XAy1yqpL3kHb41MBsSdfPjt1ZqMfDXYk6J3-je6M8dNVOMldpbxhZ-IlO9IfHXMzpZc1tVvat5IjQ.webp",
+                store.imgUrl,
                 fit: BoxFit.cover,
               ),
             ),
