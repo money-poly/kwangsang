@@ -35,9 +35,10 @@ class PositionProvider with ChangeNotifier {
 
     if (permission != LocationPermission.always &&
         permission != LocationPermission.whileInUse) {
-      _myPosition = _kwuPosition;
       _isPermissionGranted = false;
+      _myPosition = _kwuPosition;
     } else {
+      _isPermissionGranted = true;
       _myPosition = await Geolocator.getCurrentPosition();
     }
     notifyListeners();
