@@ -38,13 +38,13 @@ class MapMainViewModel with ChangeNotifier {
   }
 
   Future<void> getMarkers() async {
-    final List<StoreSimple> simpleStores = [
+    final List<StoreSimple> tempStores = [
       StoreSimple(id: 1, name: "누구나 반한 닭", latLng: LatLng(37.5052, 127.0478)),
       StoreSimple(id: 2, name: "이디야 커피", latLng: LatLng(37.5039, 127.0482)),
       StoreSimple(id: 3, name: "바나프레소", latLng: LatLng(37.5046, 127.0482))
     ];
 
-    _markers = simpleStores
+    _markers = tempStores
         .map((e) => Marker(
             markerId: MarkerId(e.id.toString()),
             position: e.latLng,
