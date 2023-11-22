@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/store.dart';
+import 'package:immersion_kwangsang/models/store_tag.dart';
+import 'package:immersion_kwangsang/styles/color.dart';
 
 class MapMainViewModel with ChangeNotifier {
   late final GoogleMapController _mapController;
@@ -8,8 +10,10 @@ class MapMainViewModel with ChangeNotifier {
   BitmapDescriptor _markerOnIcon = BitmapDescriptor.defaultMarker;
   int? selectedMarkerId;
   List<Marker> _markers = [];
+  Store? _store;
 
   List<Marker> get markers => _markers;
+  Store? get store => _store;
 
   MapMainViewModel() {
     initMarkerIcon();
@@ -67,6 +71,19 @@ class MapMainViewModel with ChangeNotifier {
                 ? _markerOnIcon
                 : _markerOffIcon))
         .toList();
+    await getStoreCard();
+    notifyListeners();
+  }
+
+  Future<void> getStoreCard() async {
+    final tempStore = Store(
+        name: "누구나 반한 닭$selectedMarkerId",
+        description: "누구나 반한 닭은 누구나 반한 닭이다.",
+        maxDiscountRate: 30,
+        tags: [
+          StoreTag(icon: "time", name: "마감할인", color: KwangColor.green),
+        ]);
+    _store = tempStore;
     notifyListeners();
   }
 }
