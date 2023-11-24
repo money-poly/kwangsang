@@ -4,7 +4,7 @@ import 'package:immersion_kwangsang/styles/color.dart';
 class KwangStyle {
   static const TextStyle base = TextStyle(
     overflow: TextOverflow.ellipsis,
-    color: KwangColor.black,
+    color: KwangColor.grey900,
     leadingDistribution: TextLeadingDistribution.even,
   );
   
