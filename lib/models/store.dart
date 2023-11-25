@@ -24,3 +24,37 @@ class Store {
       required this.tags,
       required this.imgUrl});
 }
+
+class StoreDetail {
+  String name;
+  String category;
+  String dday;
+  String address;
+  LatLng latLng;
+  String openTime;
+  String closeTime;
+  int minPickUpTime;
+  int maxPickUpTime;
+  String phoneNumber;
+  List<Menu> menu;
+  String countryOrigin;
+  List<String> notes;
+  String imgUrl;
+
+  StoreDetail({
+    required this.name,
+    required this.category,
+    required this.dday,
+    required this.address,
+    required this.latLng,
+    required this.openTime,
+    required this.closeTime,
+    required this.minPickUpTime,
+    required this.maxPickUpTime,
+    required this.phoneNumber,
+    required this.menu,
+    required this.countryOrigin,
+    required this.notes,
+    required this.imgUrl,
+  });
+}
