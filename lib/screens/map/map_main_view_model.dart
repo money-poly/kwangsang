@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/store.dart';
-import 'package:immersion_kwangsang/models/store_tag.dart';
-import 'package:immersion_kwangsang/styles/color.dart';
+import 'package:immersion_kwangsang/models/tag.dart';
 
 class MapMainViewModel with ChangeNotifier {
   late final GoogleMapController _mapController;
@@ -81,7 +80,7 @@ class MapMainViewModel with ChangeNotifier {
         description: "누구나 반한 닭은 누구나 반한 닭이다.",
         maxDiscountRate: 30,
         tags: [
-          StoreTag(icon: "time", name: "마감할인", color: KwangColor.green),
+          tagMapping["마감할인"]!,
         ],
         imgUrl:
             "https://i.namu.wiki/i/aN7eMJzy4XAy1yqpL3kHb41MBsSdfPjt1ZqMfDXYk6J3-je6M8dNVOMldpbxhZ-IlO9IfHXMzpZc1tVvat5IjQ.webp");

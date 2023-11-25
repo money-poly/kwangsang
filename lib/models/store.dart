@@ -1,5 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:immersion_kwangsang/models/store_tag.dart';
+import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/tag.dart';
 
 class StoreSimple {
   int id;
@@ -13,7 +14,7 @@ class Store {
   String name;
   String description;
   int maxDiscountRate;
-  List<StoreTag> tags;
+  List<Tag> tags;
   String imgUrl;
 
   Store(

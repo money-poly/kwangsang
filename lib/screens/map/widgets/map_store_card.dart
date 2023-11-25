@@ -73,7 +73,7 @@ class MapStoreCard extends StatelessWidget {
                         .map((e) => Container(
                               padding: const EdgeInsets.fromLTRB(6, 2, 8, 2),
                               decoration: BoxDecoration(
-                                color: KwangColor.grey300,
+                                color: e.bgColor,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Wrap(
@@ -86,12 +86,12 @@ class MapStoreCard extends StatelessWidget {
                                     width: 12,
                                     height: 12,
                                     colorFilter: ColorFilter.mode(
-                                        e.color, BlendMode.srcIn),
+                                        e.txtColor, BlendMode.srcIn),
                                   ),
                                   Text(
                                     e.name,
                                     style: KwangStyle.body2M
-                                        .copyWith(color: e.color),
+                                        .copyWith(color: e.txtColor),
                                   )
                                 ],
                               ),
