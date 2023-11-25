@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
+import 'package:intl/intl.dart';
 
 enum MenuCardType {
   vertical,
@@ -62,7 +63,9 @@ class MenuCard extends StatelessWidget {
                           ),
                         ),
                       Text(
-                        menu.price.toString(),
+                        "${NumberFormat('###,###,###,###')
+                            .format(menu.price)
+                            .replaceAll(' ', ',')}원",
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
