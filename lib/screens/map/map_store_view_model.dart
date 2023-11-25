@@ -40,7 +40,7 @@ class MapStoreViewModel with ChangeNotifier {
               imgUrl:
                   "https://ldb-phinf.pstatic.net/20211201_276/1638314448912aitj0_JPEG/nKfrwz87arUAxjYhlXPHpU5xo_DIhwSKWohwHmQrhDM%3D.jpg")
         ],
-        countryOrigin: "닭가슴살(국내산), 베이컨(수입산)",
+        countryOrigin: "닭가슴살(국내산), 베이컨(호주산), 토마토(국내산), 양상추(중국산), 연어(일본산)",
         notes: [
           "메뉴 사진은 연출된 이미지로 실제 조리된 음식과 다를 수 있습니다.",
           "상단 메뉴 및 가격은 업소에서 제공한 정보를 기준으로 작성되었으며 변동될 수 있습니다.",

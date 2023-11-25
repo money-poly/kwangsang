@@ -196,10 +196,14 @@ class MapStoreView extends StatelessWidget {
                               .copyWith(color: KwangColor.grey600),
                         ),
                         const SizedBox(width: 14),
-                        Text(
-                          viewModel.store!.countryOrigin,
-                          style: KwangStyle.body2M
-                              .copyWith(color: KwangColor.grey800),
+                        Expanded(
+                          child: Text(
+                            viewModel.store!.countryOrigin,
+                            style: KwangStyle.body2M.copyWith(
+                                color: KwangColor.grey800,
+                                overflow: TextOverflow.visible),
+                            softWrap: true,
+                          ),
                         ),
                       ],
                     ),
