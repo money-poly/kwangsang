@@ -26,8 +26,19 @@ class NavViewModel with ChangeNotifier {
   int get currIdx => _currIdx;
   Widget get currPages => _pages[currIdx];
 
+  bool canChangeIdx(int idx) {
+    switch (idx) {
+      case 2:
+        return false;
+      default:
+        return true;
+    }
+  }
+
   void changeIdx(int idx) {
-    _currIdx = idx;
+    if (canChangeIdx(idx)) {
+      _currIdx = idx;
+    }
     notifyListeners();
   }
 }
