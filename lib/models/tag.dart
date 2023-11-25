@@ -15,8 +15,8 @@ class Tag {
 }
 
 Map<String, Tag> tagMapping = {
-  '마감 할인': Tag(
-      name: '마감 할인',
+  '마감할인': Tag(
+      name: '마감할인',
       txtColor: KwangColor.green,
       bgColor: KwangColor.grey300,
       icon: "time"),
