@@ -63,9 +63,7 @@ class MenuCard extends StatelessWidget {
                           ),
                         ),
                       Text(
-                        "${NumberFormat('###,###,###,###')
-                            .format(menu.price)
-                            .replaceAll(' ', ',')}원",
+                        "${NumberFormat('###,###,###,###').format(menu.price).replaceAll(' ', ',')}원",
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -77,15 +75,17 @@ class MenuCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 12),
-            SizedBox(
+            Container(
               width: 80,
               height: 80,
+              decoration: BoxDecoration(
+                  border: Border.all(color: KwangColor.grey300, width: 1),
+                  borderRadius: BorderRadius.circular(4)),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: ExtendedImage.network(
                   menu.imgUrl,
                   fit: BoxFit.cover,
-                  border: Border.all(color: KwangColor.grey300, width: 1),
                 ),
               ),
             ),
