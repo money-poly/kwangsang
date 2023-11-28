@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class KwangColor {
   static const grey100 = Colors.white;
-  static const grey200 = Color(0xFFFBFBFB);
+  static const grey200 = Color(0xFFF8F8F9);
   static const grey300 = Color(0xFFF4F6FA);
   static const grey400 = Color(0xFFDFE3EC);
   static const grey500 = Color(0xFFC3C8D0);
