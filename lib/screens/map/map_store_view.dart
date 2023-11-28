@@ -44,14 +44,6 @@ class MapStoreView extends StatelessWidget {
               ),
             ),
             leadingWidth: 56,
-            actions: [
-              SvgPicture.asset(
-                "assets/icons/ic_36_close.svg",
-                width: 36,
-                height: 36,
-              ),
-              const SizedBox(width: 20)
-            ],
             backgroundColor: Colors.white,
             elevation: 0,
           ),
