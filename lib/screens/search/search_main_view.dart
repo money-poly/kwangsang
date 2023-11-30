@@ -13,7 +13,7 @@ class SearchMainView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<SearchMainViewModel>(context);
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           "검색",
@@ -24,10 +24,16 @@ class SearchMainView extends StatelessWidget {
         centerTitle: false,
         leading: Padding(
           padding: const EdgeInsets.all(8),
-          child: SvgPicture.asset(
-            "assets/icons/ic_36_back.svg",
-            width: 36,
-            height: 36,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            behavior: HitTestBehavior.translucent,
+            child: SvgPicture.asset(
+              "assets/icons/ic_36_back.svg",
+              width: 36,
+              height: 36,
+            ),
           ),
         ),
         leadingWidth: 52,
@@ -44,6 +50,9 @@ class SearchMainView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4)),
             child: TextField(
               controller: viewModel.searchController,
+              onSubmitted: (value) {
+                viewModel.search(value);
+              },
               style: KwangStyle.body1M,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -70,6 +79,7 @@ class SearchMainView extends StatelessWidget {
                           onTap: () {
                             viewModel.searchController.clear();
                           },
+                          behavior: HitTestBehavior.translucent,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 16),
                             child: SvgPicture.asset(
@@ -86,6 +96,88 @@ class SearchMainView extends StatelessWidget {
                       : const BoxConstraints(minWidth: 24, minHeight: 24)),
             ),
           ),
+          if (viewModel.history.isNotEmpty)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "최근 검색어",
+                        style: KwangStyle.header2,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          viewModel.clearHistory();
+                        },
+                        child: Text(
+                          "전체삭제",
+                          style: KwangStyle.body2M
+                              .copyWith(color: KwangColor.grey500),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: viewModel.history.reversed
+                          .map((e) => GestureDetector(
+                                onTap: () {
+                                  viewModel.search(e);
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 16),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 16),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: KwangColor.grey300, width: 1),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Wrap(
+                                    direction: Axis.horizontal,
+                                    spacing: 8,
+                                    children: [
+                                      Text(
+                                        e,
+                                        style: KwangStyle.body1M,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          viewModel.removeHistory(e);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 1),
+                                          child: SvgPicture.asset(
+                                            "assets/icons/ic_18_remove.svg",
+                                            width: 18,
+                                            height: 18,
+                                            colorFilter: const ColorFilter.mode(
+                                                KwangColor.grey600,
+                                                BlendMode.srcIn),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 28),
+              ],
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
             child: Row(
@@ -115,7 +207,7 @@ class SearchMainView extends StatelessWidget {
                         .where((e) => viewModel.keywords.indexOf(e) < 5)
                         .map((e) => GestureDetector(
                               onTap: () {
-                                viewModel.searchController.text = e;
+                                viewModel.search(e);
                               },
                               child: KeywordRankRow(
                                   rank: viewModel.keywords.indexOf(e) + 1,
@@ -135,7 +227,7 @@ class SearchMainView extends StatelessWidget {
                           .where((e) => viewModel.keywords.indexOf(e) >= 5)
                           .map((e) => GestureDetector(
                                 onTap: () {
-                                  viewModel.searchController.text = e;
+                                  viewModel.search(e);
                                 },
                                 child: KeywordRankRow(
                                     rank: viewModel.keywords.indexOf(e) + 1,

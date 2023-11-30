@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchMainViewModel with ChangeNotifier {
   List<String> _keywords = [];
   final TextEditingController _searchController = TextEditingController();
   bool _keywordsIsEmpty = true;
+  List<String> _history = [];
 
   List<String> get keywords => _keywords;
   TextEditingController get searchController => _searchController;
   bool get keywordsIsEmpty => _keywordsIsEmpty;
+  List<String> get history => _history;
 
   SearchMainViewModel() {
     getKeywords();
@@ -19,6 +22,7 @@ class SearchMainViewModel with ChangeNotifier {
       }
       notifyListeners();
     });
+    getRecords();
   }
 
   Future<void> getKeywords() async {
@@ -38,5 +42,42 @@ class SearchMainViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> search(String keyword) async {}
+  Future<void> search(String keyword) async {
+    _searchController.text = keyword;
+    await saveHistory(keyword);
+    notifyListeners();
+  }
+
+  Future<void> saveHistory(String keyword) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (keyword.isEmpty) {
+      return;
+    }
+    if (_history.contains(keyword)) {
+      _history.remove(keyword);
+    }
+    _history.add(keyword);
+    await prefs.setStringList('searchHistory', _history);
+    notifyListeners();
+  }
+
+  Future<void> removeHistory(String keyword) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    _history.remove(keyword);
+    await prefs.setStringList('searchHistory', _history);
+    notifyListeners();
+  }
+
+  Future<void> clearHistory() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    _history = [];
+    await prefs.setStringList('searchHistory', _history);
+    notifyListeners();
+  }
+
+  Future<void> getRecords() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    _history = prefs.getStringList('searchHistory') ?? [];
+    notifyListeners();
+  }
 }
