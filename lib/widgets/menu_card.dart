@@ -1,7 +1,10 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
+import 'package:immersion_kwangsang/styles/txt.dart';
+// import 'package:immersion_kwangsang/widgets/tag_widget.dart';
 import 'package:intl/intl.dart';
 
 enum MenuCardType {
@@ -18,37 +21,144 @@ class MenuCard extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (type) {
       case MenuCardType.horizontal:
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return SizedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 132,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      menu.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: KwangColor.black,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Text(
+                      menu.description!,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: KwangColor.grey600,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 4,
+                      children: [
+                        if (menu.discountRate != 0)
+                          Text(
+                            "${menu.discountRate}%",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: KwangColor.red,
+                            ),
+                          ),
+                        Text(
+                          "${NumberFormat('###,###,###,###').format(menu.price).replaceAll(' ', ',')}원",
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                    border: Border.all(color: KwangColor.grey300, width: 1),
+                    borderRadius: BorderRadius.circular(4)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: ExtendedImage.network(
+                    menu.imgUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      case MenuCardType.vertical:
+        return Wrap(
+          alignment: WrapAlignment.start,
+          runAlignment: WrapAlignment.start,
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 132,
+            Stack(
+              children: [
+                Container(
+                  height: 130,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: KwangColor.grey300, width: 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: ExtendedImage.network(
+                      menu.imgUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 8,
+                  bottom: 4,
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        "assets/icons/ic_24_view.svg",
+                        width: 24,
+                        height: 24,
+                        colorFilter: const ColorFilter.mode(
+                            KwangColor.grey900, BlendMode.srcIn),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        menu.view.toString(),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: KwangColor.grey900,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    menu.name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: KwangColor.black,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 6,
+                    menu.store!,
+                    style:
+                        KwangStyle.body2M.copyWith(color: KwangColor.grey600),
                   ),
                   Text(
-                    menu.description,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: KwangColor.grey600,
-                    ),
+                    menu.name,
+                    style: KwangStyle.body1M
+                        .copyWith(overflow: TextOverflow.ellipsis),
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
+                  const SizedBox(height: 4),
                   Wrap(
                     direction: Axis.horizontal,
                     spacing: 4,
@@ -56,39 +166,21 @@ class MenuCard extends StatelessWidget {
                       if (menu.discountRate != 0)
                         Text(
                           "${menu.discountRate}%",
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: KwangColor.red,
-                          ),
+                          style:
+                              KwangStyle.btn2B.copyWith(color: KwangColor.red),
                         ),
                       Text(
                         "${NumberFormat('###,###,###,###').format(menu.price).replaceAll(' ', ',')}원",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: KwangStyle.btn2B,
                       ),
                     ],
                   )
                 ],
               ),
             ),
-            const SizedBox(width: 12),
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                  border: Border.all(color: KwangColor.grey300, width: 1),
-                  borderRadius: BorderRadius.circular(4)),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: ExtendedImage.network(
-                  menu.imgUrl,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            // Wrap(
+            //   children: menu.tags!.map((e) => TagWidget(tag: e)).toList(),
+            // )
           ],
         );
       default:

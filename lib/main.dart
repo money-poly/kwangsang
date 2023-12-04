@@ -15,14 +15,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'kwangsaeng',
-        theme: KwangTheme.kwangTheme,
-        home: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => NavViewModel()),
-            ChangeNotifierProvider(create: (_) => PositionProvider())
-          ],
-          child: const NavView(),
-        ));
+      title: 'kwangsaeng',
+      theme: KwangTheme.kwangTheme,
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => NavViewModel()),
+          ChangeNotifierProvider(create: (_) => PositionProvider())
+        ],
+        child: const NavView(),
+      ),
+    );
   }
 }

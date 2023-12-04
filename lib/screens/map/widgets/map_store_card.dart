@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/tag_widget.dart';
 
 class MapStoreCard extends StatelessWidget {
   const MapStoreCard({super.key, required this.store});
@@ -69,34 +70,7 @@ class MapStoreCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 8),
                   child: Wrap(
                     direction: Axis.horizontal,
-                    children: store.tags
-                        .map((e) => Container(
-                              padding: const EdgeInsets.fromLTRB(6, 2, 8, 2),
-                              decoration: BoxDecoration(
-                                color: e.bgColor,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Wrap(
-                                direction: Axis.horizontal,
-                                crossAxisAlignment: WrapCrossAlignment.center,
-                                spacing: 4,
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/icons/ic_24_${e.icon}.svg",
-                                    width: 12,
-                                    height: 12,
-                                    colorFilter: ColorFilter.mode(
-                                        e.txtColor, BlendMode.srcIn),
-                                  ),
-                                  Text(
-                                    e.name,
-                                    style: KwangStyle.body2M
-                                        .copyWith(color: e.txtColor),
-                                  )
-                                ],
-                              ),
-                            ))
-                        .toList(),
+                    children: store.tags.map((e) => TagWidget(tag: e)).toList(),
                   ),
                 )
               ],
