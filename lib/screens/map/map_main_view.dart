@@ -6,6 +6,8 @@ import 'package:immersion_kwangsang/screens/map/map_main_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/map_store_card.dart';
+import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
+import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:provider/provider.dart';
 
@@ -27,10 +29,22 @@ class MapMainView extends StatelessWidget {
         titleSpacing: 20,
         centerTitle: false,
         actions: [
-          SvgPicture.asset(
-            "assets/icons/ic_36_search.svg",
-            width: 36,
-            height: 36,
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ChangeNotifierProvider(
+                    create: (_) => SearchMainViewModel(),
+                    child: const SearchMainView(),
+                  ),
+                ),
+              );
+            },
+            child: SvgPicture.asset(
+              "assets/icons/ic_36_search.svg",
+              width: 36,
+              height: 36,
+            ),
           ),
           const SizedBox(width: 20)
         ],
