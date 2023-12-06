@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/models/tag.dart';
 
@@ -78,7 +79,7 @@ class MapMainViewModel with ChangeNotifier {
     final tempStore = Store(
         name: "누구나 반한 닭$selectedMarkerId",
         description: "누구나 반한 닭은 누구나 반한 닭이다.",
-        maxDiscountRate: 30,
+        maxDiscountMenu: MenuSimple(discountRate: 30),
         tags: [
           tagMapping["마감할인"]!,
         ],

@@ -46,7 +46,7 @@ class MapStoreCard extends StatelessWidget {
                             colorFilter: const ColorFilter.mode(
                                 KwangColor.red, BlendMode.srcIn)),
                         Text(
-                          "최대 ${store.maxDiscountRate}%",
+                          "최대 ${store.maxDiscountMenu.discountRate}%",
                           style:
                               KwangStyle.btn2SB.copyWith(color: KwangColor.red),
                         )
@@ -59,7 +59,7 @@ class MapStoreCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      store.description,
+                      store.description!,
                       style:
                           KwangStyle.body1M.copyWith(color: KwangColor.grey700),
                       overflow: TextOverflow.ellipsis,
@@ -70,7 +70,9 @@ class MapStoreCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 8),
                   child: Wrap(
                     direction: Axis.horizontal,
-                    children: store.tags.map((e) => TagWidget(tag: e)).toList(),
+                    children: (store.tags ?? [])
+                        .map((e) => TagWidget(tag: e))
+                        .toList(),
                   ),
                 )
               ],

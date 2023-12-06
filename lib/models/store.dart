@@ -12,17 +12,19 @@ class StoreSimple {
 
 class Store {
   String name;
-  String description;
-  int maxDiscountRate;
-  List<Tag> tags;
+  MenuSimple maxDiscountMenu;
+  String? description;
+  String? category;
+  List<Tag>? tags;
   String imgUrl;
 
   Store(
       {required this.name,
-      required this.description,
-      required this.maxDiscountRate,
-      required this.tags,
-      required this.imgUrl});
+      required this.imgUrl,
+      required this.maxDiscountMenu,
+      this.description,
+      this.tags,
+      this.category});
 }
 
 class StoreDetail {
