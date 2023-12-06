@@ -13,6 +13,15 @@ enum TabTypes {
   final String str;
 }
 
+enum Order {
+  last("최신순"),
+  distance("거리순"),
+  name("이름순");
+
+  const Order(this.str);
+  final String str;
+}
+
 class HomeViewModel with ChangeNotifier {
   final List<Tab> _tabs = TabTypes.values.map((e) => Tab(text: e.str)).toList();
   final List<Menu> _menus = [
@@ -44,7 +53,14 @@ class HomeViewModel with ChangeNotifier {
         view: 2,
         tags: []),
   ];
+  Order _order = Order.values.first;
 
   List<Widget> get tabs => _tabs;
   List<Menu> get menus => _menus;
+  Order get order => _order;
+
+  void changeOrder(Order order) {
+    _order = order;
+    notifyListeners();
+  }
 }
