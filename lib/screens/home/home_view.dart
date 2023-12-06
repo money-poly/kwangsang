@@ -55,7 +55,7 @@ class HomeView extends StatelessWidget {
           length: viewModel.tabs.length,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TabBar(
                 tabs: viewModel.tabs,
@@ -126,7 +126,7 @@ class HomeView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 20),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 8),
@@ -180,7 +180,7 @@ class HomeView extends StatelessWidget {
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 padding:
-                                    const EdgeInsets.fromLTRB(20, 8, 20, 20),
+                                    const EdgeInsets.fromLTRB(20, 12, 20, 20),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
