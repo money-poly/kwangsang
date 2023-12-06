@@ -104,7 +104,8 @@ class MenuCard extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 130,
+                  height: 120,
+                  width: (MediaQuery.of(context).size.width - 60) / 2,
                   decoration: BoxDecoration(
                     border: Border.all(color: KwangColor.grey300, width: 1),
                     borderRadius: BorderRadius.circular(4),
@@ -150,8 +151,7 @@ class MenuCard extends StatelessWidget {
                 children: [
                   Text(
                     menu.store!,
-                    style:
-                        KwangStyle.body2M.copyWith(color: KwangColor.grey600),
+                    style: KwangStyle.body2M.copyWith(color: KwangColor.grey600),
                   ),
                   Text(
                     menu.name,
@@ -166,8 +166,7 @@ class MenuCard extends StatelessWidget {
                       if (menu.discountRate != 0)
                         Text(
                           "${menu.discountRate}%",
-                          style:
-                              KwangStyle.btn2B.copyWith(color: KwangColor.red),
+                          style: KwangStyle.btn2B.copyWith(color: KwangColor.red),
                         ),
                       Text(
                         "${NumberFormat('###,###,###,###').format(menu.price).replaceAll(' ', ',')}원",
