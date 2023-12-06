@@ -1,5 +1,19 @@
 import 'package:immersion_kwangsang/models/tag.dart';
 
+class MenuSimple {
+  String? name;
+  int? originPrice;
+  int? discountPrice;
+  int discountRate;
+
+  MenuSimple({
+    this.name,
+    this.originPrice,
+    this.discountPrice,
+    required this.discountRate,
+  });
+}
+
 class Menu {
   String name;
   int discountRate;
