@@ -132,12 +132,14 @@ class SearchAfterTab extends StatelessWidget {
                   : Expanded(
                       child: GridView(
                         padding: const EdgeInsets.fromLTRB(20, 8, 20, 65),
-                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent:
-                                (MediaQuery.of(context).size.width - 60) / 2,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
                             mainAxisSpacing: 28,
                             crossAxisSpacing: 20,
-                            childAspectRatio: 158 / 198),
+                            childAspectRatio:
+                                (MediaQuery.of(context).size.width - 60) /
+                                    2 /
+                                    196),
                         children: viewModel.menus!
                             .map((e) =>
                                 MenuCard(menu: e, type: MenuCardType.vertical))
