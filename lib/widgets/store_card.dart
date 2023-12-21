@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:intl/intl.dart';
 
 class StoreCard extends StatelessWidget {
   const StoreCard({super.key, required this.store});
@@ -66,7 +67,9 @@ class StoreCard extends StatelessWidget {
                     style: KwangStyle.btn1B.copyWith(color: KwangColor.red),
                   ),
                   const SizedBox(width: 8),
-                  Text("8,000원", style: KwangStyle.btn1B)
+                  Text(
+                      "${NumberFormat('###,###,###,###').format(store.maxDiscountMenu.discountPrice).replaceAll(' ', ',')}원",
+                      style: KwangStyle.btn1B)
                 ],
               )
             ],
@@ -74,8 +77,7 @@ class StoreCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: ExtendedImage.network(
-              store
-                  .imgUrl,
+              store.imgUrl,
               width: 96,
               height: 96,
               fit: BoxFit.cover,
