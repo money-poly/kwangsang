@@ -83,9 +83,18 @@ class HomeView extends StatelessWidget {
                           (index) => viewModel.maxDiscountStores[index] ==
                                       null ||
                                   viewModel.discountMenus.isEmpty
-                              ? const Column(
+                              ? Column(
                                   children: [
-                                    EmptyCard(emptyType: EmptyCardType.home)
+                                    Container(
+                                      alignment: Alignment.center,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 16),
+                                      height: 100,
+                                      width: MediaQuery.of(context).size.width,
+                                      color: Colors.orange,
+                                      child: Text("배너"),
+                                    ),
+                                    const EmptyCard(emptyType: EmptyCardType.home)
                                   ],
                                 )
                               : SingleChildScrollView(
