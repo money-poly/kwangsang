@@ -25,6 +25,16 @@ class Store {
       this.description,
       this.tags,
       this.category});
+
+  factory Store.fromJson(Map<String, dynamic> json) => Store(
+        name: json['storeName'],
+        imgUrl: json['storeImgUrl'],
+        maxDiscountMenu: MenuSimple.fromJson(json['menu']),
+        /* Optional */
+        description: json['description'],
+        category: json['category'],
+        tags: json['tags']
+      );
 }
 
 class StoreDetail {
