@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/number_formatter.dart';
 // import 'package:immersion_kwangsang/widgets/tag_widget.dart';
 import 'package:intl/intl.dart';
 
@@ -120,26 +121,33 @@ class MenuCard extends StatelessWidget {
                 ),
                 Positioned(
                   right: 8,
-                  bottom: 4,
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/ic_24_view.svg",
-                        width: 24,
-                        height: 24,
-                        colorFilter: const ColorFilter.mode(
-                            KwangColor.grey900, BlendMode.srcIn),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        menu.view.toString(),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: KwangColor.grey900,
+                  bottom: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: KwangColor.grey100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/ic_24_view.svg",
+                          width: 24,
+                          height: 24,
+                          colorFilter: const ColorFilter.mode(
+                              KwangColor.grey900, BlendMode.srcIn),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 4),
+                        Text(
+                          kmNumberFormatter(menu.view!),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: KwangColor.grey900,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -151,7 +159,8 @@ class MenuCard extends StatelessWidget {
                 children: [
                   Text(
                     menu.store!,
-                    style: KwangStyle.body2M.copyWith(color: KwangColor.grey600),
+                    style:
+                        KwangStyle.body2M.copyWith(color: KwangColor.grey600),
                   ),
                   Text(
                     menu.name,
@@ -166,7 +175,8 @@ class MenuCard extends StatelessWidget {
                       if (menu.discountRate != 0)
                         Text(
                           "${menu.discountRate}%",
-                          style: KwangStyle.btn2B.copyWith(color: KwangColor.red),
+                          style:
+                              KwangStyle.btn2B.copyWith(color: KwangColor.red),
                         ),
                       Text(
                         "${NumberFormat('###,###,###,###').format(menu.price).replaceAll(' ', ',')}원",
