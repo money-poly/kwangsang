@@ -26,6 +26,7 @@ class MapStoreViewModel with ChangeNotifier {
         phoneNumber: "010-1234-6678",
         menu: [
           Menu(
+              id: 1,
               name: "양념에 반한닭",
               description: "토마토와 칠리소스로 맛을 낸 양념치킨",
               discountRate: 10,
@@ -33,6 +34,7 @@ class MapStoreViewModel with ChangeNotifier {
               imgUrl:
                   "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210316_22%2F1615866542833460Bs_JPEG%2FEPYlyuBM9Sd5XP-ChhBTkLev.jpg"),
           Menu(
+              id: 2,
               name: "쌈닭화히타",
               description: "볶음 야채와 치킨을 또띠아에 싸먹는 멕시칸스타일 쌈닭",
               discountRate: 10,

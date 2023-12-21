@@ -79,7 +79,7 @@ class MapMainViewModel with ChangeNotifier {
     final tempStore = Store(
         name: "누구나 반한 닭$selectedMarkerId",
         description: "누구나 반한 닭은 누구나 반한 닭이다.",
-        maxDiscountMenu: MenuSimple(discountRate: 30),
+        maxDiscountMenu: MenuSimple(id: 1, discountRate: 30),
         tags: [
           tagMapping["마감할인"]!,
         ],

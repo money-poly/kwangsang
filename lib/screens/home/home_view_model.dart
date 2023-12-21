@@ -26,15 +26,17 @@ class HomeViewModel with ChangeNotifier {
   final List<Tab> _tabs = TabTypes.values.map((e) => Tab(text: e.str)).toList();
   final List<Menu> _menus = [
     Menu(
+        id: 1,
         name: "양념 치킨",
         discountRate: 10,
         price: 20900,
         imgUrl:
             "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210316_22%2F1615866542833460Bs_JPEG%2FEPYlyuBM9Sd5XP-ChhBTkLev.jpg",
         store: "누구나 반한 닭",
-        view: 8,
+        view: 800300000,
         tags: []),
     Menu(
+        id: 2,
         name: "파닭 존맛탱입니다 존맛존맛존맛존맛",
         discountRate: 10,
         price: 20900,
@@ -44,13 +46,14 @@ class HomeViewModel with ChangeNotifier {
         view: 2,
         tags: []),
     Menu(
+        id: 3,
         name: "치킨 샐러드 존맛탱입니다 맛있어요",
         discountRate: 10,
         price: 20900,
         imgUrl:
             "https://cphoto.asiae.co.kr/listimglink/1/2021072914403655715_1627537236.jpg",
         store: "네네치킨",
-        view: 2,
+        view: 1200,
         tags: []),
   ];
   Order _order = Order.values.first;

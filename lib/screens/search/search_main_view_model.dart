@@ -100,6 +100,7 @@ class SearchMainViewModel with ChangeNotifier {
   Future<void> getMenus() async {
     final List<Menu> tempMenus = [
       Menu(
+          id: 1,
           name: "양념 치킨",
           discountRate: 10,
           price: 20900,
@@ -114,6 +115,7 @@ class SearchMainViewModel with ChangeNotifier {
                 bgColor: KwangColor.grey300),
           ]),
       Menu(
+          id: 2,
           name: "파닭 존맛탱입니다 존맛존맛존맛존맛",
           discountRate: 10,
           price: 20900,
@@ -129,13 +131,14 @@ class SearchMainViewModel with ChangeNotifier {
                 bgColor: KwangColor.grey300),
           ]),
       Menu(
+          id: 3,
           name: "치킨 샐러드 존맛탱입니다 맛있어요",
           discountRate: 10,
           price: 20900,
           imgUrl:
               "https://cphoto.asiae.co.kr/listimglink/1/2021072914403655715_1627537236.jpg",
           store: "네네치킨",
-          view: 2,
+          view: 12000,
           tags: [
             Tag(
                 icon: "time",
