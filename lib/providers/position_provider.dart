@@ -20,6 +20,7 @@ class PositionProvider with ChangeNotifier {
 
   PositionProvider() {
     getLocationPermission();
+    updateMyPosition();
   }
 
   Future<void> getLocationPermission() async {
