@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/empty_card.dart';
 import 'package:immersion_kwangsang/widgets/menu_card.dart';
 import 'package:provider/provider.dart';
 
@@ -95,40 +96,7 @@ class SearchAfterTab extends StatelessWidget {
                 height: 8,
               ),
               viewModel.menus!.isEmpty
-                  ? Expanded(
-                      child: Column(children: [
-                        Flexible(
-                          flex: 1,
-                          child: Container(),
-                        ),
-                        Image.asset(
-                          "assets/imgs/img_86_bird_exclamation.png",
-                          width: 86,
-                          height: 86,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Column(children: [
-                            Text(
-                              "검색결과가 없어요!",
-                              style: KwangStyle.header2,
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              "다른 검색어로 다시 검색해주세요",
-                              style: KwangStyle.btn1SB
-                                  .copyWith(color: KwangColor.grey600),
-                            ),
-                          ]),
-                        ),
-                        Flexible(
-                          flex: 2,
-                          child: Container(),
-                        )
-                      ]),
-                    )
+                  ? const EmptyCard(emptyType: EmptyCardType.search)
                   : Expanded(
                       child: GridView(
                         padding: const EdgeInsets.fromLTRB(20, 8, 20, 65),
