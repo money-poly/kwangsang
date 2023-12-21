@@ -14,6 +14,14 @@ class MenuSimple {
     this.discountPrice,
     required this.discountRate,
   });
+
+  factory MenuSimple.fromJson(Map<String, dynamic> json) => MenuSimple(
+        id: json['menuId'],
+        name: json['menuName'],
+        originPrice: json['price'],
+        discountPrice: json['sellingPrice'],
+        discountRate: json['discountRate'],
+      );
 }
 
 class Menu {
