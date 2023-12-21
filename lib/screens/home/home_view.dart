@@ -221,7 +221,8 @@ class HomeView extends StatelessWidget {
                                                               60) /
                                                           2 /
                                                           196),
-                                          children: viewModel.discountMenus
+                                          children: viewModel
+                                              .discountMenus[index]
                                               .map((e) => MenuCard(
                                                   menu: e,
                                                   type: MenuCardType.vertical))

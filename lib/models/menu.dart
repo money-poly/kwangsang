@@ -46,4 +46,17 @@ class Menu {
     this.view,
     this.tags,
   });
+
+  factory Menu.fromJson(Map<String, dynamic> json) => Menu(
+        id: json['menuId'],
+        name: json['menuName'],
+        discountRate: json['discountRate'],
+        price: json['sellingPrice'],
+        imgUrl: json['menuImgUrl'],
+        /* Optional */
+        description: json['description'],
+        store: json['storeName'],
+        view: json['view'],
+        tags: json['tags'],
+      );
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/services/api.dart';
 
@@ -16,5 +17,13 @@ class HomeService {
       return {category: store};
     }).toList();
     return stores;
+  }
+
+  Future<List<List<Menu>>> getDiscountMenus() async {
+    final res = await _api.req("/home/discountMenus", HttpMethod.post);
+    final menus = (jsonDecode(res.body)["data"] as List)
+        .map((e) => (e["menus"] as List).map((e) => Menu.fromJson(e)).toList())
+        .toList();
+    return menus;
   }
 }
