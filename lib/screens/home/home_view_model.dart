@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/store.dart';
+import 'package:immersion_kwangsang/services/home_service.dart';
 
 enum TabTypes {
   all("전체"),
@@ -23,8 +25,17 @@ enum Order {
 }
 
 class HomeViewModel with ChangeNotifier {
-  final List<Tab> _tabs = TabTypes.values.map((e) => Tab(text: e.str)).toList();
-  final List<Menu> _menus = [
+  final HomeService _service = HomeService();
+
+  bool _isLoading = true;
+  List<Tab>? _tabs;
+  List<Store?> _maxDiscountStores = [];
+
+  HomeViewModel() {
+    getMaxDiscountStores();
+  }
+
+  final List<Menu> _discountMenus = [
     Menu(
         id: 1,
         name: "양념 치킨",
@@ -58,12 +69,44 @@ class HomeViewModel with ChangeNotifier {
   ];
   Order _order = Order.values.first;
 
-  List<Widget> get tabs => _tabs;
-  List<Menu> get menus => _menus;
+  bool get isLoading => _isLoading;
+  List<Widget>? get tabs => _tabs;
+  List<Store?> get maxDiscountStores => _maxDiscountStores;
+  List<Menu> get discountMenus => _discountMenus;
   Order get order => _order;
+
+  Future<void> getMaxDiscountStores() async {
+    final stores = await _service.getMaxDiscountStores();
+    _tabs = stores.map((e) => Tab(text: e.keys.single)).toList();
+    _tabs = [const Tab(text: "전체"), ..._tabs!];
+    _maxDiscountStores = stores.map((e) => e[e.keys.single]).toList();
+    _maxDiscountStores = [
+      getMaxDiscountStoreOfAll(_maxDiscountStores),
+      ..._maxDiscountStores
+    ];
+    _isLoading = false;
+    notifyListeners();
+  }
 
   void changeOrder(Order order) {
     _order = order;
     notifyListeners();
   }
+}
+
+Store? getMaxDiscountStoreOfAll(List<Store?> stores) {
+  Store? maxDiscountStore;
+  for (var store in stores) {
+    if (store != null) {
+      if (maxDiscountStore == null) {
+        maxDiscountStore = store;
+      } else {
+        if (maxDiscountStore.maxDiscountMenu.discountRate <
+            store.maxDiscountMenu.discountRate) {
+          maxDiscountStore = store;
+        }
+      }
+    }
+  }
+  return maxDiscountStore;
 }
