@@ -69,3 +69,4 @@ lib/generated_plugin_registrant.dart
 
 ios/Flutter/Kwang.xcconfig
 .DS_Store
+.env
