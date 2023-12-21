@@ -18,7 +18,7 @@ class NavViewModel with ChangeNotifier {
   int _currIdx = 0;
   final List<Widget> _pages = [
     ChangeNotifierProvider(
-      create: (_) => HomeViewModel(),
+      create: (context) => HomeViewModel(context),
       child: const HomeView(),
     ),
     ChangeNotifierProvider(

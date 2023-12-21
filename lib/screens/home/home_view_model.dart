@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/models/store.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/services/home_service.dart';
+import 'package:provider/provider.dart';
 
 enum TabTypes {
   all("전체"),
@@ -27,12 +30,14 @@ enum Order {
 class HomeViewModel with ChangeNotifier {
   final HomeService _service = HomeService();
 
+  late PositionProvider _positionProvider;
   bool _isLoading = true;
   List<Tab>? _tabs;
   List<Store?> _maxDiscountStores = [];
   List<List<Menu>> _discountMenus = [];
 
-  HomeViewModel() {
+  HomeViewModel(BuildContext context) {
+    _positionProvider = Provider.of<PositionProvider>(context, listen: false);
     getMaxDiscountStores();
     getDiscountMenus();
   }
@@ -46,7 +51,9 @@ class HomeViewModel with ChangeNotifier {
   Order get order => _order;
 
   Future<void> getMaxDiscountStores() async {
-    final stores = await _service.getMaxDiscountStores();
+    final stores = await _service.getMaxDiscountStores(LatLng(
+        _positionProvider.myPosition!.latitude,
+        _positionProvider.myPosition!.longitude));
     _tabs = stores.map((e) => Tab(text: e.keys.single)).toList();
     _tabs = [const Tab(text: "전체"), ..._tabs!];
     _maxDiscountStores = stores.map((e) => e[e.keys.single]).toList();
@@ -57,13 +64,17 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeOrder(Order order) {
+  void changeOrder(Order order) async {
     _order = order;
+    await getDiscountMenus();
     notifyListeners();
   }
 
   Future<void> getDiscountMenus() async {
-    _discountMenus = await _service.getDiscountMenus();
+    _discountMenus = await _service.getDiscountMenus(
+        _order,
+        LatLng(_positionProvider.myPosition!.latitude,
+            _positionProvider.myPosition!.longitude));
     _isLoading = false;
     notifyListeners();
   }
