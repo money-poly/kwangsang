@@ -80,20 +80,21 @@ class MenuCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                    border: Border.all(color: KwangColor.grey300, width: 1),
-                    borderRadius: BorderRadius.circular(4)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: ExtendedImage.network(
-                    menu.imgUrl,
-                    fit: BoxFit.cover,
+              if (menu.imgUrl != null)
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: KwangColor.grey300, width: 1),
+                      borderRadius: BorderRadius.circular(4)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: ExtendedImage.network(
+                      menu.imgUrl!,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         );
@@ -108,16 +109,24 @@ class MenuCard extends StatelessWidget {
                   height: 120,
                   width: (MediaQuery.of(context).size.width - 60) / 2,
                   decoration: BoxDecoration(
-                    border: Border.all(color: KwangColor.grey300, width: 1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: ExtendedImage.network(
-                      menu.imgUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      border: Border.all(color: KwangColor.grey300, width: 1),
+                      borderRadius: BorderRadius.circular(4),
+                      color: KwangColor.grey200),
+                  child: menu.imgUrl == null
+                      ? Center(
+                          child: Text(
+                            "이미지 준비중입니다",
+                            style: KwangStyle.btn3
+                                .copyWith(color: KwangColor.grey500),
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: ExtendedImage.network(
+                            menu.imgUrl!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
                 Positioned(
                   right: 8,

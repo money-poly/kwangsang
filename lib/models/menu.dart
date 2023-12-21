@@ -29,7 +29,7 @@ class Menu {
   String name;
   int discountRate;
   int price;
-  String imgUrl;
+  String? imgUrl;
   String? description;
   String? store;
   int? view;
