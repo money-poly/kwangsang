@@ -1,8 +1,8 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/store_img_card.dart';
 import 'package:intl/intl.dart';
 
 class StoreCard extends StatelessWidget {
@@ -74,16 +74,7 @@ class StoreCard extends StatelessWidget {
               )
             ],
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: ExtendedImage.network(
-              store.imgUrl,
-              width: 96,
-              height: 96,
-              fit: BoxFit.cover,
-              cache: true,
-            ),
-          )
+          StoreImgCard(imgUrl: store.imgUrl)
         ],
       ),
     );
