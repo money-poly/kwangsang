@@ -20,6 +20,19 @@ class StoreSimple {
       );
 }
 
+class StoreHome {
+  String name;
+  String? category;
+  Menu menu;
+
+  StoreHome({required this.name, required this.menu, this.category});
+
+  factory StoreHome.fromJson(Map<String, dynamic> json) => StoreHome(
+        name: json['name'],
+        menu: Menu.fromHomeJson(json['menu']),
+      );
+}
+
 class Store {
   String name;
   MenuSimple maxDiscountMenu;
