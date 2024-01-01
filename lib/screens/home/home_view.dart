@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/home_bottom_sheet.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
@@ -94,7 +95,8 @@ class HomeView extends StatelessWidget {
                                       color: Colors.orange,
                                       child: Text("배너"),
                                     ),
-                                    const EmptyCard(emptyType: EmptyCardType.home)
+                                    const EmptyCard(
+                                        emptyType: EmptyCardType.home)
                                   ],
                                 )
                               : SingleChildScrollView(
@@ -232,9 +234,22 @@ class HomeView extends StatelessWidget {
                                                           196),
                                           children: viewModel
                                               .discountMenus[index]
-                                              .map((e) => MenuCard(
-                                                  menu: e,
-                                                  type: MenuCardType.vertical))
+                                              .map((e) => GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              MenuView(
+                                                                  menuId: e.id),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: MenuCard(
+                                                        menu: e,
+                                                        type: MenuCardType
+                                                            .vertical),
+                                                  ))
                                               .toList(),
                                         ),
                                       ],

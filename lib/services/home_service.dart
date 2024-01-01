@@ -8,33 +8,36 @@ import 'package:immersion_kwangsang/services/api.dart';
 class HomeService {
   final API _api = API();
 
-  Future<List<Map<String, Store?>>> getMaxDiscountStores(LatLng latLng) async {
-    final res = await _api.req("/home/maxdiscount", HttpMethod.post,
-        body: jsonEncode({
-          "latitude": latLng.latitude,
-          "longitude": latLng.longitude,
-        }));
-    final stores = (jsonDecode(res.body)["data"] as List).map((e) {
-      String category = e["category"];
-      Store? store = e["store"] == null ? null : Store.fromJson(e["store"]);
-      if (store != null) {
+  Future<Map<String, StoreHome?>> getMaxDiscountStores(LatLng latLng) async {
+    final res = await _api.req(
+      "/menus/max-discount?lat=${latLng.latitude}&lon=${latLng.longitude}",
+      HttpMethod.get,
+      type: UrlType.dev,
+    );
+    if (res.statusCode != 200) {
+      throw Exception("Failed to load max discount stores");
+    } else {
+      Map<String, StoreHome?> stores = {};
+      for (var e in (jsonDecode(res.body)["data"] as List)) {
+        String category = e["category"];
+        StoreHome? store = StoreHome.fromJson(e["store"]);
         store.category = category;
+        stores[category] = store;
       }
-      return {category: store};
-    }).toList();
-    return stores;
+      return stores;
+    }
   }
 
   Future<List<List<Menu>>> getDiscountMenus(Order order, LatLng latLng) async {
-    final res = await _api.req("/home/discountMenus", HttpMethod.post,
-        body: jsonEncode({
-          "type": order.name,
-          "latitude": latLng.latitude,
-          "longitude": latLng.longitude,
-        }));
+    final res = await _api.req(
+      "/menus/discounted?type=${order.name}&lat=${latLng.latitude}&lon=${latLng.longitude}",
+      HttpMethod.get,
+      type: UrlType.dev,
+    );
     if (res.statusCode != 200) {
       throw Exception("Failed to load discount menus");
     } else {
+      print(res.body);
       final menus = (jsonDecode(res.body)["data"] as List)
           .map(
               (e) => (e["menus"] as List).map((e) => Menu.fromJson(e)).toList())
