@@ -1,14 +1,15 @@
+import 'package:immersion_kwangsang/models/origin.dart';
 import 'package:immersion_kwangsang/models/tag.dart';
 
 class MenuSimple {
-  int id;
+  int? id;
   String? name;
   int? originPrice;
   int? discountPrice;
   int discountRate;
 
   MenuSimple({
-    required this.id,
+    this.id,
     this.name,
     this.originPrice,
     this.discountPrice,
@@ -28,35 +29,71 @@ class Menu {
   int id;
   String name;
   int discountRate;
-  int price;
+  int discountPrice;
+  int? regularPrice;
   String? imgUrl;
   String? description;
   String? store;
   int? view;
   List<Tag>? tags;
+  List<Origin>? origins;
 
   Menu({
     required this.id,
     required this.name,
     required this.imgUrl,
     required this.discountRate,
-    required this.price,
+    required this.discountPrice,
+    this.regularPrice,
     this.description,
     this.store,
     this.view,
     this.tags,
+    this.origins,
   });
 
   factory Menu.fromJson(Map<String, dynamic> json) => Menu(
         id: json['menuId'],
         name: json['menuName'],
         discountRate: json['discountRate'],
-        price: json['sellingPrice'],
-        imgUrl: json['menuImgUrl'],
+        discountPrice: json['sellingPrice'],
+        imgUrl: json['menuPictureUrl'],
         /* Optional */
+        regularPrice: json['price'],
         description: json['description'],
         store: json['storeName'],
         view: json['view'],
         tags: json['tags'],
+        origins: json['origins'],
+      );
+
+  factory Menu.fromStoreJson(Map<String, dynamic> json) => Menu(
+        id: json['id'],
+        name: json['name'],
+        discountRate: json['discountRate'],
+        discountPrice: json['salePrice'],
+        imgUrl: json['menuPictureUrl'],
+        /* Optional */
+        regularPrice: json['price'],
+        description: json['description'],
+        store: json['storeName'],
+        view: json['view'],
+        tags: json['tags'],
+        origins: json['origins'],
+      );
+
+  factory Menu.fromHomeJson(Map<String, dynamic> json) => Menu(
+        id: json['id'],
+        name: json['name'],
+        discountRate: json['discountRate'],
+        discountPrice: json['sellingPrice'],
+        imgUrl: json['menuPictureUrl'],
+        /* Optional */
+        regularPrice: json['price'],
+        description: json['description'],
+        store: json['storeName'],
+        view: json['view'],
+        tags: json['tags'],
+        origins: json['origins'],
       );
 }

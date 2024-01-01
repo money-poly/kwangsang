@@ -68,7 +68,7 @@ class MenuCard extends StatelessWidget {
                             ),
                           ),
                         Text(
-                          "${NumberFormat('###,###,###,###').format(menu.price).replaceAll(' ', ',')}원",
+                          "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -188,7 +188,7 @@ class MenuCard extends StatelessWidget {
                               KwangStyle.btn2B.copyWith(color: KwangColor.red),
                         ),
                       Text(
-                        "${NumberFormat('###,###,###,###').format(menu.price).replaceAll(' ', ',')}원",
+                        "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
                         style: KwangStyle.btn2B,
                       ),
                     ],

@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 class StoreCard extends StatelessWidget {
   const StoreCard({super.key, required this.store});
 
-  final Store store;
+  final StoreHome store;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,14 +45,14 @@ class StoreCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    store.maxDiscountMenu.name!,
+                    store.menu.name,
                     style: KwangStyle.body1M.copyWith(
                       color: KwangColor.grey600,
                     ),
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    "${store.maxDiscountMenu.originPrice}원",
+                    "${store.menu.regularPrice}원",
                     style: KwangStyle.body1M.copyWith(
                       color: KwangColor.grey600,
                       decoration: TextDecoration.lineThrough,
@@ -63,18 +63,18 @@ class StoreCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "${store.maxDiscountMenu.discountRate}%",
+                    "${store.menu.discountRate}%",
                     style: KwangStyle.btn1B.copyWith(color: KwangColor.red),
                   ),
                   const SizedBox(width: 8),
                   Text(
-                      "${NumberFormat('###,###,###,###').format(store.maxDiscountMenu.discountPrice).replaceAll(' ', ',')}원",
+                      "${NumberFormat('###,###,###,###').format(store.menu.discountPrice).replaceAll(' ', ',')}원",
                       style: KwangStyle.btn1B)
                 ],
               )
             ],
           ),
-          StoreImgCard(imgUrl: store.imgUrl)
+          StoreImgCard(imgUrl: store.menu.imgUrl)
         ],
       ),
     );
