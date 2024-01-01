@@ -9,11 +9,16 @@ enum HttpMethod {
   delete,
 }
 
+enum UrlType { dummy, dev }
+
 class API {
   final String baseUrl = dotenv.env['BASE_URL']!;
+  final String tempUrl = dotenv.env['TEMP_URL']!;
 
-  Future<http.Response> req(String url, HttpMethod method, {body}) async {
-    final reqUrl = Uri.parse(baseUrl + url);
+  Future<http.Response> req(String url, HttpMethod method,
+      {body, UrlType type = UrlType.dummy}) async {
+    final reqUrl =
+        Uri.parse(type == UrlType.dev ? tempUrl + url : baseUrl + url);
     final header = {
       if (method != HttpMethod.get) 'Content-Type': 'application/json'
     };
