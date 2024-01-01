@@ -1,4 +1,4 @@
-package com.example.immersion_kwangsang
+package net.immersion.kwangsaeng
 
 import io.flutter.embedding.android.FlutterActivity
 
