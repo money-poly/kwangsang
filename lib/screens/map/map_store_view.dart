@@ -18,9 +18,12 @@ class MapStoreView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MapStoreViewModel>(context);
     if (viewModel.store == null) {
-      return const Center(
-        child: CircularProgressIndicator(
-          color: KwangColor.primary400,
+      return const Scaffold(
+        backgroundColor: KwangColor.grey100,
+        body: Center(
+          child: CircularProgressIndicator(
+            color: KwangColor.primary400,
+          ),
         ),
       );
     } else {
@@ -150,7 +153,8 @@ class MapStoreView extends StatelessWidget {
                         markers: {
                           Marker(
                               markerId: const MarkerId("store"),
-                              position: viewModel.store!.latLng)
+                              position: viewModel.store!.latLng,
+                              icon: viewModel.markerOffIcon!)
                         }),
                   ),
                   Container(
