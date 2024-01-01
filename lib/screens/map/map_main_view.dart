@@ -9,6 +9,7 @@ import 'package:immersion_kwangsang/screens/map/widgets/map_store_card.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
+import 'package:immersion_kwangsang/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 class MapMainView extends StatelessWidget {
@@ -31,14 +32,18 @@ class MapMainView extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ChangeNotifierProvider(
-                    create: (_) => SearchMainViewModel(),
-                    child: const SearchMainView(),
-                  ),
-                ),
-              );
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      const CustomAlertDialog(type: AlertType.developing));
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (context) => ChangeNotifierProvider(
+              //       create: (_) => SearchMainViewModel(),
+              //       child: const SearchMainView(),
+              //     ),
+              //   ),
+              // );
             },
             child: SvgPicture.asset(
               "assets/icons/ic_36_search.svg",

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/home_bottom_sheet.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/custom_alert_dialog.dart';
 import 'package:immersion_kwangsang/widgets/empty_card.dart';
 import 'package:immersion_kwangsang/widgets/menu_card.dart';
 import 'package:immersion_kwangsang/widgets/store_card.dart';
@@ -17,6 +21,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
         appBar: AppBar(
@@ -31,14 +36,18 @@ class HomeView extends StatelessWidget {
           actions: [
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ChangeNotifierProvider(
-                      create: (_) => SearchMainViewModel(),
-                      child: const SearchMainView(),
-                    ),
-                  ),
-                );
+                showDialog(
+                    context: context,
+                    builder: (context) =>
+                        const CustomAlertDialog(type: AlertType.developing));
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => ChangeNotifierProvider(
+                //       create: (_) => SearchMainViewModel(),
+                //       child: const SearchMainView(),
+                //     ),
+                //   ),
+                // );
               },
               child: SvgPicture.asset(
                 "assets/icons/ic_36_search.svg",
@@ -84,36 +93,37 @@ class HomeView extends StatelessWidget {
                           (index) => viewModel.maxDiscountStores[index] ==
                                       null ||
                                   viewModel.discountMenus.isEmpty
-                              ? Column(
-                                  children: [
-                                    Container(
-                                      alignment: Alignment.center,
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 16),
-                                      height: 100,
-                                      width: MediaQuery.of(context).size.width,
-                                      color: Colors.orange,
-                                      child: Text("배너"),
-                                    ),
-                                    const EmptyCard(
-                                        emptyType: EmptyCardType.home)
-                                  ],
-                                )
+                              ? const EmptyCard(emptyType: EmptyCardType.home)
+                              // Column(
+                              //   children: [
+                              //     Container(
+                              //       alignment: Alignment.center,
+                              //       margin: const EdgeInsets.symmetric(
+                              //           vertical: 16),
+                              //       height: 100,
+                              //       width: MediaQuery.of(context).size.width,
+                              //       color: Colors.orange,
+                              //       child: Text("배너"),
+                              //     ),
+                              //     const EmptyCard(
+                              //         emptyType: EmptyCardType.home)
+                              //   ],
+                              // )
                               : SingleChildScrollView(
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 64),
                                     child: Column(
                                       children: [
-                                        Container(
-                                          alignment: Alignment.center,
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 16),
-                                          height: 100,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          color: Colors.orange,
-                                          child: Text("배너"),
-                                        ),
+                                        // Container(
+                                        //   alignment: Alignment.center,
+                                        //   margin: const EdgeInsets.symmetric(
+                                        //       vertical: 16),
+                                        //   height: 100,
+                                        //   width:
+                                        //       MediaQuery.of(context).size.width,
+                                        //   color: Colors.orange,
+                                        //   child: Text("배너"),
+                                        // ),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 20, vertical: 8),
@@ -240,8 +250,18 @@ class HomeView extends StatelessWidget {
                                                           .push(
                                                         MaterialPageRoute(
                                                           builder: (context) =>
-                                                              MenuView(
-                                                                  menuId: e.id),
+                                                              ChangeNotifierProvider(
+                                                            create: (_) => MenuViewModel(
+                                                                LatLng(
+                                                                    positionProvider
+                                                                        .myPosition!
+                                                                        .latitude,
+                                                                    positionProvider
+                                                                        .myPosition!
+                                                                        .longitude),
+                                                                e.id),
+                                                            child: const MenuView(),
+                                                          ),
                                                         ),
                                                       );
                                                     },
