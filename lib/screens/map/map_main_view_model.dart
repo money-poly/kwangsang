@@ -1,10 +1,15 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/models/store.dart';
-import 'package:immersion_kwangsang/models/tag.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
+import 'package:immersion_kwangsang/services/map_service.dart';
+import 'package:provider/provider.dart';
 
 class MapMainViewModel with ChangeNotifier {
+  late final PositionProvider _positionProvider;
+
   late final GoogleMapController _mapController;
   BitmapDescriptor _markerOffIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor _markerOnIcon = BitmapDescriptor.defaultMarker;
@@ -15,12 +20,14 @@ class MapMainViewModel with ChangeNotifier {
   List<Marker> get markers => _markers;
   Store? get store => _store;
 
-  MapMainViewModel() {
+  MapMainViewModel(BuildContext context) {
+    _positionProvider = Provider.of<PositionProvider>(context, listen: false);
     initMarkerIcon();
   }
 
   void initController(controller) {
     _mapController = controller;
+    getMarkers();
     notifyListeners();
   }
 
@@ -29,16 +36,21 @@ class MapMainViewModel with ChangeNotifier {
   }
 
   void initMarkerIcon() async {
-    await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(30, 35)),
-            "assets/imgs/img_30_marker_offorigin.png")
-        .then((value) => _markerOffIcon = value);
-    await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(50, 58)),
-            "assets/imgs/img_50_marker_onorigin.png")
-        .then((value) => _markerOnIcon = value);
-    getMarkers();
+    await getBytesFromAsset("assets/imgs/img_30_marker_off.png", 90)
+        .then((value) => _markerOffIcon = BitmapDescriptor.fromBytes(value));
+    await getBytesFromAsset("assets/imgs/img_50_marker_on.png", 150)
+        .then((value) => _markerOnIcon = BitmapDescriptor.fromBytes(value));
     notifyListeners();
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    final data = await rootBundle.load(path);
+    final codec = await instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    final frameInfo = await codec.getNextFrame();
+    return (await frameInfo.image.toByteData(format: ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   Future<void> getMarkers() async {
