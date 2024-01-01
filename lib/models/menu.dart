@@ -1,3 +1,4 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/origin.dart';
 import 'package:immersion_kwangsang/models/tag.dart';
 
@@ -95,5 +96,83 @@ class Menu {
         view: json['view'],
         tags: json['tags'],
         origins: json['origins'],
+      );
+
+  factory Menu.fromDetailJson(Map<String, dynamic> json) => Menu(
+        id: json['menuId'],
+        name: json['name'],
+        discountRate: json['discountRate'],
+        discountPrice: json['price'],
+        imgUrl: json['menuPictureUrl'],
+        /* Optional */
+        regularPrice: json['price'],
+        description: json['description'],
+        store: json['storeName'],
+        view: json['view'],
+        tags: json['tags'],
+        origins: json['origins'],
+      );
+}
+
+class MenuDetail {
+  String name;
+  String description;
+  int discountRate;
+  int discountPrice;
+  int regularPrice;
+  int storeId;
+  String storeName;
+  String storeAddress;
+  String pickUpTime;
+  String phone;
+  LatLng location;
+  List<Menu> anotherMenus;
+  int view;
+  List<String> cautions;
+  List<Origin> origins;
+  /* Optional */
+  String? menuPictureUrl;
+
+  MenuDetail({
+    required this.name,
+    required this.description,
+    required this.discountRate,
+    required this.discountPrice,
+    required this.regularPrice,
+    required this.storeId,
+    required this.storeName,
+    required this.storeAddress,
+    required this.pickUpTime,
+    required this.phone,
+    required this.location,
+    required this.anotherMenus,
+    required this.view,
+    required this.origins,
+    required this.cautions,
+    this.menuPictureUrl,
+  });
+
+  factory MenuDetail.fromJson(Map<String, dynamic> json) => MenuDetail(
+        name: json['name'],
+        description: json['description'],
+        discountRate: json['discountRate'],
+        discountPrice: json['sellingPrice'],
+        regularPrice: json['price'],
+        storeId: json['storeId'],
+        storeName: json['storeName'],
+        storeAddress: json['storeAddress'],
+        pickUpTime: json['pickUpTime'] ?? json['cookingTime'],
+        phone: json['phone'],
+        location: LatLng(double.parse(json['lat']), double.parse(json['lon'])),
+        anotherMenus: (json['anotherMenus'] as List)
+            .map((e) => Menu.fromDetailJson(e))
+            .toList(),
+        view: json['viewCount'],
+        cautions: json['caution'].cast<String>(),
+        origins: (json['countryOfOrigin'] as List)
+            .map((e) => Origin.fromJson(e))
+            .toList(),
+        /* Optional */
+        menuPictureUrl: json['menuPictureUrl'],
       );
 }
