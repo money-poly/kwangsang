@@ -114,7 +114,13 @@ class MapMainView extends StatelessWidget {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => ChangeNotifierProvider(
-                                    create: (_) => MapStoreViewModel(),
+                                    create: (_) => MapStoreViewModel(
+                                        LatLng(
+                                            positionProvider
+                                                .myPosition!.latitude,
+                                            positionProvider
+                                                .myPosition!.longitude),
+                                        viewModel.selectedMarkerId!),
                                     child: const MapStoreView(),
                                   ),
                                 ),

@@ -22,7 +22,7 @@ class NavViewModel with ChangeNotifier {
       child: const HomeView(),
     ),
     ChangeNotifierProvider(
-      create: (_) => MapMainViewModel(),
+      create: (context) => MapMainViewModel(context),
       child: const MapMainView(),
     ),
     Placeholder()

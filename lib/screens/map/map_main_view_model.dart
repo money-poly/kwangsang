@@ -8,6 +8,7 @@ import 'package:immersion_kwangsang/services/map_service.dart';
 import 'package:provider/provider.dart';
 
 class MapMainViewModel with ChangeNotifier {
+  final MapService _service = MapService();
   late final PositionProvider _positionProvider;
 
   late final GoogleMapController _mapController;
@@ -54,19 +55,18 @@ class MapMainViewModel with ChangeNotifier {
   }
 
   Future<void> getMarkers() async {
-    final List<StoreSimple> tempStores = [
-      StoreSimple(id: 1, name: "누구나 반한 닭", latLng: LatLng(37.5052, 127.0478)),
-      StoreSimple(id: 2, name: "이디야 커피", latLng: LatLng(37.5039, 127.0482)),
-      StoreSimple(id: 3, name: "바나프레소", latLng: LatLng(37.5046, 127.0482))
-    ];
+    final List<StoreSimple> stores = await _service.getStores(LatLng(
+        _positionProvider.myPosition!.latitude,
+        _positionProvider.myPosition!.longitude));
 
-    _markers = tempStores
+    _markers = stores
         .map((e) => Marker(
             markerId: MarkerId(e.id.toString()),
             position: e.latLng,
-            onTap: () {
+            onTap: () async {
               selectedMarkerId = e.id;
-              updateMarker(e.id);
+              print(e.id);
+              await updateMarker(e.id);
             },
             icon: selectedMarkerId == e.id ? _markerOnIcon : _markerOffIcon))
         .toList();
@@ -88,16 +88,7 @@ class MapMainViewModel with ChangeNotifier {
   }
 
   Future<void> getStoreCard() async {
-    final tempStore = Store(
-        name: "누구나 반한 닭$selectedMarkerId",
-        description: "누구나 반한 닭은 누구나 반한 닭이다.",
-        maxDiscountMenu: MenuSimple(id: 1, discountRate: 30),
-        tags: [
-          tagMapping["마감할인"]!,
-        ],
-        imgUrl:
-            "https://i.namu.wiki/i/aN7eMJzy4XAy1yqpL3kHb41MBsSdfPjt1ZqMfDXYk6J3-je6M8dNVOMldpbxhZ-IlO9IfHXMzpZc1tVvat5IjQ.webp");
-    _store = tempStore;
+    _store = await _service.getStore(selectedMarkerId!);
     notifyListeners();
   }
 }
