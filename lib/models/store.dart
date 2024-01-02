@@ -105,7 +105,7 @@ class StoreDetail {
         .expand((e) => e['countryOfOrigin'] ?? [])
         .toList()
         .map((e) => Origin.fromJson(e))
-        .toList(); //.map((e) => e['countryOfOrigin']);
+        .toList();
 
     return StoreDetail(
       id: json['id'],
@@ -113,9 +113,9 @@ class StoreDetail {
       categories: (json['categories'] as List)
           .map((e) => e['name'].toString())
           .toList(),
-      address:
-          json['detail']['address'] + " " + json['detail']['addressDetail'] ??
-              "",
+      address: json['detail']['address'] +
+          " " +
+          (json['detail']['addressDetail'] ?? ""),
       latLng: LatLng(
         double.parse(json['detail']['lat']),
         double.parse(json['detail']['lon']),
