@@ -6,14 +6,15 @@ import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/services/detail_service.dart';
 
 class MenuViewModel with ChangeNotifier {
-  final DetailService _service = DetailService();
+  late final DetailService _service;
   MenuDetail? _menu;
   BitmapDescriptor? _markerOffIcon;
 
   MenuDetail? get menu => _menu;
   BitmapDescriptor? get markerOffIcon => _markerOffIcon;
 
-  MenuViewModel(LatLng latLng, int id) {
+  MenuViewModel(BuildContext context, LatLng latLng, int id) {
+    _service = DetailService(context);
     initMarkerIcon();
     getDetailMenu(id, latLng);
   }

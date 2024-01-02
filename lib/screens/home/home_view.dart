@@ -10,7 +10,6 @@ import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
-import 'package:immersion_kwangsang/widgets/custom_alert_dialog.dart';
 import 'package:immersion_kwangsang/widgets/empty_card.dart';
 import 'package:immersion_kwangsang/widgets/menu_card.dart';
 import 'package:immersion_kwangsang/widgets/store_card.dart';
@@ -22,7 +21,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final positionProvider = Provider.of<PositionProvider>(context);
-    final viewModel = Provider.of<HomeViewModel>(context);
+    late final viewModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
         appBar: AppBar(
           title: Image.asset(
@@ -36,18 +35,14 @@ class HomeView extends StatelessWidget {
           actions: [
             GestureDetector(
               onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (context) =>
-                        const CustomAlertDialog(type: AlertType.developing));
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => ChangeNotifierProvider(
-                //       create: (_) => SearchMainViewModel(),
-                //       child: const SearchMainView(),
-                //     ),
-                //   ),
-                // );
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ChangeNotifierProvider(
+                      create: (_) => SearchMainViewModel(),
+                      child: const SearchMainView(),
+                    ),
+                  ),
+                );
               },
               child: SvgPicture.asset(
                 "assets/icons/ic_36_search.svg",
@@ -93,7 +88,11 @@ class HomeView extends StatelessWidget {
                           (index) => viewModel.maxDiscountStores[index] ==
                                       null ||
                                   viewModel.discountMenus.isEmpty
-                              ? const EmptyCard(emptyType: EmptyCardType.home)
+                              ? const Column(
+                                  children: [
+                                    EmptyCard(emptyType: EmptyCardType.home),
+                                  ],
+                                )
                               // Column(
                               //   children: [
                               //     Container(
@@ -242,35 +241,37 @@ class HomeView extends StatelessWidget {
                                                               60) /
                                                           2 /
                                                           196),
-                                          children: viewModel
-                                              .discountMenus[index]
-                                              .map((e) => GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ChangeNotifierProvider(
-                                                            create: (_) => MenuViewModel(
-                                                                LatLng(
-                                                                    positionProvider
-                                                                        .myPosition!
-                                                                        .latitude,
-                                                                    positionProvider
-                                                                        .myPosition!
-                                                                        .longitude),
-                                                                e.id),
-                                                            child: const MenuView(),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                    child: MenuCard(
-                                                        menu: e,
-                                                        type: MenuCardType
-                                                            .vertical),
-                                                  ))
-                                              .toList(),
+                                          children:
+                                              viewModel.discountMenus[index]
+                                                  .map((e) => GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .push(
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  ChangeNotifierProvider(
+                                                                create: (_) => MenuViewModel(
+                                                                    context,
+                                                                    LatLng(
+                                                                        positionProvider
+                                                                            .myPosition!
+                                                                            .latitude,
+                                                                        positionProvider
+                                                                            .myPosition!
+                                                                            .longitude),
+                                                                    e.id),
+                                                                child:
+                                                                    const MenuView(),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: MenuCard(
+                                                            menu: e,
+                                                            type: MenuCardType
+                                                                .vertical),
+                                                      ))
+                                                  .toList(),
                                         ),
                                       ],
                                     ),

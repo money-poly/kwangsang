@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/store.dart';
-import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/services/map_service.dart';
-import 'package:provider/provider.dart';
 
 class MapMainViewModel with ChangeNotifier {
-  final MapService _service = MapService();
-  late final PositionProvider _positionProvider;
+  late final MapService _service;
+  bool _isDisposed = false;
 
   late final GoogleMapController _mapController;
   BitmapDescriptor _markerOffIcon = BitmapDescriptor.defaultMarker;
@@ -22,14 +20,22 @@ class MapMainViewModel with ChangeNotifier {
   Store? get store => _store;
 
   MapMainViewModel(BuildContext context) {
-    _positionProvider = Provider.of<PositionProvider>(context, listen: false);
+    _service = MapService(context);
     initMarkerIcon();
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
   }
 
   void initController(controller) {
     _mapController = controller;
     getMarkers();
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   void moveCameraInitPosition(LatLng latLng) {
@@ -41,7 +47,9 @@ class MapMainViewModel with ChangeNotifier {
         .then((value) => _markerOffIcon = BitmapDescriptor.fromBytes(value));
     await getBytesFromAsset("assets/imgs/img_50_marker_on.png", 150)
         .then((value) => _markerOnIcon = BitmapDescriptor.fromBytes(value));
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -55,9 +63,7 @@ class MapMainViewModel with ChangeNotifier {
   }
 
   Future<void> getMarkers() async {
-    final List<StoreSimple> stores = await _service.getStores(LatLng(
-        _positionProvider.myPosition!.latitude,
-        _positionProvider.myPosition!.longitude));
+    final List<StoreSimple> stores = await _service.getStores();
 
     _markers = stores
         .map((e) => Marker(
@@ -70,7 +76,9 @@ class MapMainViewModel with ChangeNotifier {
             },
             icon: selectedMarkerId == e.id ? _markerOnIcon : _markerOffIcon))
         .toList();
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   Future<void> updateMarker(markerId) async {
@@ -84,11 +92,15 @@ class MapMainViewModel with ChangeNotifier {
                 : _markerOffIcon))
         .toList();
     await getStoreCard();
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   Future<void> getStoreCard() async {
     _store = await _service.getStore(selectedMarkerId!);
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 }

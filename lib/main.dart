@@ -4,6 +4,7 @@ import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/navigation/nav_view.dart';
 import 'package:immersion_kwangsang/screens/navigation/nav_view_model.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding.dart';
+import 'package:immersion_kwangsang/screens/navigation/onboarding_view_model.dart';
 import 'package:immersion_kwangsang/styles/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,15 +22,20 @@ class MyApp extends StatelessWidget {
   final bool isVisited;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'kwangsaeng',
-      theme: KwangTheme.kwangTheme,
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => NavViewModel()),
-          ChangeNotifierProvider(create: (_) => PositionProvider())
-        ],
-        child: isVisited ? const NavView() : const OnBoarding(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => NavViewModel()),
+        ChangeNotifierProvider(create: (_) => PositionProvider()),
+      ],
+      child: MaterialApp(
+        title: 'kwangsaeng',
+        theme: KwangTheme.kwangTheme,
+        home: isVisited
+            ? const NavView()
+            : ChangeNotifierProvider(
+                create: (context) => OnBoardingViewModel(context),
+                child: const OnBoarding(),
+              ),
       ),
     );
   }

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/category.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/models/store.dart';
-import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/services/admin_service.dart';
 import 'package:immersion_kwangsang/services/home_service.dart';
-import 'package:provider/provider.dart';
 
 enum Order {
   last("최신순"),
@@ -18,19 +15,26 @@ enum Order {
 }
 
 class HomeViewModel with ChangeNotifier {
-  final HomeService _service = HomeService();
+  late final HomeService _service;
   final AdminService _adminService = AdminService();
-  late PositionProvider _positionProvider;
 
   bool _isLoading = true;
+  bool _isDisposed = false;
+
   List<Category>? _categories;
   List<Tab>? _tabs;
   List<StoreHome?> _maxDiscountStores = [];
   List<List<Menu>> _discountMenus = [];
 
   HomeViewModel(BuildContext context) {
-    _positionProvider = Provider.of<PositionProvider>(context, listen: false);
-    init();
+    _service = HomeService(context);
+    init(context);
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
   }
 
   Order _order = Order.values.first;
@@ -42,7 +46,7 @@ class HomeViewModel with ChangeNotifier {
   List<List<Menu>> get discountMenus => _discountMenus;
   Order get order => _order;
 
-  Future<void> init() async {
+  Future<void> init(BuildContext context) async {
     await getStoreCategories();
     await getMaxDiscountStores();
     await getDiscountMenus();
@@ -53,9 +57,7 @@ class HomeViewModel with ChangeNotifier {
   }
 
   Future<void> getMaxDiscountStores() async {
-    final stores = await _service.getMaxDiscountStores(LatLng(
-        _positionProvider.myPosition!.latitude,
-        _positionProvider.myPosition!.longitude));
+    final stores = await _service.getMaxDiscountStores();
 
     _maxDiscountStores = categories!.map((e) => stores[e.name]).toList();
     _tabs = [
@@ -66,22 +68,25 @@ class HomeViewModel with ChangeNotifier {
       getMaxDiscountStoreOfAll(_maxDiscountStores),
       ..._maxDiscountStores
     ];
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   void changeOrder(Order order) async {
     _order = order;
     await getDiscountMenus();
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   Future<void> getDiscountMenus() async {
-    _discountMenus = await _service.getDiscountMenus(
-        _order,
-        LatLng(_positionProvider.myPosition!.latitude,
-            _positionProvider.myPosition!.longitude));
+    _discountMenus = await _service.getDiscountMenus(_order);
     _isLoading = false;
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 }
 

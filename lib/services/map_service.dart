@@ -1,14 +1,21 @@
 import 'dart:convert';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/models/store.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/services/api.dart';
+import 'package:provider/provider.dart';
 
 class MapService {
   final API _api = API();
+  late final PositionProvider _positionProvider;
 
-  Future<List<StoreSimple>> getStores(LatLng latLng) async {
+  MapService(BuildContext context) {
+    _positionProvider = context.read<PositionProvider>();
+  }
+
+  Future<List<StoreSimple>> getStores() async {
     final res = await _api.req(
-      "/stores/map/location?lat=${latLng.latitude}&lon=${latLng.longitude}&range=1000000000",
+      "/stores/map/location?lat=${_positionProvider.myPosition!.latitude}&lon=${_positionProvider.myPosition!.longitude}&range=1000000000",
       HttpMethod.get,
       type: UrlType.dev,
     );
@@ -32,9 +39,9 @@ class MapService {
     }
   }
 
-  Future<StoreDetail> getStoreDetail(LatLng latLng, int id) async {
+  Future<StoreDetail> getStoreDetail(int id) async {
     final res = await _api.req(
-        "/stores/$id?lat=${latLng.latitude}&lon=${latLng.longitude}",
+        "/stores/$id?lat=${_positionProvider.myPosition!.latitude}&lon=${_positionProvider.myPosition!.longitude}",
         HttpMethod.get,
         type: UrlType.dev);
     if (res.statusCode != 200) {
