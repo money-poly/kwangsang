@@ -7,6 +7,8 @@ import 'package:immersion_kwangsang/services/map_service.dart';
 
 class MapStoreViewModel with ChangeNotifier {
   late final MapService _service;
+  bool _isDisposed = false;
+
   StoreDetail? _store;
   BitmapDescriptor? _markerOffIcon;
 
@@ -19,10 +21,18 @@ class MapStoreViewModel with ChangeNotifier {
     getStoreDetail(id);
   }
 
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
   void initMarkerIcon() async {
     await getBytesFromAsset("assets/imgs/img_30_marker_off.png", 90)
         .then((value) => _markerOffIcon = BitmapDescriptor.fromBytes(value));
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -37,6 +47,8 @@ class MapStoreViewModel with ChangeNotifier {
 
   Future<void> getStoreDetail(int id) async {
     _store = await _service.getStoreDetail(id);
-    notifyListeners();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 }
