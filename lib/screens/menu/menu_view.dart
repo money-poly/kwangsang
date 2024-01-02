@@ -124,6 +124,10 @@ class MenuView extends StatelessWidget {
                         child: Column(
                           children: [
                             StoreInfoRow(
+                                title: "매장이름",
+                                content: viewModel.menu!.storeName,
+                                hasPaddingBottom: true),
+                            StoreInfoRow(
                                 title: "매장주소",
                                 content: viewModel.menu!.storeAddress,
                                 hasPaddingBottom: true),
