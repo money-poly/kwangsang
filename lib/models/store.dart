@@ -1,5 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/origin.dart';
 import 'package:immersion_kwangsang/models/tag.dart';
 
 class StoreSimple {
@@ -8,53 +9,126 @@ class StoreSimple {
   LatLng latLng;
 
   StoreSimple({required this.id, required this.name, required this.latLng});
+
+  factory StoreSimple.fromJson(Map<String, dynamic> json) => StoreSimple(
+        id: json['id'],
+        name: json['name'],
+        latLng: LatLng(
+          json['lat'],
+          json['lon'],
+        ),
+      );
+}
+
+class StoreHome {
+  String name;
+  String? category;
+  Menu menu;
+
+  StoreHome({required this.name, required this.menu, this.category});
+
+  factory StoreHome.fromJson(Map<String, dynamic> json) => StoreHome(
+        name: json['name'],
+        menu: Menu.fromHomeJson(json['menu']),
+      );
 }
 
 class Store {
   String name;
-  String description;
-  int maxDiscountRate;
-  List<Tag> tags;
-  String imgUrl;
+  MenuSimple maxDiscountMenu;
+  String? description;
+  String? category;
+  List<Tag>? tags;
+  String? imgUrl;
 
   Store(
       {required this.name,
-      required this.description,
-      required this.maxDiscountRate,
-      required this.tags,
-      required this.imgUrl});
+      required this.imgUrl,
+      required this.maxDiscountMenu,
+      this.description,
+      this.tags,
+      this.category});
+
+  factory Store.fromStoreJson(Map<String, dynamic> json) => Store(
+      name: json['name'],
+      maxDiscountMenu: MenuSimple(discountRate: int.parse(json['maxDiscount'])),
+      /* Optional */
+      imgUrl: json['imgUrl'],
+      description: json['description'],
+      category: json['category'],
+      tags: json['tags']);
+
+  factory Store.fromJson(Map<String, dynamic> json) => Store(
+      name: json['storeName'],
+      maxDiscountMenu: MenuSimple.fromJson(json['menu']),
+      /* Optional */
+      imgUrl: json['storePictureUrl'],
+      description: json['description'],
+      category: json['category'],
+      tags: json['tags']);
 }
 
 class StoreDetail {
+  int id;
   String name;
-  String category;
-  String dday;
-  String address;
+  List<String> categories;
+  String address; // address + addressDetail
   LatLng latLng;
+  String pickUpTime;
   String openTime;
   String closeTime;
-  int minPickUpTime;
-  int maxPickUpTime;
-  String phoneNumber;
   List<Menu> menu;
-  String countryOrigin;
   List<String> notes;
-  String imgUrl;
+  List<Origin> origins;
+  /* Optional */
+  String? phone;
+  String? imgUrl;
 
   StoreDetail({
+    required this.id,
     required this.name,
-    required this.category,
-    required this.dday,
+    required this.categories,
     required this.address,
     required this.latLng,
+    required this.pickUpTime,
     required this.openTime,
     required this.closeTime,
-    required this.minPickUpTime,
-    required this.maxPickUpTime,
-    required this.phoneNumber,
     required this.menu,
-    required this.countryOrigin,
     required this.notes,
-    required this.imgUrl,
+    required this.origins,
+    this.phone,
+    this.imgUrl,
   });
+
+  factory StoreDetail.fromJson(Map<dynamic, dynamic> json) {
+    final origins = (json['menus'] as List)
+        .expand((e) => e['countryOfOrigin'] ?? [])
+        .toList()
+        .map((e) => Origin.fromJson(e))
+        .toList();
+
+    return StoreDetail(
+      id: json['id'],
+      name: json['name'],
+      categories: (json['categories'] as List)
+          .map((e) => e['name'].toString())
+          .toList(),
+      address: json['detail']['address'] +
+          " " +
+          (json['detail']['addressDetail'] ?? ""),
+      latLng: LatLng(
+        double.parse(json['detail']['lat']),
+        double.parse(json['detail']['lon']),
+      ),
+      pickUpTime: json['detail']['pickupTime'],
+      openTime: json['detail']['operationTimes']['startedAt'],
+      closeTime: json['detail']['operationTimes']['endedAt'],
+      menu: (json['menus'] as List).map((e) => Menu.fromStoreJson(e)).toList(),
+      notes: (json['caution'] as List).map((e) => e.toString()).toList(),
+      origins: origins,
+      /* Optional */
+      phone: json['phone'],
+      imgUrl: json['storePictureUrl'],
+    );
+  }
 }

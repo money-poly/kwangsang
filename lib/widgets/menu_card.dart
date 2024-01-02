@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/number_formatter.dart';
 // import 'package:immersion_kwangsang/widgets/tag_widget.dart';
 import 'package:intl/intl.dart';
 
@@ -39,17 +40,19 @@ class MenuCard extends StatelessWidget {
                         color: KwangColor.black,
                       ),
                     ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      menu.description!,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: KwangColor.grey600,
+                    if (menu.description != null)
+                      const SizedBox(
+                        height: 6,
                       ),
-                    ),
+                    if (menu.description != null)
+                      Text(
+                        menu.description!,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: KwangColor.grey600,
+                        ),
+                      ),
                     const SizedBox(
                       height: 6,
                     ),
@@ -67,7 +70,7 @@ class MenuCard extends StatelessWidget {
                             ),
                           ),
                         Text(
-                          "${NumberFormat('###,###,###,###').format(menu.price).replaceAll(' ', ',')}원",
+                          "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
@@ -79,20 +82,23 @@ class MenuCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                    border: Border.all(color: KwangColor.grey300, width: 1),
-                    borderRadius: BorderRadius.circular(4)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: ExtendedImage.network(
-                    menu.imgUrl,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              menu.imgUrl != null
+                  ? Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                          border:
+                              Border.all(color: KwangColor.grey300, width: 1),
+                          borderRadius: BorderRadius.circular(4)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: ExtendedImage.network(
+                          menu.imgUrl!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(height: 80, width: 80)
             ],
           ),
         );
@@ -104,41 +110,57 @@ class MenuCard extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  height: 130,
+                  height: 120,
+                  width: (MediaQuery.of(context).size.width - 60) / 2,
                   decoration: BoxDecoration(
-                    border: Border.all(color: KwangColor.grey300, width: 1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: ExtendedImage.network(
-                      menu.imgUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      border: Border.all(color: KwangColor.grey300, width: 1),
+                      borderRadius: BorderRadius.circular(4),
+                      color: KwangColor.grey200),
+                  child: menu.imgUrl == null
+                      ? Center(
+                          child: Text(
+                            "이미지 준비중입니다",
+                            style: KwangStyle.btn3
+                                .copyWith(color: KwangColor.grey500),
+                          ),
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: ExtendedImage.network(
+                            menu.imgUrl!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                 ),
                 Positioned(
                   right: 8,
-                  bottom: 4,
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/ic_24_view.svg",
-                        width: 24,
-                        height: 24,
-                        colorFilter: const ColorFilter.mode(
-                            KwangColor.grey900, BlendMode.srcIn),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        menu.view.toString(),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: KwangColor.grey900,
+                  bottom: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: KwangColor.grey100,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/ic_24_view.svg",
+                          width: 24,
+                          height: 24,
+                          colorFilter: const ColorFilter.mode(
+                              KwangColor.grey900, BlendMode.srcIn),
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 4),
+                        Text(
+                          kmNumberFormatter(menu.view!),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: KwangColor.grey900,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -170,7 +192,7 @@ class MenuCard extends StatelessWidget {
                               KwangStyle.btn2B.copyWith(color: KwangColor.red),
                         ),
                       Text(
-                        "${NumberFormat('###,###,###,###').format(menu.price).replaceAll(' ', ',')}원",
+                        "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
                         style: KwangStyle.btn2B,
                       ),
                     ],

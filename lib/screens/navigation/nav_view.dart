@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/navigation/nav_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/custom_alert_dialog.dart';
 import 'package:provider/provider.dart';
 
 class NavView extends StatelessWidget {
@@ -12,7 +13,7 @@ class NavView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<NavViewModel>(context);
     return Scaffold(
-      body: viewModel.currPages,
+      body: viewModel.pages[viewModel.currIdx],
       bottomNavigationBar: Container(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
@@ -27,7 +28,15 @@ class NavView extends StatelessWidget {
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      viewModel.changeIdx(item.index);
+                      if (item.index == 2) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => const CustomAlertDialog(
+                              type: AlertType.developing),
+                        );
+                      } else {
+                        viewModel.changeIdx(item.index);
+                      }
                     },
                     child: Container(
                       height: 64,

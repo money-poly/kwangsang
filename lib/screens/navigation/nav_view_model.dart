@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:immersion_kwangsang/screens/home/home_view.dart';
+import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/map_main_view.dart';
 import 'package:immersion_kwangsang/screens/map/map_main_view_model.dart';
 import 'package:provider/provider.dart';
@@ -14,17 +16,19 @@ enum NavItems {
 
 class NavViewModel with ChangeNotifier {
   int _currIdx = 0;
-  final List<Widget> _pages = [
-    Placeholder(),
+  List<Widget> get pages => [
     ChangeNotifierProvider(
-      create: (_) => MapMainViewModel(),
+      create: (context) => HomeViewModel(context),
+      child: const HomeView(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => MapMainViewModel(context),
       child: const MapMainView(),
     ),
     Placeholder()
   ];
 
   int get currIdx => _currIdx;
-  Widget get currPages => _pages[currIdx];
 
   bool canChangeIdx(int idx) {
     switch (idx) {

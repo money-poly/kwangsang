@@ -6,6 +6,7 @@ import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/origin_formatter.dart';
 import 'package:immersion_kwangsang/widgets/bullet_string.dart';
 import 'package:immersion_kwangsang/widgets/menu_card.dart';
 import 'package:provider/provider.dart';
@@ -17,44 +18,49 @@ class MapStoreView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MapStoreViewModel>(context);
     if (viewModel.store == null) {
-      return const Center(
-        child: CircularProgressIndicator(
-          color: KwangColor.primary400,
+      return const Scaffold(
+        backgroundColor: KwangColor.grey100,
+        body: Center(
+          child: CircularProgressIndicator(
+            color: KwangColor.primary400,
+          ),
         ),
       );
     } else {
       return Scaffold(
-          backgroundColor: KwangColor.grey100,
-          appBar: AppBar(
-            title: Text(viewModel.store!.name, style: KwangStyle.header2),
-            toolbarHeight: 64,
-            titleSpacing: 8,
-            centerTitle: false,
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: SvgPicture.asset(
-                  "assets/icons/ic_36_back.svg",
-                  width: 36,
-                  height: 36,
-                ),
+        backgroundColor: KwangColor.grey100,
+        appBar: AppBar(
+          title: Text(viewModel.store!.name, style: KwangStyle.header2),
+          toolbarHeight: 64,
+          titleSpacing: 8,
+          centerTitle: false,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: SvgPicture.asset(
+                "assets/icons/ic_36_back.svg",
+                width: 36,
+                height: 36,
               ),
             ),
-            leadingWidth: 56,
-            backgroundColor: Colors.white,
-            elevation: 0,
           ),
-          body: SingleChildScrollView(
-            child: Column(children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 244,
-                child: ExtendedImage.network(viewModel.store!.imgUrl,
-                    fit: BoxFit.cover),
-              ),
+          leadingWidth: 44,
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              if (viewModel.store!.imgUrl != null)
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 244,
+                  child: ExtendedImage.network(viewModel.store!.imgUrl!,
+                      fit: BoxFit.cover),
+                ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -64,22 +70,22 @@ class MapStoreView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
-                          margin: const EdgeInsets.only(bottom: 16),
-                          decoration: BoxDecoration(
-                            color: KwangColor.lightRed,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            viewModel.store!.dday,
-                            style:
-                                KwangStyle.btn3.copyWith(color: KwangColor.red),
-                          ),
-                        ),
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(
+                        //       horizontal: 8, vertical: 2),
+                        //   margin: const EdgeInsets.only(bottom: 16),
+                        //   decoration: BoxDecoration(
+                        //     color: KwangColor.lightRed,
+                        //     borderRadius: BorderRadius.circular(12),
+                        //   ),
+                        //   child: Text(
+                        //     viewModel.store!.dday,
+                        //     style:
+                        //         KwangStyle.btn3.copyWith(color: KwangColor.red),
+                        //   ),
+                        // ),
                         Text(
-                          viewModel.store!.category,
+                          viewModel.store!.categories.join(", "),
                           style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -108,7 +114,7 @@ class MapStoreView extends StatelessWidget {
                     child: Column(
                       children: [
                         StoreInfoRow(
-                            title: "매장",
+                            title: "매장주소",
                             content: viewModel.store!.address,
                             hasPaddingBottom: true),
                         StoreInfoRow(
@@ -118,13 +124,13 @@ class MapStoreView extends StatelessWidget {
                             hasPaddingBottom: true),
                         StoreInfoRow(
                             title: "픽업시간",
-                            content:
-                                "${viewModel.store!.minPickUpTime}~${viewModel.store!.maxPickUpTime}분",
-                            hasPaddingBottom: true),
-                        StoreInfoRow(
-                            title: "전화번호",
-                            content: viewModel.store!.phoneNumber,
-                            hasPaddingBottom: false),
+                            content: "${viewModel.store!.pickUpTime}분",
+                            hasPaddingBottom: viewModel.store!.phone != null),
+                        if (viewModel.store!.phone != null)
+                          StoreInfoRow(
+                              title: "전화번호",
+                              content: viewModel.store!.phone!,
+                              hasPaddingBottom: false),
                       ],
                     ),
                   ),
@@ -147,7 +153,8 @@ class MapStoreView extends StatelessWidget {
                         markers: {
                           Marker(
                               markerId: const MarkerId("store"),
-                              position: viewModel.store!.latLng)
+                              position: viewModel.store!.latLng,
+                              icon: viewModel.markerOffIcon!)
                         }),
                   ),
                   Container(
@@ -190,7 +197,7 @@ class MapStoreView extends StatelessWidget {
                         const SizedBox(width: 14),
                         Expanded(
                           child: Text(
-                            viewModel.store!.countryOrigin,
+                            originFormatter(viewModel.store!.origins),
                             style: KwangStyle.body2M.copyWith(
                                 color: KwangColor.grey800,
                                 overflow: TextOverflow.visible),
@@ -227,8 +234,10 @@ class MapStoreView extends StatelessWidget {
                   ),
                 ],
               )
-            ]),
-          ));
+            ],
+          ),
+        ),
+      );
     }
   }
 }

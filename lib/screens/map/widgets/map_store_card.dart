@@ -1,9 +1,9 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/store_img_card.dart';
 import 'package:immersion_kwangsang/widgets/tag_widget.dart';
 
 class MapStoreCard extends StatelessWidget {
@@ -40,13 +40,14 @@ class MapStoreCard extends StatelessWidget {
                   children: [
                     Wrap(
                       direction: Axis.horizontal,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       spacing: 4,
                       children: [
                         SvgPicture.asset("assets/icons/ic_24_percent.svg",
                             colorFilter: const ColorFilter.mode(
                                 KwangColor.red, BlendMode.srcIn)),
                         Text(
-                          "최대 ${store.maxDiscountRate}%",
+                          "최대 ${store.maxDiscountMenu.discountRate}%",
                           style:
                               KwangStyle.btn2SB.copyWith(color: KwangColor.red),
                         )
@@ -57,37 +58,30 @@ class MapStoreCard extends StatelessWidget {
                       store.name,
                       style: KwangStyle.header2,
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      store.description,
-                      style:
-                          KwangStyle.body1M.copyWith(color: KwangColor.grey700),
-                      overflow: TextOverflow.ellipsis,
-                    )
+                    if (store.description != null) const SizedBox(height: 6),
+                    if (store.description != null)
+                      Text(
+                        store.description!,
+                        style: KwangStyle.body1M
+                            .copyWith(color: KwangColor.grey700),
+                        overflow: TextOverflow.ellipsis,
+                      )
                   ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Wrap(
                     direction: Axis.horizontal,
-                    children: store.tags.map((e) => TagWidget(tag: e)).toList(),
+                    children: (store.tags ?? [])
+                        .map((e) => TagWidget(tag: e))
+                        .toList(),
                   ),
                 )
               ],
             ),
           ),
           const SizedBox(width: 12),
-          SizedBox(
-            width: 96,
-            height: 96,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: ExtendedImage.network(
-                store.imgUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
-          )
+          StoreImgCard(imgUrl: store.imgUrl)
         ],
       ),
     );
