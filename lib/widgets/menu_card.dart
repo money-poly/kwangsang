@@ -82,21 +82,23 @@ class MenuCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              if (menu.imgUrl != null)
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: KwangColor.grey300, width: 1),
-                      borderRadius: BorderRadius.circular(4)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: ExtendedImage.network(
-                      menu.imgUrl!,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+              menu.imgUrl != null
+                  ? Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                          border:
+                              Border.all(color: KwangColor.grey300, width: 1),
+                          borderRadius: BorderRadius.circular(4)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: ExtendedImage.network(
+                          menu.imgUrl!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  : const SizedBox(height: 80, width: 80)
             ],
           ),
         );
