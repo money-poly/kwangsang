@@ -102,7 +102,7 @@ class StoreDetail {
 
   factory StoreDetail.fromJson(Map<dynamic, dynamic> json) {
     final origins = (json['menus'] as List)
-        .expand((e) => e['countryOfOrigin'])
+        .expand((e) => e['countryOfOrigin'] ?? [])
         .toList()
         .map((e) => Origin.fromJson(e))
         .toList(); //.map((e) => e['countryOfOrigin']);
@@ -114,7 +114,8 @@ class StoreDetail {
           .map((e) => e['name'].toString())
           .toList(),
       address:
-          json['detail']['address'] + " " + json['detail']['addressDetail'],
+          json['detail']['address'] + " " + json['detail']['addressDetail'] ??
+              "",
       latLng: LatLng(
         double.parse(json['detail']['lat']),
         double.parse(json['detail']['lon']),

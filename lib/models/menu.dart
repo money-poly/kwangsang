@@ -63,7 +63,7 @@ class Menu {
         regularPrice: json['price'],
         description: json['description'],
         store: json['storeName'],
-        view: json['view'],
+        view: json['viewCount'] ?? json['view'],
         tags: json['tags'],
         origins: json['origins'],
       );
@@ -78,7 +78,7 @@ class Menu {
         regularPrice: json['price'],
         description: json['description'],
         store: json['storeName'],
-        view: json['view'],
+        view: json['viewCount'] ?? json['view'],
         tags: json['tags'],
         origins: json['origins'],
       );
@@ -93,7 +93,7 @@ class Menu {
         regularPrice: json['price'],
         description: json['description'],
         store: json['storeName'],
-        view: json['view'],
+        view: json['viewCount'] ?? json['view'],
         tags: json['tags'],
         origins: json['origins'],
       );
@@ -108,7 +108,7 @@ class Menu {
         regularPrice: json['price'],
         description: json['description'],
         store: json['storeName'],
-        view: json['view'],
+        view: json['viewCount'] ?? json['view'],
         tags: json['tags'],
         origins: json['origins'],
       );
