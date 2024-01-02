@@ -114,7 +114,7 @@ class MapStoreView extends StatelessWidget {
                     child: Column(
                       children: [
                         StoreInfoRow(
-                            title: "매장",
+                            title: "매장주소",
                             content: viewModel.store!.address,
                             hasPaddingBottom: true),
                         StoreInfoRow(
