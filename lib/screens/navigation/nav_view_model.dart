@@ -16,7 +16,7 @@ enum NavItems {
 
 class NavViewModel with ChangeNotifier {
   int _currIdx = 0;
-  final List<Widget> _pages = [
+  List<Widget> get pages => [
     ChangeNotifierProvider(
       create: (context) => HomeViewModel(context),
       child: const HomeView(),
@@ -29,7 +29,6 @@ class NavViewModel with ChangeNotifier {
   ];
 
   int get currIdx => _currIdx;
-  Widget get currPages => _pages[currIdx];
 
   bool canChangeIdx(int idx) {
     switch (idx) {

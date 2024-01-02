@@ -13,7 +13,7 @@ class NavView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<NavViewModel>(context);
     return Scaffold(
-      body: viewModel.currPages,
+      body: viewModel.pages[viewModel.currIdx],
       bottomNavigationBar: Container(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
