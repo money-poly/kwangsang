@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class PositionProvider with ChangeNotifier {
-  // ignore: unused_field
-  late Future _isLoaded;
   Position? _myPosition;
   final Position _kwuPosition = Position(
       longitude: 127.06091701329066,
@@ -21,7 +19,14 @@ class PositionProvider with ChangeNotifier {
   Position? get myPosition => _myPosition;
 
   PositionProvider() {
-    _isLoaded = getLocationPermission();
+    initMyPosition().then((value) {
+      notifyListeners();
+    });
+  }
+
+  Future initMyPosition() async {
+    await getLocationPermission();
+    await updateMyPosition();
   }
 
   Future getLocationPermission() async {
@@ -35,16 +40,7 @@ class PositionProvider with ChangeNotifier {
       permission = await Geolocator.requestPermission();
     }
 
-    if (permission != LocationPermission.always &&
-        permission != LocationPermission.whileInUse) {
-      _isPermissionGranted = false;
-      _myPosition = _kwuPosition;
-    } else {
-      _isPermissionGranted = true;
-      _myPosition = await Geolocator.getCurrentPosition();
-    }
     notifyListeners();
-    return true;
   }
 
   Future<void> updateMyPosition() async {
