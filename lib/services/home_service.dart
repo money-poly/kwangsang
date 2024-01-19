@@ -12,7 +12,11 @@ class HomeService {
   late final PositionProvider _positionProvider;
 
   HomeService(BuildContext context) {
-    _positionProvider = context.read<PositionProvider>();
+    _positionProvider = Provider.of<PositionProvider>(context, listen: false);
+  }
+
+  Future<void> initPosition() async {
+    await _positionProvider.initMyPosition();
   }
 
   Future<Map<String, StoreHome?>> getMaxDiscountStores() async {

@@ -47,18 +47,30 @@ class HomeViewModel with ChangeNotifier {
   Order get order => _order;
 
   Future<void> init(BuildContext context) async {
+    _isLoading = true;
     await getStoreCategories();
-    await getMaxDiscountStores();
-    await getDiscountMenus();
+    await _service.initPosition();
+    await Future.wait(
+      [
+        getMaxDiscountStores(),
+        getDiscountMenus(),
+      ],
+    );
+    _isLoading = false;
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   Future<void> getStoreCategories() async {
     _categories = await _adminService.getStoreCategories();
+    if (!_isDisposed) {
+      notifyListeners();
+    }
   }
 
   Future<void> getMaxDiscountStores() async {
     final stores = await _service.getMaxDiscountStores();
-
     _maxDiscountStores = categories!.map((e) => stores[e.name]).toList();
     _tabs = [
       const Tab(text: "전체"),
@@ -83,7 +95,6 @@ class HomeViewModel with ChangeNotifier {
 
   Future<void> getDiscountMenus() async {
     _discountMenus = await _service.getDiscountMenus(_order);
-    _isLoading = false;
     if (!_isDisposed) {
       notifyListeners();
     }

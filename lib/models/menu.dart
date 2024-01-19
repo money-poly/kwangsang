@@ -169,10 +169,12 @@ class MenuDetail {
             .toList(),
         view: json['viewCount'],
         cautions: json['caution'].cast<String>(),
-        origins: (json['countryOfOrigin'] as List)
-            .map((e) => Origin.fromJson(e))
-            .toList(),
+        origins: json['countryOfOrigin'] == null
+            ? []
+            : (json['countryOfOrigin'] as List)
+                .map((e) => Origin.fromJson(e))
+                .toList(),
         /* Optional */
-        menuPictureUrl: json['menuPictureUrl'],
+        menuPictureUrl: json['menuPictureUrl'] ?? json['mainMenuPictureUrl'],
       );
 }

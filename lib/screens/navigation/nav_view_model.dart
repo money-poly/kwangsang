@@ -16,17 +16,18 @@ enum NavItems {
 
 class NavViewModel with ChangeNotifier {
   int _currIdx = 0;
+
   List<Widget> get pages => [
-    ChangeNotifierProvider(
-      create: (context) => HomeViewModel(context),
-      child: const HomeView(),
-    ),
-    ChangeNotifierProvider(
-      create: (context) => MapMainViewModel(context),
-      child: const MapMainView(),
-    ),
-    Placeholder()
-  ];
+        ChangeNotifierProvider(
+          create: (context) => HomeViewModel(context),
+          child: const HomeView(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MapMainViewModel(context),
+          child: const MapMainView(),
+        ),
+        Placeholder()
+      ];
 
   int get currIdx => _currIdx;
 
