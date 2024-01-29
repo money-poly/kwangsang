@@ -53,7 +53,7 @@ class Store {
       name: json['name'],
       maxDiscountMenu: MenuSimple(discountRate: int.parse(json['maxDiscount'])),
       /* Optional */
-      imgUrl: json['imgUrl'],
+      imgUrl: json['storePictureUrl'],
       description: json['description'],
       category: json['category'],
       tags: json['tags']);
