@@ -2,8 +2,11 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
@@ -17,6 +20,7 @@ class MapStoreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MapStoreViewModel>(context);
+    final positionProvider = Provider.of<PositionProvider>(context);
     if (viewModel.store == null) {
       return const Scaffold(
         backgroundColor: KwangColor.grey100,
@@ -173,8 +177,33 @@ class MapStoreView extends StatelessWidget {
                       direction: Axis.vertical,
                       spacing: 20,
                       children: viewModel.store!.menu
-                          .map((e) =>
-                              MenuCard(menu: e, type: MenuCardType.horizontal))
+                          .map(
+                            (e) => GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ChangeNotifierProvider(
+                                      create: (_) => MenuViewModel(
+                                          context,
+                                          LatLng(
+                                              positionProvider
+                                                  .myPosition!.latitude,
+                                              positionProvider
+                                                  .myPosition!.longitude),
+                                          e.id),
+                                      child: const MenuView(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: MenuCard(
+                                menu: e,
+                                type: MenuCardType.horizontal,
+                              ),
+                            ),
+                          )
                           .toList(),
                     ),
                   ),
