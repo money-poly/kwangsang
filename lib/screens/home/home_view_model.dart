@@ -50,12 +50,8 @@ class HomeViewModel with ChangeNotifier {
     _isLoading = true;
     await getStoreCategories();
     await _service.initPosition();
-    await Future.wait(
-      [
-        getMaxDiscountStores(),
-        getDiscountMenus(),
-      ],
-    );
+    await getMaxDiscountStores();
+    await getDiscountMenus();
     _isLoading = false;
     if (!_isDisposed) {
       notifyListeners();
@@ -94,7 +90,8 @@ class HomeViewModel with ChangeNotifier {
   }
 
   Future<void> getDiscountMenus() async {
-    _discountMenus = await _service.getDiscountMenus(_order);
+    final menuMap = await _service.getDiscountMenus(_order);
+    _discountMenus = _tabs!.map((e) => menuMap[e.text] ?? []).toList();
     if (!_isDisposed) {
       notifyListeners();
     }

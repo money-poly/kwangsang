@@ -39,7 +39,7 @@ class HomeService {
     }
   }
 
-  Future<List<List<Menu>>> getDiscountMenus(Order order) async {
+  Future<Map<String, List<Menu>>> getDiscountMenus(Order order) async {
     final res = await _api.req(
       "/menus/discounted?type=${order.name}&lat=${_positionProvider.myPosition!.latitude}&lon=${_positionProvider.myPosition!.longitude}",
       HttpMethod.get,
@@ -48,11 +48,16 @@ class HomeService {
     if (res.statusCode != 200) {
       throw Exception("Failed to load discount menus");
     } else {
-      final menus = (jsonDecode(res.body)["data"] as List)
-          .map(
-              (e) => (e["menus"] as List).map((e) => Menu.fromJson(e)).toList())
-          .toList();
-      return menus;
+      Map<String, List<Menu>> menuMap = {};
+      for (var e in (jsonDecode(res.body)["data"] as List)) {
+        String category = e["category"];
+        List<Menu> menus = (e["menus"] as List)
+            .map((e) => Menu.fromJson(e))
+            .toList()
+            .cast<Menu>();
+        menuMap[category] = menus;
+      }
+      return menuMap;
     }
   }
 }
