@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/widgets/keyword_rank_row.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
@@ -11,6 +14,7 @@ class SearchBeforeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<SearchMainViewModel>(context);
     return Column(
       children: [
@@ -23,7 +27,14 @@ class SearchBeforeTab extends StatelessWidget {
           child: TextField(
             controller: viewModel.searchController,
             onSubmitted: (value) {
-              viewModel.search(value);
+              if (value.length < 2) {
+                showToast("2글자 이상으로 입력해주세요");
+              } else {
+                viewModel.search(
+                    value,
+                    LatLng(positionProvider.myPosition!.latitude,
+                        positionProvider.myPosition!.longitude));
+              }
             },
             style: KwangStyle.body1M,
             decoration: InputDecoration(
@@ -116,7 +127,13 @@ class SearchBeforeTab extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      viewModel.search(e);
+                                      viewModel.search(
+                                          e,
+                                          LatLng(
+                                              positionProvider
+                                                  .myPosition!.latitude,
+                                              positionProvider
+                                                  .myPosition!.longitude));
                                     },
                                     child: Text(
                                       e,
@@ -179,7 +196,10 @@ class SearchBeforeTab extends StatelessWidget {
                       .where((e) => viewModel.keywords.indexOf(e) < 5)
                       .map((e) => GestureDetector(
                             onTap: () {
-                              viewModel.search(e);
+                              viewModel.search(
+                                  e,
+                                  LatLng(positionProvider.myPosition!.latitude,
+                                      positionProvider.myPosition!.longitude));
                             },
                             child: KeywordRankRow(
                                 rank: viewModel.keywords.indexOf(e) + 1,
@@ -199,7 +219,12 @@ class SearchBeforeTab extends StatelessWidget {
                         .where((e) => viewModel.keywords.indexOf(e) >= 5)
                         .map((e) => GestureDetector(
                               onTap: () {
-                                viewModel.search(e);
+                                viewModel.search(
+                                    e,
+                                    LatLng(
+                                        positionProvider.myPosition!.latitude,
+                                        positionProvider
+                                            .myPosition!.longitude));
                               },
                               child: KeywordRankRow(
                                   rank: viewModel.keywords.indexOf(e) + 1,

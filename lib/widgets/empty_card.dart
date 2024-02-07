@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum EmptyCardType {
   home("할인중인 메뉴가 없어요!", "다른 카테고리를 선택해보세요"),
@@ -49,7 +51,9 @@ class EmptyCard extends StatelessWidget {
         if (emptyType == EmptyCardType.search)
           GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () {}, // 수정 - 구글 폼 연결
+            onTap: () async {
+              await launchUrl(Uri.parse("${dotenv.env['KAKAO_URL']}"));
+            },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               decoration: BoxDecoration(

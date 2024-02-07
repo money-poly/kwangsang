@@ -46,6 +46,7 @@ class MapStoreViewModel with ChangeNotifier {
   }
 
   Future<void> getStoreDetail(int id) async {
+    _store = null;
     _store = await _service.getStoreDetail(id);
     if (!_isDisposed) {
       notifyListeners();

@@ -27,7 +27,7 @@ class MenuView extends StatelessWidget {
       backgroundColor: KwangColor.grey100,
       appBar: AppBar(
         title: Text("상품상세", style: KwangStyle.header2),
-        toolbarHeight: 64,
+        toolbarHeight: 52,
         titleSpacing: 8,
         centerTitle: false,
         leading: Padding(
