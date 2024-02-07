@@ -74,7 +74,6 @@ class MapMainViewModel with ChangeNotifier {
             position: e.latLng,
             onTap: () async {
               selectedMarkerId = e.id;
-              print(e.id);
               await updateMarker(e.id);
             },
             icon: selectedMarkerId == e.id ? _markerOnIcon : _markerOffIcon))

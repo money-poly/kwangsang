@@ -24,7 +24,7 @@ class SearchService {
           "range": "100000000" // 수정 - range 협의
         }),
         type: UrlType.dev); // 수정 - size 삭제
-    print(res.body); // 수정 - 삭제
+    // print(res.body); // 수정 - 삭제
     if (res.statusCode == 201) {
       return (jsonDecode(res.body)["data"] as List)
           .map((e) => Menu.fromJson(e))
