@@ -36,6 +36,7 @@ class MenuViewModel with ChangeNotifier {
   }
 
   Future<void> getDetailMenu(int id, LatLng latLng) async {
+    _menu = null;
     _menu = await _service.getDetailMenu(id, latLng);
     notifyListeners();
   }
