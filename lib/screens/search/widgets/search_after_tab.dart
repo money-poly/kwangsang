@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
@@ -26,7 +27,14 @@ class SearchAfterTab extends StatelessWidget {
                 child: TextField(
                   controller: viewModel.searchController,
                   onSubmitted: (value) {
-                    viewModel.search(value);
+                    if (value.length < 2) {
+                      showToast("2글자 이상으로 입력해주세요");
+                    } else {
+                      viewModel.search(
+                          value,
+                          LatLng(positionProvider.myPosition!.latitude,
+                              positionProvider.myPosition!.longitude));
+                    }
                   },
                   style: KwangStyle.body1M,
                   decoration: InputDecoration(
