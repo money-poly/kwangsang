@@ -14,7 +14,7 @@ class MenuViewModel with ChangeNotifier {
   BitmapDescriptor? get markerOffIcon => _markerOffIcon;
 
   MenuViewModel(BuildContext context, LatLng latLng, int id) {
-    _service = DetailService(context);
+    _service = DetailService();
     initMarkerIcon();
     getDetailMenu(id, latLng);
   }
@@ -35,7 +35,7 @@ class MenuViewModel with ChangeNotifier {
         .asUint8List();
   }
 
-  Future<void> getDetailMenu(int id, LatLng latLng) async {
+  void getDetailMenu(int id, LatLng latLng) async {
     _menu = null;
     _menu = await _service.getDetailMenu(id, latLng);
     notifyListeners();
