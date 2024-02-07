@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
+import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
+import 'package:immersion_kwangsang/screens/map/map_main_view_model.dart';
 import 'package:immersion_kwangsang/screens/navigation/nav_view.dart';
 import 'package:immersion_kwangsang/screens/navigation/nav_view_model.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding.dart';
@@ -51,7 +53,14 @@ class MyApp extends StatelessWidget {
           title: 'kwangsaeng',
           theme: KwangTheme.kwangTheme,
           home: isVisited
-              ? const NavView()
+              ? MultiProvider(providers: [
+                  ChangeNotifierProvider(create: (_) => NavViewModel()),
+                  ChangeNotifierProvider(create: (_) => PositionProvider()),
+                  ChangeNotifierProvider(
+                      create: (context) => HomeViewModel(context)),
+                  ChangeNotifierProvider(
+                      create: (context) => MapMainViewModel(context)),
+                ], child: const NavView())
               : ChangeNotifierProvider(
                   create: (context) => OnBoardingViewModel(context),
                   child: const OnBoarding(),

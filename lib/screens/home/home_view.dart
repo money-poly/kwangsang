@@ -21,7 +21,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final positionProvider = Provider.of<PositionProvider>(context);
-    late final viewModel = Provider.of<HomeViewModel>(context);
+    final viewModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
         appBar: AppBar(
           title: Image.asset(

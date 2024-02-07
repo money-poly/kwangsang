@@ -9,7 +9,7 @@ class MapMainViewModel with ChangeNotifier {
   late final MapService _service;
   bool _isDisposed = false;
 
-  late final GoogleMapController _mapController;
+  GoogleMapController? _mapController;
   BitmapDescriptor _markerOffIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor _markerOnIcon = BitmapDescriptor.defaultMarker;
   int? selectedMarkerId;
@@ -31,6 +31,9 @@ class MapMainViewModel with ChangeNotifier {
   }
 
   void initController(controller) {
+    if (_mapController != null) {
+      return;
+    }
     _mapController = controller;
     getMarkers();
     if (!_isDisposed) {
@@ -39,7 +42,7 @@ class MapMainViewModel with ChangeNotifier {
   }
 
   void moveCameraInitPosition(LatLng latLng) {
-    _mapController.animateCamera(CameraUpdate.newLatLng(latLng));
+    _mapController!.animateCamera(CameraUpdate.newLatLng(latLng));
   }
 
   void initMarkerIcon() async {
