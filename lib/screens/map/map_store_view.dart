@@ -35,7 +35,7 @@ class MapStoreView extends StatelessWidget {
         backgroundColor: KwangColor.grey100,
         appBar: AppBar(
           title: Text(viewModel.store!.name, style: KwangStyle.header2),
-          toolbarHeight: 64,
+          toolbarHeight: 52,
           titleSpacing: 8,
           centerTitle: false,
           leading: Padding(
@@ -170,72 +170,81 @@ class MapStoreView extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 20),
                       child: Text("메뉴", style: KwangStyle.header2)),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 20),
-                    child: Wrap(
-                      direction: Axis.vertical,
-                      spacing: 20,
-                      children: viewModel.store!.menu
-                          .map(
-                            (e) => GestureDetector(
-                              behavior: HitTestBehavior.translucent,
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ChangeNotifierProvider(
-                                      create: (_) => MenuViewModel(
-                                          context,
-                                          LatLng(
-                                              positionProvider
-                                                  .myPosition!.latitude,
-                                              positionProvider
-                                                  .myPosition!.longitude),
-                                          e.id),
-                                      child: const MenuView(),
+                  if (viewModel.store!.menu.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                      child: Text("아직 등록된 메뉴가 없어요!",
+                          style: KwangStyle.body1M
+                              .copyWith(color: KwangColor.grey700)),
+                    ),
+                  if (viewModel.store!.menu.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 20),
+                      child: Wrap(
+                        direction: Axis.vertical,
+                        spacing: 20,
+                        children: viewModel.store!.menu
+                            .map(
+                              (e) => GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ChangeNotifierProvider(
+                                        create: (_) => MenuViewModel(
+                                            context,
+                                            LatLng(
+                                                positionProvider
+                                                    .myPosition!.latitude,
+                                                positionProvider
+                                                    .myPosition!.longitude),
+                                            e.id),
+                                        child: const MenuView(),
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              child: MenuCard(
-                                menu: e,
-                                type: MenuCardType.horizontal,
+                                  );
+                                },
+                                child: MenuCard(
+                                  menu: e,
+                                  type: MenuCardType.horizontal,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
+                            )
+                            .toList(),
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 20),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: KwangColor.grey300),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "원산지 표기",
-                          style: KwangStyle.body2M
-                              .copyWith(color: KwangColor.grey600),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Text(
-                            originFormatter(viewModel.store!.origins),
-                            style: KwangStyle.body2M.copyWith(
-                                color: KwangColor.grey800,
-                                overflow: TextOverflow.visible),
-                            softWrap: true,
+                  if (viewModel.store!.origins.isNotEmpty)
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 20),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: KwangColor.grey300),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "원산지 표기",
+                            style: KwangStyle.body2M
+                                .copyWith(color: KwangColor.grey600),
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Text(
+                              originFormatter(viewModel.store!.origins),
+                              style: KwangStyle.body2M.copyWith(
+                                  color: KwangColor.grey800,
+                                  overflow: TextOverflow.visible),
+                              softWrap: true,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 4),
                     height: 4,
