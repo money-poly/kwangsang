@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -13,9 +17,13 @@ class SearchAfterTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<SearchMainViewModel>(context);
     return viewModel.menus == null
-        ? const Center(child: CircularProgressIndicator())
+        ? const Center(
+            child: CircularProgressIndicator(
+            color: KwangColor.primary400,
+          ))
         : Column(
             children: [
               Container(
@@ -117,8 +125,27 @@ class SearchAfterTab extends StatelessWidget {
                                     2 /
                                     196),
                         children: viewModel.menus!
-                            .map((e) =>
-                                MenuCard(menu: e, type: MenuCardType.vertical))
+                            .map((e) => GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ChangeNotifierProvider(
+                                        create: (_) => MenuViewModel(
+                                            context,
+                                            LatLng(
+                                                positionProvider
+                                                    .myPosition!.latitude,
+                                                positionProvider
+                                                    .myPosition!.longitude),
+                                            e.id),
+                                        child: const MenuView(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: MenuCard(
+                                    menu: e, type: MenuCardType.vertical)))
                             .toList(),
                       ),
                     )
