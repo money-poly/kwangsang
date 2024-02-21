@@ -22,7 +22,6 @@ class API {
     final header = {
       if (method != HttpMethod.get) 'Content-Type': 'application/json'
     };
-
     switch (method) {
       case HttpMethod.get:
         return await http.get(reqUrl, headers: header);

@@ -63,8 +63,11 @@ class MapMainView extends StatelessWidget {
                       target: LatLng(positionProvider.myPosition!.latitude,
                           positionProvider.myPosition!.longitude),
                       zoom: 16),
-                  onMapCreated: (controller) =>
-                      viewModel.initController(controller),
+                  onMapCreated: (controller) => viewModel.initController(
+                    controller,
+                    LatLng(positionProvider.myPosition!.latitude,
+                        positionProvider.myPosition!.longitude),
+                  ),
                   myLocationButtonEnabled: false,
                   zoomControlsEnabled: false,
                   markers: viewModel.markers.toSet(),
@@ -115,7 +118,12 @@ class MapMainView extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) => ChangeNotifierProvider(
                                     create: (context) => MapStoreViewModel(
-                                        context, viewModel.selectedMarkerId!),
+                                        LatLng(
+                                            positionProvider
+                                                .myPosition!.latitude,
+                                            positionProvider
+                                                .myPosition!.longitude),
+                                        viewModel.selectedMarkerId!),
                                     builder: (context, child) =>
                                         const MapStoreView(),
                                   ),
