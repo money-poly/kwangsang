@@ -17,7 +17,7 @@ class SearchService {
   }
 
   Future<List<Menu>> search(String keyword, LatLng latlng) async {
-    final res = await _api.req("/search?q=$keyword&size=100", HttpMethod.post,
+    final res = await _api.req("/search?q=$keyword", HttpMethod.post,
         body: jsonEncode({
           "lat": latlng.latitude,
           "lon": latlng.longitude,
