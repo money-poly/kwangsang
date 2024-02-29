@@ -119,7 +119,7 @@ class StoreDetail {
         double.parse(json['detail']['lat']),
         double.parse(json['detail']['lon']),
       ),
-      pickUpTime: json['detail']['pickupTime'],
+      pickUpTime: json['detail']['pickUpTime'],
       openTime: json['detail']['operationTimes']['startedAt'],
       closeTime: json['detail']['operationTimes']['endedAt'],
       menu: (json['menus'] as List).map((e) => Menu.fromStoreJson(e)).toList(),
