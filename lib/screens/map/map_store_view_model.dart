@@ -6,7 +6,7 @@ import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/services/map_service.dart';
 
 class MapStoreViewModel with ChangeNotifier {
-  late final MapService _service;
+  final MapService _service = MapService();
   bool _isDisposed = false;
 
   StoreDetail? _store;
@@ -15,10 +15,9 @@ class MapStoreViewModel with ChangeNotifier {
   StoreDetail? get store => _store;
   BitmapDescriptor? get markerOffIcon => _markerOffIcon;
 
-  MapStoreViewModel(BuildContext context, int id) {
-    _service = MapService(context);
+  MapStoreViewModel(LatLng position, int id) {
     initMarkerIcon();
-    getStoreDetail(id);
+    getStoreDetail(id, position);
   }
 
   @override
@@ -45,9 +44,9 @@ class MapStoreViewModel with ChangeNotifier {
         .asUint8List();
   }
 
-  Future<void> getStoreDetail(int id) async {
+  Future<void> getStoreDetail(int id, LatLng position) async {
     _store = null;
-    _store = await _service.getStoreDetail(id);
+    _store = await _service.getStoreDetail(id, position);
     if (!_isDisposed) {
       notifyListeners();
     }

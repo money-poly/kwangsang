@@ -6,7 +6,7 @@ import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/services/map_service.dart';
 
 class MapMainViewModel with ChangeNotifier {
-  late final MapService _service;
+  final MapService _service = MapService();
   bool _isDisposed = false;
 
   GoogleMapController? _mapController;
@@ -20,7 +20,6 @@ class MapMainViewModel with ChangeNotifier {
   Store? get store => _store;
 
   MapMainViewModel(BuildContext context) {
-    _service = MapService(context);
     initMarkerIcon();
   }
 
@@ -30,12 +29,12 @@ class MapMainViewModel with ChangeNotifier {
     super.dispose();
   }
 
-  void initController(controller) {
+  void initController(GoogleMapController controller, LatLng position) {
     if (_mapController != null) {
       return;
     }
     _mapController = controller;
-    getMarkers();
+    getMarkers(position);
     if (!_isDisposed) {
       notifyListeners();
     }
@@ -65,8 +64,8 @@ class MapMainViewModel with ChangeNotifier {
         .asUint8List();
   }
 
-  Future<void> getMarkers() async {
-    final List<StoreSimple> stores = await _service.getStores();
+  Future<void> getMarkers(LatLng position) async {
+    final List<StoreSimple> stores = await _service.getStores(position);
 
     _markers = stores
         .map((e) => Marker(
