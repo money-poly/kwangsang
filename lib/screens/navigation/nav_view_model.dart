@@ -4,8 +4,8 @@ import 'package:immersion_kwangsang/screens/map/map_main_view.dart';
 
 enum NavItems {
   home("홈"),
-  map("내 근처"),
-  user("MY");
+  map("내 근처");
+  // user("MY");
 
   const NavItems(this.label);
   final String label;
