@@ -6,6 +6,7 @@ import 'package:immersion_kwangsang/services/api.dart';
 class MapService {
   final API _api = API();
 
+  // [TODO] range 백엔드와 협의 후 수정. 현재 더미데이터를 사용하는 동안, 전체 가게를 볼 수 있도록 임의의 큰 값을 사용함
   Future<List<StoreSimple>> getStores(LatLng position) async {
     final res = await _api.req(
       "/stores/map/location?lat=${position.latitude}&lon=${position.longitude}&range=1000000000",
