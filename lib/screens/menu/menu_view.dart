@@ -131,20 +131,20 @@ class MenuView extends StatelessWidget {
                           children: [
                             StoreInfoRow(
                                 title: "매장이름",
-                                content: viewModel.menu!.storeName,
+                                content: viewModel.menu!.store.name,
                                 hasPaddingBottom: true),
                             StoreInfoRow(
                                 title: "매장주소",
-                                content: viewModel.menu!.storeAddress,
+                                content: viewModel.menu!.store.address,
                                 hasPaddingBottom: true,
                                 selectable: true),
                             StoreInfoRow(
                                 title: "픽업시간",
-                                content: "${viewModel.menu!.pickUpTime}분",
+                                content: "${viewModel.menu!.store.pickUpTime}분",
                                 hasPaddingBottom: true),
                             StoreInfoRow(
                                 title: "전화번호",
-                                content: viewModel.menu!.phone,
+                                content: viewModel.menu!.store.phone,
                                 hasPaddingBottom: false),
                           ],
                         ),
@@ -159,7 +159,7 @@ class MenuView extends StatelessWidget {
                         height: 100,
                         child: GoogleMap(
                             initialCameraPosition: CameraPosition(
-                              target: viewModel.menu!.location,
+                              target: viewModel.menu!.store.latLng,
                               zoom: 16,
                             ),
                             myLocationButtonEnabled: false,
@@ -172,7 +172,7 @@ class MenuView extends StatelessWidget {
                             markers: {
                               Marker(
                                 markerId: const MarkerId("store"),
-                                position: viewModel.menu!.location,
+                                position: viewModel.menu!.store.latLng,
                                 icon: viewModel.markerOffIcon!,
                               )
                             }),

@@ -130,12 +130,11 @@ class MapStoreView extends StatelessWidget {
                         StoreInfoRow(
                             title: "픽업시간",
                             content: "${viewModel.store!.pickUpTime}분",
-                            hasPaddingBottom: viewModel.store!.phone != null),
-                        if (viewModel.store!.phone != null)
-                          StoreInfoRow(
-                              title: "전화번호",
-                              content: viewModel.store!.phone!,
-                              hasPaddingBottom: false),
+                            hasPaddingBottom: true),
+                        StoreInfoRow(
+                            title: "전화번호",
+                            content: viewModel.store!.phone,
+                            hasPaddingBottom: false),
                       ],
                     ),
                   ),
