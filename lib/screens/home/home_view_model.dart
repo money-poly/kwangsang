@@ -58,6 +58,12 @@ class HomeViewModel with ChangeNotifier {
     }
   }
 
+  Future<void> refresh() async {
+    await getMaxDiscountStores();
+    await getDiscountMenus();
+    notifyListeners();
+  }
+
   Future<void> getStoreCategories() async {
     _categories = await _adminService.getStoreCategories();
     if (!_isDisposed) {
