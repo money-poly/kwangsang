@@ -89,9 +89,10 @@ class OnBoarding extends StatelessWidget {
             onTap: () async {
               await SharedPreferences.getInstance().then((value) {
                 value.setBool("visited", true);
-                Navigator.of(context).push(
+                Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                       builder: (context) => const MyApp(isVisited: true)),
+                  (route) => false,
                 );
               });
             },
@@ -117,10 +118,10 @@ class OnBoarding extends StatelessWidget {
               onTap: () async {
                 await SharedPreferences.getInstance().then((value) {
                   value.setBool("visited", true);
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const MyApp(isVisited: true)),
-                  );
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const MyApp(isVisited: true)),
+                      (route) => false);
                 });
               },
               child: Container(
