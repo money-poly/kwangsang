@@ -110,8 +110,9 @@ class StoreDetail {
     return StoreDetail(
       id: json['id'],
       name: json['name'],
-      categories:
-          (json['categories'] as List).map((e) => e.toString()).toList(),
+      categories: (json['categories'] as List)
+          .map((e) => e['name'].toString())
+          .toList(),
       address: json['detail']['address'] +
           " " +
           (json['detail']['addressDetail'] ?? ""),

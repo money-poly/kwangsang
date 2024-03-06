@@ -107,196 +107,208 @@ class HomeView extends StatelessWidget {
                             //         emptyType: EmptyCardType.home)
                             //   ],
                             // )
-                            : SingleChildScrollView(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 64),
-                                  child: Column(
-                                    children: [
-                                      // Container(
-                                      //   alignment: Alignment.center,
-                                      //   margin: const EdgeInsets.symmetric(
-                                      //       vertical: 16),
-                                      //   height: 100,
-                                      //   width:
-                                      //       MediaQuery.of(context).size.width,
-                                      //   color: Colors.orange,
-                                      //   child: Text("배너"),
-                                      // ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 8),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "할인율 가장 높아요",
-                                              style: KwangStyle.header1,
-                                            ),
-                                            const SizedBox(width: 8),
-                                            SvgPicture.asset(
-                                              "assets/icons/ic_24_check_fill.svg",
-                                              colorFilter:
-                                                  const ColorFilter.mode(
-                                                      KwangColor.primary300,
-                                                      BlendMode.srcIn),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      GestureDetector(
-                                        behavior: HitTestBehavior.translucent,
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ChangeNotifierProvider(
-                                                create: (_) => MenuViewModel(
-                                                    context,
-                                                    LatLng(
-                                                        positionProvider
-                                                            .myPosition!
-                                                            .latitude,
-                                                        positionProvider
-                                                            .myPosition!
-                                                            .longitude),
-                                                    viewModel
-                                                        .maxDiscountStores[
-                                                            index]!
-                                                        .menu
-                                                        .id),
-                                                child: const MenuView(),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        child: Padding(
+                            : RefreshIndicator(
+                                color: KwangColor.primary400,
+                                backgroundColor: KwangColor.grey100,
+                                onRefresh: () async {
+                                  await viewModel.refresh();
+                                },
+                                child: SingleChildScrollView(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 64),
+                                    child: Column(
+                                      children: [
+                                        // Container(
+                                        //   alignment: Alignment.center,
+                                        //   margin: const EdgeInsets.symmetric(
+                                        //       vertical: 16),
+                                        //   height: 100,
+                                        //   width:
+                                        //       MediaQuery.of(context).size.width,
+                                        //   color: Colors.orange,
+                                        //   child: Text("배너"),
+                                        // ),
+                                        Padding(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          child: StoreCard(
-                                            store: viewModel
-                                                .maxDiscountStores[index]!,
+                                              horizontal: 20, vertical: 8),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "할인율 가장 높아요",
+                                                style: KwangStyle.header1,
+                                              ),
+                                              const SizedBox(width: 8),
+                                              SvgPicture.asset(
+                                                "assets/icons/ic_24_check_fill.svg",
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                        KwangColor.primary300,
+                                                        BlendMode.srcIn),
+                                              )
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 8),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "지금 먹으면 할인",
-                                                  style: KwangStyle.header1,
+                                        const SizedBox(height: 8),
+                                        GestureDetector(
+                                          behavior: HitTestBehavior.translucent,
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChangeNotifierProvider(
+                                                  create: (_) => MenuViewModel(
+                                                      context,
+                                                      LatLng(
+                                                          positionProvider
+                                                              .myPosition!
+                                                              .latitude,
+                                                          positionProvider
+                                                              .myPosition!
+                                                              .longitude),
+                                                      viewModel
+                                                          .maxDiscountStores[
+                                                              index]!
+                                                          .menu
+                                                          .id),
+                                                  child: const MenuView(),
                                                 ),
-                                                const SizedBox(width: 8),
-                                                SvgPicture.asset(
-                                                  "assets/icons/ic_24_percent.svg",
-                                                  colorFilter:
-                                                      const ColorFilter.mode(
-                                                          KwangColor.red,
-                                                          BlendMode.srcIn),
-                                                )
-                                              ],
+                                              ),
+                                            );
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            child: StoreCard(
+                                              store: viewModel
+                                                  .maxDiscountStores[index]!,
                                             ),
-                                            GestureDetector(
-                                              behavior:
-                                                  HitTestBehavior.translucent,
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      HomeBottomSheet(
-                                                          viewModel: viewModel),
-                                                );
-                                              },
-                                              child: Row(
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 8),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
-                                                  Text(viewModel.order.str,
-                                                      style: KwangStyle.body2M
-                                                          .copyWith(
-                                                              color: KwangColor
-                                                                  .grey700)),
-                                                  const SizedBox(
-                                                    width: 4,
+                                                  Text(
+                                                    "지금 먹으면 할인",
+                                                    style: KwangStyle.header1,
                                                   ),
+                                                  const SizedBox(width: 8),
                                                   SvgPicture.asset(
-                                                    "assets/icons/ic_18_order.svg",
-                                                    width: 18,
-                                                    height: 18,
+                                                    "assets/icons/ic_24_percent.svg",
                                                     colorFilter:
                                                         const ColorFilter.mode(
-                                                            KwangColor.grey700,
+                                                            KwangColor.red,
                                                             BlendMode.srcIn),
-                                                  ),
+                                                  )
                                                 ],
                                               ),
-                                            ),
-                                          ],
+                                              GestureDetector(
+                                                behavior:
+                                                    HitTestBehavior.translucent,
+                                                onTap: () {
+                                                  showModalBottomSheet(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        HomeBottomSheet(
+                                                            viewModel:
+                                                                viewModel),
+                                                  );
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    Text(viewModel.order.str,
+                                                        style: KwangStyle.body2M
+                                                            .copyWith(
+                                                                color: KwangColor
+                                                                    .grey700)),
+                                                    const SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      "assets/icons/ic_18_order.svg",
+                                                      width: 18,
+                                                      height: 18,
+                                                      colorFilter:
+                                                          const ColorFilter
+                                                                  .mode(
+                                                              KwangColor
+                                                                  .grey700,
+                                                              BlendMode.srcIn),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      GridView(
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        shrinkWrap: true,
-                                        padding: const EdgeInsets.fromLTRB(
-                                            20, 12, 20, 20),
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                mainAxisSpacing: 28,
-                                                crossAxisSpacing: 20,
-                                                childAspectRatio:
-                                                    (MediaQuery.of(context)
-                                                                .size
-                                                                .width -
-                                                            60) /
-                                                        2 /
-                                                        196),
-                                        children: viewModel.discountMenus[index]
-                                            .map((e) => GestureDetector(
-                                                  behavior: HitTestBehavior
-                                                      .translucent,
-                                                  onTap: () {
-                                                    Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ChangeNotifierProvider(
-                                                          create: (_) => MenuViewModel(
-                                                              context,
-                                                              LatLng(
-                                                                  positionProvider
-                                                                      .myPosition!
-                                                                      .latitude,
-                                                                  positionProvider
-                                                                      .myPosition!
-                                                                      .longitude),
-                                                              e.id),
-                                                          child:
-                                                              const MenuView(),
+                                        GridView(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 12, 20, 20),
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  mainAxisSpacing: 28,
+                                                  crossAxisSpacing: 20,
+                                                  childAspectRatio:
+                                                      (MediaQuery.of(context)
+                                                                  .size
+                                                                  .width -
+                                                              60) /
+                                                          2 /
+                                                          196),
+                                          children: viewModel
+                                              .discountMenus[index]
+                                              .map((e) => GestureDetector(
+                                                    behavior: HitTestBehavior
+                                                        .translucent,
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ChangeNotifierProvider(
+                                                            create: (_) => MenuViewModel(
+                                                                context,
+                                                                LatLng(
+                                                                    positionProvider
+                                                                        .myPosition!
+                                                                        .latitude,
+                                                                    positionProvider
+                                                                        .myPosition!
+                                                                        .longitude),
+                                                                e.id),
+                                                            child:
+                                                                const MenuView(),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: MenuCard(
-                                                      menu: e,
-                                                      type: MenuCardType
-                                                          .vertical),
-                                                ))
-                                            .toList(),
-                                      ),
-                                    ],
+                                                      );
+                                                    },
+                                                    child: MenuCard(
+                                                        menu: e,
+                                                        type: MenuCardType
+                                                            .vertical),
+                                                  ))
+                                              .toList(),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
