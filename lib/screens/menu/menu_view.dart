@@ -132,7 +132,8 @@ class MenuView extends StatelessWidget {
                             StoreInfoRow(
                                 title: "매장주소",
                                 content: viewModel.menu!.storeAddress,
-                                hasPaddingBottom: true),
+                                hasPaddingBottom: true,
+                                selectable: true),
                             StoreInfoRow(
                                 title: "픽업시간",
                                 content: "${viewModel.menu!.pickUpTime}분",

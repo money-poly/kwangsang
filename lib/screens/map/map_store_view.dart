@@ -120,7 +120,8 @@ class MapStoreView extends StatelessWidget {
                         StoreInfoRow(
                             title: "매장주소",
                             content: viewModel.store!.address,
-                            hasPaddingBottom: true),
+                            hasPaddingBottom: true,
+                            selectable: true),
                         StoreInfoRow(
                             title: "영업시간",
                             content:
