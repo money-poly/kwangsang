@@ -94,8 +94,12 @@ class MenuView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  "가격",
-                                  style: KwangStyle.header1,
+                                  NumberFormat('###,###,###,###')
+                                      .format(viewModel.menu!.regularPrice)
+                                      .replaceAll(' ', ','),
+                                  style: KwangStyle.header1.copyWith(
+                                      color: KwangColor.grey600,
+                                      decoration: TextDecoration.lineThrough),
                                 ),
                                 Row(
                                   children: [
