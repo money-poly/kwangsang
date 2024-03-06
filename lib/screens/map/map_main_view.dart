@@ -68,8 +68,13 @@ class MapMainView extends StatelessWidget {
                     LatLng(positionProvider.myPosition!.latitude,
                         positionProvider.myPosition!.longitude),
                   ),
+                  myLocationEnabled: true,
+                  compassEnabled: true,
+                  mapToolbarEnabled: true,
+                  rotateGesturesEnabled: true,
                   myLocationButtonEnabled: false,
                   zoomControlsEnabled: false,
+                  tiltGesturesEnabled: false,
                   markers: viewModel.markers.toSet(),
                 ),
                 Positioned(
