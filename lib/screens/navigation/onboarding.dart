@@ -85,26 +85,26 @@ class OnBoarding extends StatelessWidget {
       bottomSheet: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          GestureDetector(
-            onTap: () async {
-              await SharedPreferences.getInstance().then((value) {
-                value.setBool("visited", true);
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                      builder: (context) => const MyApp(isVisited: true)),
-                  (route) => false,
-                );
-              });
-            },
-            child: Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(bottom: 4),
-              height: 44,
-              width: MediaQuery.of(context).size.width,
-              child: Text("건너뛰기",
-                  style: KwangStyle.btn1SB.copyWith(color: KwangColor.grey600)),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () async {
+          //     await SharedPreferences.getInstance().then((value) {
+          //       value.setBool("visited", true);
+          //       Navigator.of(context).pushAndRemoveUntil(
+          //         MaterialPageRoute(
+          //             builder: (context) => const MyApp(isVisited: true)),
+          //         (route) => false,
+          //       );
+          //     });
+          //   },
+          //   child: Container(
+          //     alignment: Alignment.center,
+          //     margin: const EdgeInsets.only(bottom: 4),
+          //     height: 44,
+          //     width: MediaQuery.of(context).size.width,
+          //     child: Text("건너뛰기",
+          //         style: KwangStyle.btn1SB.copyWith(color: KwangColor.grey600)),
+          //   ),
+          // ),
           Container(
             padding: EdgeInsets.fromLTRB(
                 20, 11, 20, 11 + MediaQuery.of(context).viewPadding.bottom),

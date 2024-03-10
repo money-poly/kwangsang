@@ -1,5 +1,5 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/origin.dart';
+import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/models/tag.dart';
 
 class MenuSimple {
@@ -120,12 +120,7 @@ class MenuDetail {
   int discountRate;
   int discountPrice;
   int regularPrice;
-  int storeId;
-  String storeName;
-  String storeAddress;
-  String pickUpTime;
-  String phone;
-  LatLng location;
+  StoreMenu store;
   List<Menu> anotherMenus;
   int view;
   List<String> cautions;
@@ -139,12 +134,7 @@ class MenuDetail {
     required this.discountRate,
     required this.discountPrice,
     required this.regularPrice,
-    required this.storeId,
-    required this.storeName,
-    required this.storeAddress,
-    required this.pickUpTime,
-    required this.phone,
-    required this.location,
+    required this.store,
     required this.anotherMenus,
     required this.view,
     required this.origins,
@@ -152,18 +142,13 @@ class MenuDetail {
     this.menuPictureUrl,
   });
 
-  factory MenuDetail.fromJson(Map<String, dynamic> json) => MenuDetail(
+  factory MenuDetail.fromJson(Map<dynamic, dynamic> json) => MenuDetail(
         name: json['name'],
         description: json['description'],
         discountRate: json['discountRate'],
         discountPrice: json['sellingPrice'],
         regularPrice: json['price'],
-        storeId: json['storeId'],
-        storeName: json['storeName'],
-        storeAddress: json['storeAddress'],
-        pickUpTime: json['pickUpTime'] ?? json['cookingTime'],
-        phone: json['phone'],
-        location: LatLng(double.parse(json['lat']), double.parse(json['lon'])),
+        store: StoreMenu.fromJson(json['store']),
         anotherMenus: (json['anotherMenus'] as List)
             .map((e) => Menu.fromDetailJson(e))
             .toList(),
@@ -175,6 +160,6 @@ class MenuDetail {
                 .map((e) => Origin.fromJson(e))
                 .toList(),
         /* Optional */
-        menuPictureUrl: json['menuPictureUrl'] ?? json['mainMenuPictureUrl'],
+        menuPictureUrl: json['menuPictureUrl'],
       );
 }
