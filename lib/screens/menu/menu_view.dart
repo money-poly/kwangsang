@@ -72,16 +72,18 @@ class MenuView extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              viewModel.menu!.description,
-                              style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: KwangColor.grey600),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
+                            if (viewModel.menu!.description != null)
+                              Text(
+                                viewModel.menu!.description!,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: KwangColor.grey600),
+                              ),
+                            if (viewModel.menu!.description != null)
+                              const SizedBox(
+                                height: 4,
+                              ),
                             Text(
                               viewModel.menu!.name,
                               style: KwangStyle.header1,

@@ -116,7 +116,6 @@ class Menu {
 
 class MenuDetail {
   String name;
-  String description;
   int discountRate;
   int discountPrice;
   int regularPrice;
@@ -127,10 +126,10 @@ class MenuDetail {
   List<Origin> origins;
   /* Optional */
   String? menuPictureUrl;
+  String? description;
 
   MenuDetail({
     required this.name,
-    required this.description,
     required this.discountRate,
     required this.discountPrice,
     required this.regularPrice,
@@ -140,11 +139,11 @@ class MenuDetail {
     required this.origins,
     required this.cautions,
     this.menuPictureUrl,
+    this.description,
   });
 
   factory MenuDetail.fromJson(Map<dynamic, dynamic> json) => MenuDetail(
         name: json['name'],
-        description: json['description'],
         discountRate: json['discountRate'],
         discountPrice: json['sellingPrice'],
         regularPrice: json['price'],
@@ -161,5 +160,6 @@ class MenuDetail {
                 .toList(),
         /* Optional */
         menuPictureUrl: json['menuPictureUrl'],
+        description: json['description'],
       );
 }
