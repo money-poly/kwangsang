@@ -3,10 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 
-class StoreImgCard extends StatelessWidget {
-  const StoreImgCard({super.key, required this.imgUrl});
+enum ImgCardType {
+  store("가게"),
+  menu("메뉴");
+
+  const ImgCardType(this.label);
+  final String label;
+}
+
+class ImgCard extends StatelessWidget {
+  const ImgCard({super.key, required this.imgUrl, required this.type});
 
   final String? imgUrl;
+  final ImgCardType type;
   @override
   Widget build(BuildContext context) {
     return imgUrl == null
@@ -27,7 +36,7 @@ class StoreImgCard extends StatelessWidget {
                   height: 28,
                 ),
                 Text(
-                  "가게 사진이\n없어요",
+                  "${type.label} 사진이\n없어요",
                   style: KwangStyle.body3M.copyWith(color: KwangColor.grey600),
                   textAlign: TextAlign.center,
                 )

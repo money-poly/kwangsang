@@ -74,7 +74,10 @@ class StoreCard extends StatelessWidget {
               )
             ],
           ),
-          StoreImgCard(imgUrl: store.menu.imgUrl)
+          ImgCard(
+            imgUrl: store.menu.imgUrl,
+            type: ImgCardType.menu,
+          ),
         ],
       ),
     );

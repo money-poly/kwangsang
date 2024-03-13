@@ -81,7 +81,7 @@ class MapStoreCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          StoreImgCard(imgUrl: store.imgUrl)
+          ImgCard(imgUrl: store.imgUrl, type: ImgCardType.store)
         ],
       ),
     );
