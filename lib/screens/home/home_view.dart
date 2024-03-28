@@ -174,7 +174,12 @@ class HomeView extends StatelessWidget {
                                                               index]!
                                                           .menu
                                                           .id),
-                                                  child: const MenuView(),
+                                                  child: MenuView(
+                                                      menuId: viewModel
+                                                          .maxDiscountStores[
+                                                              index]!
+                                                          .menu
+                                                          .id),
                                                 ),
                                               ),
                                             );
@@ -294,8 +299,9 @@ class HomeView extends StatelessWidget {
                                                                         .myPosition!
                                                                         .longitude),
                                                                 e.id),
-                                                            child:
-                                                                const MenuView(),
+                                                            child: MenuView(
+                                                              menuId: e.id,
+                                                            ),
                                                           ),
                                                         ),
                                                       );

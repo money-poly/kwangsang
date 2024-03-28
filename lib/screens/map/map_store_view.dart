@@ -201,7 +201,9 @@ class MapStoreView extends StatelessWidget {
                                                 positionProvider
                                                     .myPosition!.longitude),
                                             e.id),
-                                        child: const MenuView(),
+                                        child: MenuView(
+                                          menuId: e.id,
+                                        ),
                                       ),
                                     ),
                                   );
