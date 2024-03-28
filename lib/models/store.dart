@@ -114,8 +114,9 @@ class StoreDetail {
           .map((e) => e['name'].toString())
           .toList(),
       address: json['detail']['address'] +
-          " " +
-          (json['detail']['addressDetail'] ?? ""),
+          (json['detail']['addressDetail'] == null
+              ? ""
+              : " ${json['detail']['addressDetail']}"),
       latLng: LatLng(
         double.parse(json['detail']['lat']),
         double.parse(json['detail']['lon']),
@@ -140,8 +141,6 @@ class StoreMenu {
   LatLng latLng;
   String pickUpTime;
   String phone;
-  /* Optional */
-  String? addressDetail;
 
   StoreMenu({
     required this.id,
@@ -150,7 +149,6 @@ class StoreMenu {
     required this.latLng,
     required this.pickUpTime,
     required this.phone,
-    this.addressDetail,
   });
 
   factory StoreMenu.fromJson(Map<String, dynamic> json) {
@@ -158,8 +156,9 @@ class StoreMenu {
       id: json['id'],
       name: json['name'],
       address: json['detail']['address'] +
-          " " +
-          (json['detail']['addressDetail'] ?? ""),
+          (json['detail']['addressDetail'] == null
+              ? ""
+              : " ${json['detail']['addressDetail']}"),
       latLng: LatLng(
         double.parse(json['detail']['lat']),
         double.parse(json['detail']['lon']),
