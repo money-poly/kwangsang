@@ -41,6 +41,10 @@ class NavView extends StatelessWidget {
                     child: Container(
                       height: 64,
                       padding: const EdgeInsets.only(bottom: 8, top: 13),
+                      decoration: const BoxDecoration(
+                          border: Border(
+                              top: BorderSide(
+                                  color: KwangColor.grey300, width: 0.5))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
