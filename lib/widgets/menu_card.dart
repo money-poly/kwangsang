@@ -40,11 +40,11 @@ class MenuCard extends StatelessWidget {
                         color: KwangColor.black,
                       ),
                     ),
-                    if (menu.description != null)
+                    if (menu.description != null && menu.description!.isNotEmpty)
                       const SizedBox(
                         height: 6,
                       ),
-                    if (menu.description != null)
+                    if (menu.description != null && menu.description!.isNotEmpty)
                       Text(
                         menu.description!,
                         style: const TextStyle(
