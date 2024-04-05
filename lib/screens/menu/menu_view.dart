@@ -56,6 +56,8 @@ class MenuView extends StatelessWidget {
               elevation: 0,
             ),
             body: RefreshIndicator(
+              color: KwangColor.primary400,
+              backgroundColor: KwangColor.grey100,
               onRefresh: () async {
                 viewModel.getDetailMenu(
                     menuId,
