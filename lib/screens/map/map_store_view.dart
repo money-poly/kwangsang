@@ -118,6 +118,7 @@ class MapStoreView extends StatelessWidget {
                     ),
                   ),
                   Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     width: MediaQuery.of(context).size.width - 40,
                     height: 1,
                     color: KwangColor.grey300,
