@@ -68,12 +68,28 @@ class MenuView extends StatelessWidget {
                 child: Column(
                   children: [
                     if (viewModel.menu!.menuPictureUrl != null)
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 244,
-                        child: ExtendedImage.network(
-                            viewModel.menu!.menuPictureUrl!,
-                            fit: BoxFit.cover),
+                      Stack(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 244,
+                            child: ExtendedImage.network(
+                                viewModel.menu!.menuPictureUrl!,
+                                fit: BoxFit.cover),
+                          ),
+                          if (viewModel.menu!.count == 0)
+                            Container(
+                              height: 244,
+                              alignment: Alignment.center,
+                              color: KwangColor.black.withOpacity(0.4),
+                              child: Text(
+                                "품절",
+                                style: KwangStyle.header3.copyWith(
+                                  color: KwangColor.grey100,
+                                ),
+                              ),
+                            )
+                        ],
                       ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
