@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/datetime_formatter.dart';
@@ -24,6 +25,7 @@ class MenuView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MenuViewModel>(context);
     final positionProvider = Provider.of<PositionProvider>(context);
+    final analytics = AnalyticsConfig();
     return viewModel.menu == null
         ? const Scaffold(
             body: Center(
@@ -233,8 +235,9 @@ class MenuView extends StatelessWidget {
                                   .map(
                                     (e) => GestureDetector(
                                       behavior: HitTestBehavior.translucent,
-                                      onTap: () {
-                                        Navigator.of(context).push(
+                                      onTap: () async {
+                                        analytics.changePage("메뉴상세", "메뉴상세");
+                                        await Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 ChangeNotifierProvider(
@@ -251,6 +254,7 @@ class MenuView extends StatelessWidget {
                                             ),
                                           ),
                                         );
+                                        analytics.changePage("메뉴상세", "메뉴상세");
                                       },
                                       child: MenuCard(
                                           menu: e,

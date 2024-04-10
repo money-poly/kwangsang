@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/main.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ class OnBoarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<OnBoardingViewModel>(context);
+    final analytics = AnalyticsConfig();
     List titles = ["마감할인도 놓치지 말고", "내 손에서 시작하는 경제적인 소비", "점주와 학생이 공생하는"];
     return Scaffold(
       body: Column(
@@ -118,6 +120,7 @@ class OnBoarding extends StatelessWidget {
               onTap: () async {
                 await SharedPreferences.getInstance().then((value) {
                   value.setBool("visited", true);
+                  analytics.changePage("온보딩", "홈");
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                           builder: (context) => const MyApp(isVisited: true)),

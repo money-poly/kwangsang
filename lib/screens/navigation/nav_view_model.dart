@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/screens/home/home_view.dart';
 import 'package:immersion_kwangsang/screens/map/map_main_view.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 
 enum NavItems {
   home("홈"),
@@ -12,6 +13,7 @@ enum NavItems {
 }
 
 class NavViewModel with ChangeNotifier {
+  final analytics = AnalyticsConfig();
   int _currIdx = 0;
 
   List<Widget> get pages =>
@@ -30,6 +32,10 @@ class NavViewModel with ChangeNotifier {
 
   void changeIdx(int idx) {
     if (canChangeIdx(idx)) {
+      analytics.changePage(
+        NavItems.values[_currIdx].label,
+        NavItems.values[idx].label,
+      );
       _currIdx = idx;
     }
     notifyListeners();

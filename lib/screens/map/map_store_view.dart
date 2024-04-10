@@ -7,6 +7,7 @@ import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
@@ -21,6 +22,7 @@ class MapStoreView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MapStoreViewModel>(context);
     final positionProvider = Provider.of<PositionProvider>(context);
+    final analytics = AnalyticsConfig();
     if (viewModel.store == null) {
       return const Scaffold(
         backgroundColor: KwangColor.grey100,
@@ -188,8 +190,9 @@ class MapStoreView extends StatelessWidget {
                             .map(
                               (e) => GestureDetector(
                                 behavior: HitTestBehavior.translucent,
-                                onTap: () {
-                                  Navigator.of(context).push(
+                                onTap: () async {
+                                  analytics.changePage("가게상세", "메뉴상세");
+                                  await Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           ChangeNotifierProvider(
@@ -207,6 +210,7 @@ class MapStoreView extends StatelessWidget {
                                       ),
                                     ),
                                   );
+                                  analytics.changePage("메뉴상세", "가게상세");
                                 },
                                 child: MenuCard(
                                   menu: e,

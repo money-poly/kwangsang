@@ -8,6 +8,7 @@ import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/empty_card.dart';
@@ -22,6 +23,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<HomeViewModel>(context);
+    final analytics = AnalyticsConfig();
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -34,8 +36,9 @@ class HomeView extends StatelessWidget {
         centerTitle: false,
         actions: [
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
+            onTap: () async {
+              analytics.changePage("홈", "검색");
+              await Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ChangeNotifierProvider(
                     create: (_) => SearchMainViewModel(),
@@ -43,6 +46,7 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
               );
+              analytics.changePage("검색", "홈");
             },
             child: SvgPicture.asset(
               "assets/icons/ic_36_search.svg",
@@ -155,8 +159,9 @@ class HomeView extends StatelessWidget {
                                         const SizedBox(height: 8),
                                         GestureDetector(
                                           behavior: HitTestBehavior.translucent,
-                                          onTap: () {
-                                            Navigator.of(context).push(
+                                          onTap: () async {
+                                            analytics.changePage("홈", "메뉴상세");
+                                            await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     ChangeNotifierProvider(
@@ -183,6 +188,7 @@ class HomeView extends StatelessWidget {
                                                 ),
                                               ),
                                             );
+                                            analytics.changePage("메뉴상세", "홈");
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
@@ -285,6 +291,10 @@ class HomeView extends StatelessWidget {
                                                         .translucent,
                                                     onTap: () {
                                                       Navigator.of(context)
+                                                      analytics.changePage(
+                                                          "홈", "메뉴상세");
+                                                      await Navigator.of(
+                                                              context)
                                                           .push(
                                                         MaterialPageRoute(
                                                           builder: (context) =>
@@ -305,6 +315,8 @@ class HomeView extends StatelessWidget {
                                                           ),
                                                         ),
                                                       );
+                                                      analytics.changePage(
+                                                          "메뉴상세", "홈");
                                                     },
                                                     child: MenuCard(
                                                         menu: e,

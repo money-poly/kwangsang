@@ -6,6 +6,7 @@ import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/empty_card.dart';
@@ -19,6 +20,7 @@ class SearchAfterTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<SearchMainViewModel>(context);
+    final analytics = AnalyticsConfig();
     return viewModel.menus == null
         ? const Center(
             child: CircularProgressIndicator(
@@ -126,8 +128,9 @@ class SearchAfterTab extends StatelessWidget {
                                     196),
                         children: viewModel.menus!
                             .map((e) => GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(
+                                onTap: () async {
+                                  analytics.changePage("검색", "메뉴상세");
+                                  await Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           ChangeNotifierProvider(

@@ -9,6 +9,7 @@ import 'package:immersion_kwangsang/screens/navigation/nav_view.dart';
 import 'package:immersion_kwangsang/screens/navigation/nav_view_model.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/theme.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -26,6 +27,7 @@ void main() async {
       permission != LocationPermission.whileInUse) {
     await Geolocator.requestPermission();
   }
+  AnalyticsConfig().init();
   FlutterNativeSplash.remove();
   runApp(MyApp(isVisited: prefs.getBool("visited") ?? false));
 }
