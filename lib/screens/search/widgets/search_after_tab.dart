@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
@@ -130,6 +131,14 @@ class SearchAfterTab extends StatelessWidget {
                             .map((e) => GestureDetector(
                                 onTap: () async {
                                   analytics.changePage("검색", "메뉴상세");
+                                  analytics.clickMenu(
+                                    MenuSimple.fromMenu(e),
+                                    {
+                                      "page": "검색",
+                                      "title": "검색결과",
+                                      "options": {}
+                                    },
+                                  );
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>

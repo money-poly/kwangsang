@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
@@ -237,6 +238,14 @@ class MenuView extends StatelessWidget {
                                       behavior: HitTestBehavior.translucent,
                                       onTap: () async {
                                         analytics.changePage("메뉴상세", "메뉴상세");
+                                        analytics.clickMenu(
+                                          MenuSimple.fromMenu(e),
+                                          {
+                                            "page": "메뉴상세",
+                                            "title": "이 매장 또 다른 메뉴",
+                                            "options": {}
+                                          },
+                                        );
                                         await Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>

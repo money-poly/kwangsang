@@ -65,7 +65,8 @@ class HomeViewModel with ChangeNotifier {
   }
 
   Future<void> getStoreCategories() async {
-    _categories = await _adminService.getStoreCategories();
+    final temp = await _adminService.getStoreCategories();
+    _categories = [Category(id: -1, name: "전체"), ...temp];
     if (!_isDisposed) {
       notifyListeners();
     }
@@ -74,10 +75,7 @@ class HomeViewModel with ChangeNotifier {
   Future<void> getMaxDiscountStores() async {
     final stores = await _service.getMaxDiscountStores();
     _maxDiscountStores = categories!.map((e) => stores[e.name]).toList();
-    _tabs = [
-      const Tab(text: "전체"),
-      ...categories!.map((e) => Tab(text: e.name)).toList()
-    ];
+    _tabs = [...categories!.map((e) => Tab(text: e.name)).toList()];
     _maxDiscountStores = [
       getMaxDiscountStoreOfAll(_maxDiscountStores),
       ..._maxDiscountStores
