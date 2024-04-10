@@ -11,6 +11,19 @@ class AnalyticsConfig {
     analytics.logEvent("Start_App");
   }
 
+  void clickMenu(MenuSimple menu, Map<String, dynamic> src) {
+    analytics.logEvent("Click_Menu", eventProperties: {
+      "id": menu.id,
+      "name": menu.name,
+      "regularPrice": menu.originPrice,
+      "discountPrice": menu.discountPrice,
+      "discountRate": menu.discountRate,
+      "srcPage": src["page"],
+      "srcTitle": src["title"],
+      "srcOption": src["options"]
+    });
+  }
+
   void changePage(String fromPage, String toPage) {
     analytics.logEvent("Change_Page",
         eventProperties: {"fromPage": fromPage, "toPage": toPage});
