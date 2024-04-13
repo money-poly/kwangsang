@@ -87,39 +87,42 @@ class MenuCard extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               menu.imgUrl != null
-                  ? Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: KwangColor.grey300, width: 1),
-                          borderRadius: BorderRadius.circular(4)),
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: ExtendedImage.network(
-                              menu.imgUrl!,
-                              fit: BoxFit.cover,
-                              width: 80,
-                              height: 80,
-                            ),
+                  ? Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: ExtendedImage.network(
+                            menu.imgUrl!,
+                            fit: BoxFit.cover,
+                            width: 80,
+                            height: 80,
                           ),
-                          if (menu.status != null &&
-                              menu.status == MenuStatus.soldout)
-                            Container(
-                              color: KwangColor.black.withOpacity(0.4),
-                              alignment: Alignment.center,
-                              child: Text(
-                                menu.status!.str,
-                                style: KwangStyle.body1M.copyWith(
-                                  color: KwangColor.grey100,
-                                ),
-                              ),
-                            )
-                        ],
-                      ),
+                        ),
+                        Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: KwangColor.grey300, width: 1),
+                            borderRadius: BorderRadius.circular(4),
+                            color: menu.status != null &&
+                                    menu.status == MenuStatus.soldout
+                                ? KwangColor.black.withOpacity(0.4)
+                                : Colors.transparent,
+                          ),
+                          alignment: Alignment.center,
+                          child: menu.status != null &&
+                                  menu.status == MenuStatus.soldout
+                              ? Text(
+                                  menu.status!.str,
+                                  style: KwangStyle.body1M.copyWith(
+                                    color: KwangColor.grey100,
+                                  ),
+                                )
+                              : null,
+                        )
+                      ],
                     )
                   : const SizedBox(height: 80, width: 80)
             ],
