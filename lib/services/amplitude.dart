@@ -1,7 +1,6 @@
 import 'package:amplitude_flutter/amplitude.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
-import 'package:immersion_kwangsang/models/store.dart';
 
 class AnalyticsConfig {
   final Amplitude analytics = Amplitude.getInstance(instanceName: "kwangsaeng");
