@@ -83,6 +83,7 @@ class StoreDetail {
   String phone;
   /* Optional */
   String? imgUrl;
+  String? description;
 
   StoreDetail({
     required this.id,
@@ -98,6 +99,7 @@ class StoreDetail {
     required this.origins,
     required this.phone,
     this.imgUrl,
+    this.description,
   });
 
   factory StoreDetail.fromJson(Map<dynamic, dynamic> json) {
@@ -130,6 +132,7 @@ class StoreDetail {
       phone: json['detail']['phone'],
       /* Optional */
       imgUrl: json['detail']['storePictureUrl'],
+      description: json['detail']['description'],
     );
   }
 }

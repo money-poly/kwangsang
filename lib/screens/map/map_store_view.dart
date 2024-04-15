@@ -107,10 +107,21 @@ class MapStoreView extends StatelessWidget {
                           softWrap: true,
                           overflow: TextOverflow.visible,
                         ),
+                        if (viewModel.store!.description != null &&
+                            viewModel.store!.description!.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              viewModel.store!.description!,
+                              style: KwangStyle.body1M
+                                  .copyWith(color: KwangColor.grey700),
+                            ),
+                          )
                       ],
                     ),
                   ),
                   Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     width: MediaQuery.of(context).size.width - 40,
                     height: 1,
                     color: KwangColor.grey300,

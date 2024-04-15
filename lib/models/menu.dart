@@ -1,6 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/models/origin.dart';
 import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/models/tag.dart';
+import 'package:immersion_kwangsang/styles/color.dart';
+import 'package:immersion_kwangsang/utils/menu_status_util.dart';
+
+enum MenuStatus {
+  sale("판매중", KwangColor.primary400, "고객들에게 판매할 수 있는 상태"),
+  hidden("숨김", KwangColor.grey600, "일시적으로 숨김처리되어 메뉴가 보이지 않는 상태"),
+  soldout("품절", KwangColor.red, "메뉴는 노출되지만 품절 표시인 상태");
+
+  const MenuStatus(this.str, this.color, this.description);
+  final String str;
+  final Color color;
+  final String description;
+}
 
 class MenuSimple {
   int? id;
@@ -46,6 +60,7 @@ class Menu {
   int? view;
   List<Tag>? tags;
   List<Origin>? origins;
+  MenuStatus? status;
 
   Menu({
     required this.id,
@@ -59,6 +74,7 @@ class Menu {
     this.view,
     this.tags,
     this.origins,
+    this.status,
   });
 
   factory Menu.fromJson(Map<String, dynamic> json) => Menu(
@@ -80,7 +96,7 @@ class Menu {
         id: json['id'],
         name: json['name'],
         discountRate: json['discountRate'],
-        discountPrice: json['salePrice'],
+        discountPrice: json['sellingPrice'],
         imgUrl: json['menuPictureUrl'],
         /* Optional */
         regularPrice: json['price'],
@@ -89,6 +105,7 @@ class Menu {
         view: json['viewCount'] ?? json['view'],
         tags: json['tags'],
         origins: json['origins'],
+        status: json['status'] == null ? null : strToMenuStatus(json['status']),
       );
 
   factory Menu.fromHomeJson(Map<String, dynamic> json) => Menu(
@@ -110,7 +127,7 @@ class Menu {
         id: json['menuId'],
         name: json['name'],
         discountRate: json['discountRate'],
-        discountPrice: json['price'],
+        discountPrice: json['sellingPrice'],
         imgUrl: json['menuPictureUrl'],
         /* Optional */
         regularPrice: json['price'],
@@ -119,6 +136,7 @@ class Menu {
         view: json['viewCount'] ?? json['view'],
         tags: json['tags'],
         origins: json['origins'],
+        status: json['status'] == null ? null : strToMenuStatus(json['status']),
       );
 }
 
