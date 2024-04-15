@@ -88,7 +88,7 @@ class Menu {
         id: json['id'],
         name: json['name'],
         discountRate: json['discountRate'],
-        discountPrice: json['salePrice'],
+        discountPrice: json['sellingPrice'],
         imgUrl: json['menuPictureUrl'],
         /* Optional */
         regularPrice: json['price'],
@@ -119,7 +119,7 @@ class Menu {
         id: json['menuId'],
         name: json['name'],
         discountRate: json['discountRate'],
-        discountPrice: json['price'],
+        discountPrice: json['sellingPrice'],
         imgUrl: json['menuPictureUrl'],
         /* Optional */
         regularPrice: json['price'],
