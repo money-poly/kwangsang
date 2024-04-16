@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/home_bottom_sheet.dart';
@@ -8,6 +9,7 @@ import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/empty_card.dart';
@@ -22,6 +24,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<HomeViewModel>(context);
+    final analytics = AnalyticsConfig();
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -34,8 +37,9 @@ class HomeView extends StatelessWidget {
         centerTitle: false,
         actions: [
           GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
+            onTap: () async {
+              analytics.changePage("홈", "검색");
+              await Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ChangeNotifierProvider(
                     create: (_) => SearchMainViewModel(),
@@ -43,6 +47,7 @@ class HomeView extends StatelessWidget {
                   ),
                 ),
               );
+              analytics.changePage("검색", "홈");
             },
             child: SvgPicture.asset(
               "assets/icons/ic_36_search.svg",
@@ -85,7 +90,8 @@ class HomeView extends StatelessWidget {
                     child: TabBarView(
                       children: List.generate(
                         viewModel.tabs!.length,
-                        (index) => viewModel.maxDiscountStores[index] == null ||
+                        (tabIdx) => viewModel.maxDiscountStores[tabIdx] ==
+                                    null ||
                                 viewModel.discountMenus.isEmpty
                             ? const Column(
                                 children: [
@@ -155,8 +161,22 @@ class HomeView extends StatelessWidget {
                                         const SizedBox(height: 8),
                                         GestureDetector(
                                           behavior: HitTestBehavior.translucent,
-                                          onTap: () {
-                                            Navigator.of(context).push(
+                                          onTap: () async {
+                                            analytics.clickMenu(
+                                              MenuSimple.fromMenu(viewModel
+                                                  .maxDiscountStores[tabIdx]!
+                                                  .menu),
+                                              {
+                                                "page": "홈",
+                                                "title": "할인율 가장 높아요",
+                                                "options": {
+                                                  "tab": viewModel
+                                                      .categories![tabIdx].name,
+                                                }
+                                              },
+                                            );
+                                            analytics.changePage("홈", "메뉴상세");
+                                            await Navigator.of(context).push(
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     ChangeNotifierProvider(
@@ -171,25 +191,26 @@ class HomeView extends StatelessWidget {
                                                               .longitude),
                                                       viewModel
                                                           .maxDiscountStores[
-                                                              index]!
+                                                              tabIdx]!
                                                           .menu
                                                           .id),
                                                   child: MenuView(
                                                       menuId: viewModel
                                                           .maxDiscountStores[
-                                                              index]!
+                                                              tabIdx]!
                                                           .menu
                                                           .id),
                                                 ),
                                               ),
                                             );
+                                            analytics.changePage("메뉴상세", "홈");
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 20),
                                             child: StoreCard(
                                               store: viewModel
-                                                  .maxDiscountStores[index]!,
+                                                  .maxDiscountStores[tabIdx]!,
                                             ),
                                           ),
                                         ),
@@ -218,7 +239,7 @@ class HomeView extends StatelessWidget {
                                                         const ColorFilter.mode(
                                                             KwangColor.red,
                                                             BlendMode.srcIn),
-                                                  )
+                                                  ),
                                                 ],
                                               ),
                                               GestureDetector(
@@ -279,12 +300,31 @@ class HomeView extends StatelessWidget {
                                                           2 /
                                                           196),
                                           children: viewModel
-                                              .discountMenus[index]
+                                              .discountMenus[tabIdx]
                                               .map((e) => GestureDetector(
                                                     behavior: HitTestBehavior
                                                         .translucent,
-                                                    onTap: () {
-                                                      Navigator.of(context)
+                                                    onTap: () async {
+                                                      analytics.clickMenu(
+                                                          MenuSimple.fromMenu(
+                                                              e),
+                                                          {
+                                                            "page": "홈",
+                                                            "title":
+                                                                "지금 먹으면 할인",
+                                                            "options": {
+                                                              "tab": viewModel
+                                                                  .categories![
+                                                                      tabIdx]
+                                                                  .name,
+                                                              "sort": viewModel
+                                                                  .order.str,
+                                                            }
+                                                          });
+                                                      analytics.changePage(
+                                                          "홈", "메뉴상세");
+                                                      await Navigator.of(
+                                                              context)
                                                           .push(
                                                         MaterialPageRoute(
                                                           builder: (context) =>
@@ -305,6 +345,8 @@ class HomeView extends StatelessWidget {
                                                           ),
                                                         ),
                                                       );
+                                                      analytics.changePage(
+                                                          "메뉴상세", "홈");
                                                     },
                                                     child: MenuCard(
                                                         menu: e,

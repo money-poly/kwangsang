@@ -38,6 +38,14 @@ class MenuSimple {
         discountPrice: json['sellingPrice'],
         discountRate: json['discountRate'],
       );
+
+  factory MenuSimple.fromMenu(Menu menu) => MenuSimple(
+        id: menu.id,
+        name: menu.name,
+        originPrice: menu.regularPrice,
+        discountPrice: menu.discountPrice,
+        discountRate: menu.discountRate,
+      );
 }
 
 class Menu {
