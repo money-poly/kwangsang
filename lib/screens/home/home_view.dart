@@ -134,6 +134,7 @@ class HomeView extends StatelessWidget {
                                         //   color: Colors.orange,
                                         //   child: Text("배너"),
                                         // ),
+                                        const SizedBox(height: 20),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 20, vertical: 8),
