@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/main.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ class OnBoarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<OnBoardingViewModel>(context);
+    final analytics = AnalyticsConfig();
     List titles = ["마감할인도 놓치지 말고", "내 손에서 시작하는 경제적인 소비", "점주와 학생이 공생하는"];
     return Scaffold(
       body: Column(
@@ -85,26 +87,26 @@ class OnBoarding extends StatelessWidget {
       bottomSheet: Wrap(
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          GestureDetector(
-            onTap: () async {
-              await SharedPreferences.getInstance().then((value) {
-                value.setBool("visited", true);
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                      builder: (context) => const MyApp(isVisited: true)),
-                  (route) => false,
-                );
-              });
-            },
-            child: Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(bottom: 4),
-              height: 44,
-              width: MediaQuery.of(context).size.width,
-              child: Text("건너뛰기",
-                  style: KwangStyle.btn1SB.copyWith(color: KwangColor.grey600)),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () async {
+          //     await SharedPreferences.getInstance().then((value) {
+          //       value.setBool("visited", true);
+          //       Navigator.of(context).pushAndRemoveUntil(
+          //         MaterialPageRoute(
+          //             builder: (context) => const MyApp(isVisited: true)),
+          //         (route) => false,
+          //       );
+          //     });
+          //   },
+          //   child: Container(
+          //     alignment: Alignment.center,
+          //     margin: const EdgeInsets.only(bottom: 4),
+          //     height: 44,
+          //     width: MediaQuery.of(context).size.width,
+          //     child: Text("건너뛰기",
+          //         style: KwangStyle.btn1SB.copyWith(color: KwangColor.grey600)),
+          //   ),
+          // ),
           Container(
             padding: EdgeInsets.fromLTRB(
                 20, 11, 20, 11 + MediaQuery.of(context).viewPadding.bottom),
@@ -118,6 +120,7 @@ class OnBoarding extends StatelessWidget {
               onTap: () async {
                 await SharedPreferences.getInstance().then((value) {
                   value.setBool("visited", true);
+                  analytics.changePage("온보딩", "홈");
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                           builder: (context) => const MyApp(isVisited: true)),

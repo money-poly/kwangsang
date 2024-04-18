@@ -80,9 +80,10 @@ class StoreDetail {
   List<Menu> menu;
   List<String> notes;
   List<Origin> origins;
+  String phone;
   /* Optional */
-  String? phone;
   String? imgUrl;
+  String? description;
 
   StoreDetail({
     required this.id,
@@ -96,8 +97,9 @@ class StoreDetail {
     required this.menu,
     required this.notes,
     required this.origins,
-    this.phone,
+    required this.phone,
     this.imgUrl,
+    this.description,
   });
 
   factory StoreDetail.fromJson(Map<dynamic, dynamic> json) {
@@ -114,8 +116,9 @@ class StoreDetail {
           .map((e) => e['name'].toString())
           .toList(),
       address: json['detail']['address'] +
-          " " +
-          (json['detail']['addressDetail'] ?? ""),
+          (json['detail']['addressDetail'] == null
+              ? ""
+              : " ${json['detail']['addressDetail']}"),
       latLng: LatLng(
         double.parse(json['detail']['lat']),
         double.parse(json['detail']['lon']),
@@ -126,9 +129,45 @@ class StoreDetail {
       menu: (json['menus'] as List).map((e) => Menu.fromStoreJson(e)).toList(),
       notes: (json['caution'] as List).map((e) => e.toString()).toList(),
       origins: origins,
+      phone: json['detail']['phone'],
       /* Optional */
-      phone: json['phone'],
       imgUrl: json['detail']['storePictureUrl'],
+      description: json['detail']['description'],
+    );
+  }
+}
+
+class StoreMenu {
+  int id;
+  String name;
+  String address;
+  LatLng latLng;
+  String pickUpTime;
+  String phone;
+
+  StoreMenu({
+    required this.id,
+    required this.name,
+    required this.address,
+    required this.latLng,
+    required this.pickUpTime,
+    required this.phone,
+  });
+
+  factory StoreMenu.fromJson(Map<String, dynamic> json) {
+    return StoreMenu(
+      id: json['id'],
+      name: json['name'],
+      address: json['detail']['address'] +
+          (json['detail']['addressDetail'] == null
+              ? ""
+              : " ${json['detail']['addressDetail']}"),
+      latLng: LatLng(
+        double.parse(json['detail']['lat']),
+        double.parse(json['detail']['lon']),
+      ),
+      pickUpTime: json['detail']['pickUpTime'],
+      phone: json['detail']['phone'],
     );
   }
 }

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/empty_card.dart';
@@ -19,6 +21,7 @@ class SearchAfterTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<SearchMainViewModel>(context);
+    final analytics = AnalyticsConfig();
     return viewModel.menus == null
         ? const Center(
             child: CircularProgressIndicator(
@@ -126,8 +129,17 @@ class SearchAfterTab extends StatelessWidget {
                                     196),
                         children: viewModel.menus!
                             .map((e) => GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(
+                                onTap: () async {
+                                  analytics.changePage("검색", "메뉴상세");
+                                  analytics.clickMenu(
+                                    MenuSimple.fromMenu(e),
+                                    {
+                                      "page": "검색",
+                                      "title": "검색결과",
+                                      "options": {}
+                                    },
+                                  );
+                                  await Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           ChangeNotifierProvider(
@@ -139,7 +151,7 @@ class SearchAfterTab extends StatelessWidget {
                                                 positionProvider
                                                     .myPosition!.longitude),
                                             e.id),
-                                        child: const MenuView(),
+                                        child: MenuView(menuId: e.id),
                                       ),
                                     ),
                                   );

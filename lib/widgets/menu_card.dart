@@ -5,6 +5,7 @@ import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/number_formatter.dart';
+import 'package:immersion_kwangsang/widgets/menu_status_widget.dart';
 // import 'package:immersion_kwangsang/widgets/tag_widget.dart';
 import 'package:intl/intl.dart';
 
@@ -32,30 +33,37 @@ class MenuCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      menu.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: KwangColor.black,
-                      ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if (menu.status != null &&
+                            menu.status == MenuStatus.soldout)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: MenuStatusWidget(
+                                status: menu.status!, isSelectable: false),
+                          ),
+                        Flexible(
+                          child: Text(
+                            menu.name,
+                            style: KwangStyle.body1M,
+                            softWrap: false,
+                          ),
+                        ),
+                      ],
                     ),
-                    if (menu.description != null)
-                      const SizedBox(
-                        height: 6,
-                      ),
-                    if (menu.description != null)
-                      Text(
-                        menu.description!,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: KwangColor.grey600,
+                    if (menu.description != null &&
+                        menu.description!.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text(
+                          menu.description!,
+                          maxLines: 2,
+                          style: KwangStyle.body2M
+                              .copyWith(color: KwangColor.grey600),
                         ),
                       ),
-                    const SizedBox(
-                      height: 6,
-                    ),
+                    const SizedBox(height: 4),
                     Wrap(
                       direction: Axis.horizontal,
                       spacing: 4,
@@ -63,19 +71,15 @@ class MenuCard extends StatelessWidget {
                         if (menu.discountRate != 0)
                           Text(
                             "${menu.discountRate}%",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: KwangColor.red,
-                            ),
+                            style: KwangStyle.btn2B.copyWith(
+                                color: menu.status != null &&
+                                        menu.status == MenuStatus.soldout
+                                    ? KwangColor.grey600
+                                    : KwangColor.red),
                           ),
                         Text(
-                          "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+                            "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
+                            style: KwangStyle.btn2B),
                       ],
                     )
                   ],
@@ -83,20 +87,42 @@ class MenuCard extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               menu.imgUrl != null
-                  ? Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: KwangColor.grey300, width: 1),
-                          borderRadius: BorderRadius.circular(4)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: ExtendedImage.network(
-                          menu.imgUrl!,
-                          fit: BoxFit.cover,
+                  ? Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: ExtendedImage.network(
+                            menu.imgUrl!,
+                            fit: BoxFit.cover,
+                            width: 80,
+                            height: 80,
+                          ),
                         ),
-                      ),
+                        Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: KwangColor.grey300, width: 1),
+                            borderRadius: BorderRadius.circular(4),
+                            color: menu.status != null &&
+                                    menu.status == MenuStatus.soldout
+                                ? KwangColor.black.withOpacity(0.4)
+                                : Colors.transparent,
+                          ),
+                          alignment: Alignment.center,
+                          child: menu.status != null &&
+                                  menu.status == MenuStatus.soldout
+                              ? Text(
+                                  menu.status!.str,
+                                  style: KwangStyle.body1M.copyWith(
+                                    color: KwangColor.grey100,
+                                  ),
+                                )
+                              : null,
+                        )
+                      ],
                     )
                   : const SizedBox(height: 80, width: 80)
             ],

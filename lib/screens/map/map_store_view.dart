@@ -2,11 +2,13 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
@@ -21,6 +23,7 @@ class MapStoreView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MapStoreViewModel>(context);
     final positionProvider = Provider.of<PositionProvider>(context);
+    final analytics = AnalyticsConfig();
     if (viewModel.store == null) {
       return const Scaffold(
         backgroundColor: KwangColor.grey100,
@@ -104,10 +107,21 @@ class MapStoreView extends StatelessWidget {
                           softWrap: true,
                           overflow: TextOverflow.visible,
                         ),
+                        if (viewModel.store!.description != null &&
+                            viewModel.store!.description!.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              viewModel.store!.description!,
+                              style: KwangStyle.body1M
+                                  .copyWith(color: KwangColor.grey700),
+                            ),
+                          )
                       ],
                     ),
                   ),
                   Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     width: MediaQuery.of(context).size.width - 40,
                     height: 1,
                     color: KwangColor.grey300,
@@ -120,7 +134,8 @@ class MapStoreView extends StatelessWidget {
                         StoreInfoRow(
                             title: "매장주소",
                             content: viewModel.store!.address,
-                            hasPaddingBottom: true),
+                            hasPaddingBottom: true,
+                            selectable: true),
                         StoreInfoRow(
                             title: "영업시간",
                             content:
@@ -129,12 +144,11 @@ class MapStoreView extends StatelessWidget {
                         StoreInfoRow(
                             title: "픽업시간",
                             content: "${viewModel.store!.pickUpTime}분",
-                            hasPaddingBottom: viewModel.store!.phone != null),
-                        if (viewModel.store!.phone != null)
-                          StoreInfoRow(
-                              title: "전화번호",
-                              content: viewModel.store!.phone!,
-                              hasPaddingBottom: false),
+                            hasPaddingBottom: true),
+                        StoreInfoRow(
+                            title: "전화번호",
+                            content: viewModel.store!.phone,
+                            hasPaddingBottom: false),
                       ],
                     ),
                   ),
@@ -188,8 +202,17 @@ class MapStoreView extends StatelessWidget {
                             .map(
                               (e) => GestureDetector(
                                 behavior: HitTestBehavior.translucent,
-                                onTap: () {
-                                  Navigator.of(context).push(
+                                onTap: () async {
+                                  analytics.changePage("가게상세", "메뉴상세");
+                                  analytics.clickMenu(
+                                    MenuSimple.fromMenu(e),
+                                    {
+                                      "page": "가게상세",
+                                      "title": "메뉴",
+                                      "options": {}
+                                    },
+                                  );
+                                  await Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           ChangeNotifierProvider(
@@ -201,10 +224,13 @@ class MapStoreView extends StatelessWidget {
                                                 positionProvider
                                                     .myPosition!.longitude),
                                             e.id),
-                                        child: const MenuView(),
+                                        child: MenuView(
+                                          menuId: e.id,
+                                        ),
                                       ),
                                     ),
                                   );
+                                  analytics.changePage("메뉴상세", "가게상세");
                                 },
                                 child: MenuCard(
                                   menu: e,
