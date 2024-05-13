@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
-import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
@@ -22,7 +21,6 @@ class MapStoreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MapStoreViewModel>(context);
-    final positionProvider = Provider.of<PositionProvider>(context);
     final analytics = AnalyticsConfig();
     if (viewModel.store == null) {
       return const Scaffold(
@@ -214,16 +212,8 @@ class MapStoreView extends StatelessWidget {
                                   );
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          ChangeNotifierProvider(
-                                        create: (_) => MenuViewModel(
-                                            context,
-                                            LatLng(
-                                                positionProvider
-                                                    .myPosition!.latitude,
-                                                positionProvider
-                                                    .myPosition!.longitude),
-                                            e.id),
+                                      builder: (_) => ChangeNotifierProvider(
+                                        create: (_) => MenuViewModel(e.id),
                                         child: MenuView(
                                           menuId: e.id,
                                         ),

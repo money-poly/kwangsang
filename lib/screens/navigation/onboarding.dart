@@ -123,7 +123,7 @@ class OnBoarding extends StatelessWidget {
                   analytics.changePage("온보딩", "홈");
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                          builder: (context) => const MyApp(isVisited: true)),
+                          builder: (_) => const MyApp(isVisited: true)),
                       (route) => false);
                 });
               },

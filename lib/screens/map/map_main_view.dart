@@ -9,7 +9,6 @@ import 'package:immersion_kwangsang/screens/map/widgets/map_store_card.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
-import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:provider/provider.dart';
 
 class MapMainView extends StatelessWidget {
@@ -36,7 +35,7 @@ class MapMainView extends StatelessWidget {
               analytics.changePage("지도", "검색");
               await Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ChangeNotifierProvider(
+                  builder: (_) => ChangeNotifierProvider(
                     create: (_) => SearchMainViewModel(),
                     child: const SearchMainView(),
                   ),
@@ -55,100 +54,83 @@ class MapMainView extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: positionProvider.myPosition == null
-          ? const Center(
-              child: CircularProgressIndicator(
-              color: KwangColor.primary400,
-            ))
-          : Stack(
-              children: [
-                GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(positionProvider.myPosition!.latitude,
-                          positionProvider.myPosition!.longitude),
-                      zoom: 16),
-                  onMapCreated: (controller) => viewModel.initController(
-                    controller,
-                    LatLng(positionProvider.myPosition!.latitude,
-                        positionProvider.myPosition!.longitude),
-                  ),
-                  myLocationEnabled: true,
-                  compassEnabled: true,
-                  mapToolbarEnabled: true,
-                  rotateGesturesEnabled: true,
-                  myLocationButtonEnabled: false,
-                  zoomControlsEnabled: false,
-                  tiltGesturesEnabled: false,
-                  markers: viewModel.markers.toSet(),
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () async {
-                            await positionProvider.updateMyPosition();
-                            viewModel.moveCameraInitPosition(LatLng(
-                                positionProvider.myPosition!.latitude,
-                                positionProvider.myPosition!.longitude));
-                          },
-                          behavior: HitTestBehavior.translucent,
-                          child: Container(
-                            width: 48,
-                            height: 48,
-                            margin: const EdgeInsets.only(bottom: 16),
-                            padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromRGBO(0, 0, 0, 0.2),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 0),
-                                )
-                              ],
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/ic_28_location.svg",
-                              width: 28,
-                              height: 28,
-                            ),
-                          ),
-                        ),
-                        if (viewModel.store != null)
-                          GestureDetector(
-                            onTap: () async {
-                              analytics.changePage("지도", "가게상세");
-                              await Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => ChangeNotifierProvider(
-                                    create: (context) => MapStoreViewModel(
-                                        LatLng(
-                                            positionProvider
-                                                .myPosition!.latitude,
-                                            positionProvider
-                                                .myPosition!.longitude),
-                                        viewModel.selectedMarkerId!),
-                                    builder: (context, child) =>
-                                        const MapStoreView(),
-                                  ),
-                                ),
-                              );
-                              analytics.changePage("가게상세", "지도");
-                            },
-                            child: MapStoreCard(store: viewModel.store!),
-                          ),
-                      ],
+      body: Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: CameraPosition(
+                target: LatLng(positionProvider.myPosition.latitude,
+                    positionProvider.myPosition.longitude),
+                zoom: 16),
+            onMapCreated: (controller) => viewModel.initController(controller),
+            myLocationEnabled: true,
+            compassEnabled: true,
+            mapToolbarEnabled: true,
+            rotateGesturesEnabled: true,
+            myLocationButtonEnabled: false,
+            zoomControlsEnabled: false,
+            tiltGesturesEnabled: false,
+            markers: viewModel.markers.toSet(),
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      await positionProvider.updateMyPosition();
+                      viewModel.moveCameraInitPosition();
+                    },
+                    behavior: HitTestBehavior.translucent,
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      margin: const EdgeInsets.only(bottom: 16),
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(0, 0, 0, 0.2),
+                            blurRadius: 4,
+                            offset: Offset(0, 0),
+                          )
+                        ],
+                      ),
+                      child: SvgPicture.asset(
+                        "assets/icons/ic_28_location.svg",
+                        width: 28,
+                        height: 28,
+                      ),
                     ),
                   ),
-                )
-              ],
+                  if (viewModel.store != null)
+                    GestureDetector(
+                      onTap: () async {
+                        analytics.changePage("지도", "가게상세");
+                        await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => ChangeNotifierProvider(
+                              create: (_) => MapStoreViewModel(
+                                  viewModel.selectedMarkerId!),
+                              child: const MapStoreView(),
+                            ),
+                          ),
+                        );
+                        analytics.changePage("가게상세", "지도");
+                      },
+                      child: MapStoreCard(store: viewModel.store!),
+                    ),
+                ],
+              ),
             ),
+          )
+        ],
+      ),
     );
   }
 }

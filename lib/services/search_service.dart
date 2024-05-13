@@ -1,10 +1,11 @@
 import 'dart:convert';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/services/api.dart';
 
 class SearchService {
   final _api = API();
+  final _position = PositionProvider.instance.myPosition;
 
   Future<List<String>> getRecommendKeywords() async {
     final res = await _api.req("/search/keyword/recommend", HttpMethod.get,
@@ -17,11 +18,11 @@ class SearchService {
   }
 
   // [TODO] range 백엔드와 협의 후 수정. 현재 더미데이터를 사용하는 동안, 전체 가게를 볼 수 있도록 임의의 큰 값을 사용함
-  Future<List<Menu>> search(String keyword, LatLng latlng) async {
+  Future<List<Menu>> search(String keyword) async {
     final res = await _api.req("/search?q=$keyword", HttpMethod.post,
         body: jsonEncode({
-          "lat": latlng.latitude,
-          "lon": latlng.longitude,
+          "lat": _position.latitude,
+          "lon": _position.longitude,
           "range": "100000000"
         }),
         type: UrlType.dev);

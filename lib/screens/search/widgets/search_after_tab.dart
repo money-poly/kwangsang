@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
-import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
@@ -19,7 +17,6 @@ class SearchAfterTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<SearchMainViewModel>(context);
     final analytics = AnalyticsConfig();
     return viewModel.menus == null
@@ -41,10 +38,7 @@ class SearchAfterTab extends StatelessWidget {
                     if (value.length < 2) {
                       showToast("2글자 이상으로 입력해주세요");
                     } else {
-                      viewModel.search(
-                          value,
-                          LatLng(positionProvider.myPosition!.latitude,
-                              positionProvider.myPosition!.longitude));
+                      viewModel.search(value);
                     }
                   },
                   style: KwangStyle.body1M,
@@ -141,16 +135,8 @@ class SearchAfterTab extends StatelessWidget {
                                   );
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          ChangeNotifierProvider(
-                                        create: (_) => MenuViewModel(
-                                            context,
-                                            LatLng(
-                                                positionProvider
-                                                    .myPosition!.latitude,
-                                                positionProvider
-                                                    .myPosition!.longitude),
-                                            e.id),
+                                      builder: (_) => ChangeNotifierProvider(
+                                        create: (_) => MenuViewModel(e.id),
                                         child: MenuView(menuId: e.id),
                                       ),
                                     ),

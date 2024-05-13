@@ -31,7 +31,7 @@ class NavView extends StatelessWidget {
                       if (item.index == 2) {
                         showDialog(
                           context: context,
-                          builder: (context) => const CustomAlertDialog(
+                          builder: (_) => const CustomAlertDialog(
                               type: AlertType.developing),
                         );
                       } else {

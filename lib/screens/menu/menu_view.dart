@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
-import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
@@ -25,7 +24,6 @@ class MenuView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MenuViewModel>(context);
-    final positionProvider = Provider.of<PositionProvider>(context);
     final analytics = AnalyticsConfig();
     return viewModel.menu == null
         ? const Scaffold(
@@ -62,10 +60,7 @@ class MenuView extends StatelessWidget {
               color: KwangColor.primary400,
               backgroundColor: KwangColor.grey100,
               onRefresh: () async {
-                viewModel.getDetailMenu(
-                    menuId,
-                    LatLng(positionProvider.myPosition!.latitude,
-                        positionProvider.myPosition!.longitude));
+                viewModel.getDetailMenu(menuId);
               },
               child: SingleChildScrollView(
                 child: Column(
@@ -266,17 +261,10 @@ class MenuView extends StatelessWidget {
                                         );
                                         await Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) =>
+                                            builder: (_) =>
                                                 ChangeNotifierProvider(
-                                              create: (_) => MenuViewModel(
-                                                  context,
-                                                  LatLng(
-                                                      positionProvider
-                                                          .myPosition!.latitude,
-                                                      positionProvider
-                                                          .myPosition!
-                                                          .longitude),
-                                                  e.id),
+                                              create: (_) =>
+                                                  MenuViewModel(e.id),
                                               child: MenuView(menuId: e.id),
                                             ),
                                           ),

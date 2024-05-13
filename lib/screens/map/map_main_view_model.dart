@@ -19,7 +19,7 @@ class MapMainViewModel with ChangeNotifier {
   List<Marker> get markers => _markers;
   Store? get store => _store;
 
-  MapMainViewModel(BuildContext context) {
+  MapMainViewModel() {
     initMarkerIcon();
   }
 
@@ -29,19 +29,20 @@ class MapMainViewModel with ChangeNotifier {
     super.dispose();
   }
 
-  void initController(GoogleMapController controller, LatLng position) {
+  void initController(GoogleMapController controller) {
     if (_mapController != null) {
       return;
     }
     _mapController = controller;
-    getMarkers(position);
+    getMarkers();
     if (!_isDisposed) {
       notifyListeners();
     }
   }
 
-  void moveCameraInitPosition(LatLng latLng) {
-    _mapController!.animateCamera(CameraUpdate.newLatLng(latLng));
+  void moveCameraInitPosition() {
+    _mapController!.animateCamera(CameraUpdate.newLatLng(
+        LatLng(_service.position.latitude, _service.position.longitude)));
   }
 
   void initMarkerIcon() async {
@@ -64,8 +65,8 @@ class MapMainViewModel with ChangeNotifier {
         .asUint8List();
   }
 
-  Future<void> getMarkers(LatLng position) async {
-    final List<StoreSimple> stores = await _service.getStores(position);
+  Future<void> getMarkers() async {
+    final List<StoreSimple> stores = await _service.getStores();
 
     _markers = stores
         .map((e) => Marker(
