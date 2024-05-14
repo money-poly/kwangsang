@@ -254,46 +254,43 @@ class MenuView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 20),
-                            child: Wrap(
-                              direction: Axis.vertical,
-                              spacing: 20,
-                              children: viewModel.menu!.anotherMenus
-                                  .map(
-                                    (e) => GestureDetector(
-                                      behavior: HitTestBehavior.translucent,
-                                      onTap: () async {
-                                        analytics.changePage("메뉴상세", "메뉴상세");
-                                        analytics.clickMenu(
-                                          MenuSimple.fromMenu(e),
-                                          {
-                                            "page": "메뉴상세",
-                                            "title": "이 매장 또 다른 메뉴",
-                                            "options": {}
-                                          },
-                                        );
-                                        await Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                ChangeNotifierProvider.value(
-                                              value: Provider.of<
-                                                      MenuBottomSheetViewModel>(
-                                                  context),
-                                              child: ChangeNotifierProvider(
-                                                create: (_) =>
-                                                    MenuViewModel(e.id),
-                                                child: MenuView(menuId: e.id),
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                        analytics.changePage("메뉴상세", "메뉴상세");
-                                      },
-                                      child: MenuCard(
-                                          menu: e,
-                                          type: MenuCardType.horizontal),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              separatorBuilder: (context, idx) {
+                                return const SizedBox(height: 20);
+                              },
+                              itemCount: viewModel.menu!.anotherMenus.length,
+                              itemBuilder: (context, idx) => GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () async {
+                                  analytics.changePage("메뉴상세", "메뉴상세");
+                                  analytics.clickMenu(
+                                    MenuSimple.fromMenu(
+                                        viewModel.menu!.anotherMenus[idx]),
+                                    {
+                                      "page": "메뉴상세",
+                                      "title": "이 매장 또 다른 메뉴",
+                                      "options": {}
+                                    },
+                                  );
+                                  await Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => ChangeNotifierProvider(
+                                        create: (_) => MenuViewModel(viewModel
+                                            .menu!.anotherMenus[idx].id),
+                                        child: MenuView(
+                                            menuId: viewModel
+                                                .menu!.anotherMenus[idx].id),
+                                      ),
                                     ),
-                                  )
-                                  .toList(),
+                                  );
+                                  analytics.changePage("메뉴상세", "메뉴상세");
+                                },
+                                child: MenuCard(
+                                    menu: viewModel.menu!.anotherMenus[idx],
+                                    type: MenuCardType.horizontal),
+                              ),
                             ),
                           ),
                         if (viewModel.menu!.origins.isNotEmpty)
