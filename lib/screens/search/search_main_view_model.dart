@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/services/search_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,13 +39,13 @@ class SearchMainViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> search(String keyword, LatLng latLng) async {
+  Future<void> search(String keyword) async {
     _searchController.text = keyword;
     if (keyword.length < 2) {
       return;
     } else {
       changeStatus(SearchStatus.after);
-      await getMenus(keyword, latLng);
+      await getMenus(keyword);
       await saveHistory(keyword);
     }
     notifyListeners();
@@ -90,9 +89,9 @@ class SearchMainViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getMenus(String keyword, LatLng latlng) async {
+  Future<void> getMenus(String keyword) async {
     _menus = null;
-    _menus = await _service.search(keyword, latlng);
+    _menus = await _service.search(keyword);
     notifyListeners();
   }
 }

@@ -15,9 +15,9 @@ class MapStoreViewModel with ChangeNotifier {
   StoreDetail? get store => _store;
   BitmapDescriptor? get markerOffIcon => _markerOffIcon;
 
-  MapStoreViewModel(LatLng position, int id) {
+  MapStoreViewModel(int id) {
     initMarkerIcon();
-    getStoreDetail(id, position);
+    getStoreDetail(id);
   }
 
   @override
@@ -44,9 +44,9 @@ class MapStoreViewModel with ChangeNotifier {
         .asUint8List();
   }
 
-  Future<void> getStoreDetail(int id, LatLng position) async {
+  Future<void> getStoreDetail(int id) async {
     _store = null;
-    _store = await _service.getStoreDetail(id, position);
+    _store = await _service.getStoreDetail(id);
     if (!_isDisposed) {
       notifyListeners();
     }

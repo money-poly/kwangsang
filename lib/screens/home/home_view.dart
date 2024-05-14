@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
-import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/home_bottom_sheet.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
@@ -22,7 +20,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<HomeViewModel>(context);
     final analytics = AnalyticsConfig();
     return Scaffold(
@@ -41,7 +38,7 @@ class HomeView extends StatelessWidget {
               analytics.changePage("홈", "검색");
               await Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ChangeNotifierProvider(
+                  builder: (_) => ChangeNotifierProvider(
                     create: (_) => SearchMainViewModel(),
                     child: const SearchMainView(),
                   ),
@@ -179,17 +176,9 @@ class HomeView extends StatelessWidget {
                                             analytics.changePage("홈", "메뉴상세");
                                             await Navigator.of(context).push(
                                               MaterialPageRoute(
-                                                builder: (context) =>
+                                                builder: (_) =>
                                                     ChangeNotifierProvider(
                                                   create: (_) => MenuViewModel(
-                                                      context,
-                                                      LatLng(
-                                                          positionProvider
-                                                              .myPosition!
-                                                              .latitude,
-                                                          positionProvider
-                                                              .myPosition!
-                                                              .longitude),
                                                       viewModel
                                                           .maxDiscountStores[
                                                               tabIdx]!
@@ -328,18 +317,11 @@ class HomeView extends StatelessWidget {
                                                               context)
                                                           .push(
                                                         MaterialPageRoute(
-                                                          builder: (context) =>
+                                                          builder: (_) =>
                                                               ChangeNotifierProvider(
-                                                            create: (_) => MenuViewModel(
-                                                                context,
-                                                                LatLng(
-                                                                    positionProvider
-                                                                        .myPosition!
-                                                                        .latitude,
-                                                                    positionProvider
-                                                                        .myPosition!
-                                                                        .longitude),
-                                                                e.id),
+                                                            create: (_) =>
+                                                                MenuViewModel(
+                                                                    e.id),
                                                             child: MenuView(
                                                               menuId: e.id,
                                                             ),

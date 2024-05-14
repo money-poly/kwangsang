@@ -13,7 +13,10 @@ class NavView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<NavViewModel>(context);
     return Scaffold(
-      body: viewModel.pages[viewModel.currIdx],
+      body: IndexedStack(
+        index: viewModel.currIdx,
+        children: viewModel.pages,
+      ),
       bottomNavigationBar: Container(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
@@ -31,7 +34,7 @@ class NavView extends StatelessWidget {
                       if (item.index == 2) {
                         showDialog(
                           context: context,
-                          builder: (context) => const CustomAlertDialog(
+                          builder: (_) => const CustomAlertDialog(
                               type: AlertType.developing),
                         );
                       } else {

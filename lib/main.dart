@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/map_main_view_model.dart';
@@ -22,11 +21,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   FlutterNativeSplash.preserve(widgetsBinding: widgetBinding);
-  LocationPermission permission = await Geolocator.checkPermission();
-  if (permission != LocationPermission.always &&
-      permission != LocationPermission.whileInUse) {
-    await Geolocator.requestPermission();
-  }
+  await PositionProvider.instance.initMyPosition();
   AnalyticsConfig().init();
   FlutterNativeSplash.remove();
   runApp(MyApp(isVisited: prefs.getBool("visited") ?? false));
@@ -58,13 +53,11 @@ class MyApp extends StatelessWidget {
               ? MultiProvider(providers: [
                   ChangeNotifierProvider(create: (_) => NavViewModel()),
                   ChangeNotifierProvider(create: (_) => PositionProvider()),
-                  ChangeNotifierProvider(
-                      create: (context) => HomeViewModel(context)),
-                  ChangeNotifierProvider(
-                      create: (context) => MapMainViewModel(context)),
+                  ChangeNotifierProvider(create: (_) => HomeViewModel()),
+                  ChangeNotifierProvider(create: (_) => MapMainViewModel()),
                 ], child: const NavView())
               : ChangeNotifierProvider(
-                  create: (context) => OnBoardingViewModel(context),
+                  create: (_) => OnBoardingViewModel(),
                   child: const OnBoarding(),
                 ),
         ),

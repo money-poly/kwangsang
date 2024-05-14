@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
 class PositionProvider with ChangeNotifier {
-  Position? _myPosition;
+  late Position _myPosition;
+
+  static final PositionProvider instance = PositionProvider._internal();
+  factory PositionProvider() => instance;
+
+  PositionProvider._internal();
+
   final Position _kwuPosition = Position(
       longitude: 127.06091701329066,
       latitude: 37.61975269040579,
@@ -16,15 +22,9 @@ class PositionProvider with ChangeNotifier {
       speedAccuracy: 0.0);
   bool _isPermissionGranted = false;
 
-  Position? get myPosition => _myPosition;
+  Position get myPosition => _myPosition;
 
-  PositionProvider() {
-    initMyPosition().then((value) {
-      notifyListeners();
-    });
-  }
-
-  Future initMyPosition() async {
+  Future<void> initMyPosition() async {
     await getLocationPermission();
     await updateMyPosition();
   }

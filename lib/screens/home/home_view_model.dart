@@ -15,7 +15,7 @@ enum Order {
 }
 
 class HomeViewModel with ChangeNotifier {
-  late final HomeService _service;
+  final HomeService _service = HomeService();
   final AdminService _adminService = AdminService();
 
   bool _isLoading = true;
@@ -26,9 +26,8 @@ class HomeViewModel with ChangeNotifier {
   List<StoreHome?> _maxDiscountStores = [];
   List<List<Menu>> _discountMenus = [];
 
-  HomeViewModel(BuildContext context) {
-    _service = HomeService(context);
-    init(context);
+  HomeViewModel() {
+    init();
   }
 
   @override
@@ -46,10 +45,9 @@ class HomeViewModel with ChangeNotifier {
   List<List<Menu>> get discountMenus => _discountMenus;
   Order get order => _order;
 
-  Future<void> init(BuildContext context) async {
+  Future<void> init() async {
     _isLoading = true;
     await getStoreCategories();
-    await _service.initPosition();
     await getMaxDiscountStores();
     await getDiscountMenus();
     _isLoading = false;

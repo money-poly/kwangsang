@@ -1,27 +1,17 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/models/store.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/services/api.dart';
-import 'package:provider/provider.dart';
 
 class HomeService {
   final API _api = API();
-  late final PositionProvider _positionProvider;
-
-  HomeService(BuildContext context) {
-    _positionProvider = Provider.of<PositionProvider>(context, listen: false);
-  }
-
-  Future<void> initPosition() async {
-    await _positionProvider.initMyPosition();
-  }
+  final position = PositionProvider.instance.myPosition;
 
   Future<Map<String, StoreHome?>> getMaxDiscountStores() async {
     final res = await _api.req(
-      "/menus/max-discount?lat=${_positionProvider.myPosition!.latitude}&lon=${_positionProvider.myPosition!.longitude}",
+      "/menus/max-discount?lat=${position.latitude}&lon=${position.longitude}",
       HttpMethod.get,
       type: UrlType.dev,
     );
@@ -41,7 +31,7 @@ class HomeService {
 
   Future<Map<String, List<Menu>>> getDiscountMenus(Order order) async {
     final res = await _api.req(
-      "/menus/discounted?type=${order.name}&lat=${_positionProvider.myPosition!.latitude}&lon=${_positionProvider.myPosition!.longitude}",
+      "/menus/discounted?type=${order.name}&lat=${position.latitude}&lon=${position.longitude}",
       HttpMethod.get,
       type: UrlType.dev,
     );
