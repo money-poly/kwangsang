@@ -4,6 +4,7 @@ class KwangColor {
   static const grey100 = Colors.white;
   static const grey200 = Color(0xFFF8F8F9);
   static const grey300 = Color(0xFFF4F6FA);
+  static const grey350 = Color(0xFFEAECF1);
   static const grey400 = Color(0xFFDFE3EC);
   static const grey500 = Color(0xFFC3C8D0);
   static const grey600 = Color(0xFFB4B9C2);
@@ -19,8 +20,10 @@ class KwangColor {
   static const primary400 = Color(0xFF3D5D47);
 
   static const red = Color(0xFFEE3C32);
+  static const orange = Color(0xFFFF8C22);
   static const blue = Color(0xFF2260FF);
   static const green = Color(0xFF6FC36D);
   static const lightRed = Color(0xFFFAEAEA);
+  static const lightOrange = Color(0xFFFFEDD2);
   static const lightGreen = Color(0xFFE6F7E6);
 }
