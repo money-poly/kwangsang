@@ -23,6 +23,8 @@ class KwangStyle {
   static final TextStyle btn2SB = btn2.copyWith(fontWeight: FontWeight.w600);
 
   static final TextStyle btn3 = base.copyWith(fontSize: 12, height: 16 / 12, fontWeight: FontWeight.w700);
+
+  static final TextStyle btn4 = base.copyWith(fontSize: 10, height: 14 / 10, fontWeight: FontWeight.w700);
   
   static final TextStyle body1 = base.copyWith(fontSize: 14, height: 20 / 14, fontWeight: FontWeight.w400);
   static final TextStyle body1M = body1.copyWith(fontWeight: FontWeight.w500);
