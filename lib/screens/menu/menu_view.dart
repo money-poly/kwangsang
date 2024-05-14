@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
@@ -25,38 +27,48 @@ class MenuView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<MenuViewModel>(context);
     final analytics = AnalyticsConfig();
-    return viewModel.menu == null
-        ? const Scaffold(
-            body: Center(
-                child: CircularProgressIndicator(
-              color: KwangColor.primary400,
-            )),
-          )
-        : Scaffold(
-            backgroundColor: KwangColor.grey100,
-            appBar: AppBar(
-              title: Text("메뉴상세", style: KwangStyle.header2),
-              toolbarHeight: 52,
-              titleSpacing: 8,
-              centerTitle: false,
-              leading: Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: SvgPicture.asset(
-                    "assets/icons/ic_36_back.svg",
-                    width: 36,
-                    height: 36,
-                  ),
-                ),
-              ),
-              leadingWidth: 44,
-              backgroundColor: Colors.white,
-              elevation: 0,
+
+    if (viewModel.menu != null) {
+      var menu = viewModel.menu;
+      Provider.of<MenuBottomSheetViewModel>(context).setMainItem(Menu(
+        id: menuId,
+        name: menu!.name,
+        imgUrl: menu.menuPictureUrl,
+        regularPrice: menu.regularPrice,
+        discountRate: menu.discountRate,
+        discountPrice: menu.discountPrice,
+      ));
+    }
+    return Scaffold(
+      backgroundColor: KwangColor.grey100,
+      appBar: AppBar(
+        title: Text("메뉴상세", style: KwangStyle.header2),
+        toolbarHeight: 52,
+        titleSpacing: 8,
+        centerTitle: false,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: SvgPicture.asset(
+              "assets/icons/ic_36_back.svg",
+              width: 36,
+              height: 36,
             ),
-            body: RefreshIndicator(
+          ),
+        ),
+        leadingWidth: 44,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: viewModel.menu == null
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: KwangColor.primary400,
+            ))
+          : RefreshIndicator(
               color: KwangColor.primary400,
               backgroundColor: KwangColor.grey100,
               onRefresh: () async {
@@ -262,10 +274,15 @@ class MenuView extends StatelessWidget {
                                         await Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (_) =>
-                                                ChangeNotifierProvider(
-                                              create: (_) =>
-                                                  MenuViewModel(e.id),
-                                              child: MenuView(menuId: e.id),
+                                                ChangeNotifierProvider.value(
+                                              value: Provider.of<
+                                                      MenuBottomSheetViewModel>(
+                                                  context),
+                                              child: ChangeNotifierProvider(
+                                                create: (_) =>
+                                                    MenuViewModel(e.id),
+                                                child: MenuView(menuId: e.id),
+                                              ),
                                             ),
                                           ),
                                         );
@@ -337,77 +354,43 @@ class MenuView extends StatelessWidget {
                                 .toList(),
                           ),
                         ),
+                        const SizedBox(height: 40),
                       ],
                     ),
                   ],
                 ),
               ),
             ),
-            bottomSheet: Container(
-              height: 70 + MediaQuery.of(context).padding.bottom,
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).padding.bottom),
-              decoration: BoxDecoration(
-                border: const Border(
-                    top: BorderSide(color: KwangColor.grey300, width: 1)),
-                color: viewModel.menu!.count == 0
-                    ? KwangColor.grey300
-                    : KwangColor.grey100,
-              ),
-              alignment: Alignment.center,
-              child: viewModel.menu!.count == 0
-                  ? Text("품절",
-                      style: KwangStyle.header3
-                          .copyWith(color: KwangColor.grey600))
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/icons/ic_20_alarm.svg",
-                          width: 20,
-                          height: 20,
-                          colorFilter: const ColorFilter.mode(
-                              KwangColor.red, BlendMode.srcIn),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          "${viewModel.menu!.count}개 ",
-                          style: KwangStyle.header3
-                              .copyWith(color: KwangColor.red),
-                        ),
-                        Text("밖에 안남았어요.", style: KwangStyle.header3),
-                      ],
-                    ),
-            )
+      bottomSheet: const MenuBottomSheet(),
 
-            // Container(
-            //   padding: EdgeInsets.fromLTRB(
-            //       20, 11, 20, 11 + MediaQuery.of(context).viewPadding.bottom),
-            //   decoration: const BoxDecoration(
-            //     color: Colors.white,
-            //     border: Border(
-            //       top: BorderSide(width: 1.0, color: KwangColor.grey300),
-            //     ),
-            //   ),
-            //   child: GestureDetector(
-            //     onTap: () {
-            //       showDialog(
-            //           context: context,
-            //           builder: (context) =>
-            //               const CustomAlertDialog(type: AlertType.developing));
-            //     },
-            //     child: Container(
-            //       height: 44,
-            //       alignment: Alignment.center,
-            //       decoration: BoxDecoration(
-            //         color: KwangColor.primary400,
-            //         borderRadius: BorderRadius.circular(8),
-            //       ),
-            //       child: Text("전화하기",
-            //           style: KwangStyle.btn2B.copyWith(color: Colors.white)),
-            //     ),
-            //   ),
-            // ),
-            );
+      // Container(
+      //   padding: EdgeInsets.fromLTRB(
+      //       20, 11, 20, 11 + MediaQuery.of(context).viewPadding.bottom),
+      //   decoration: const BoxDecoration(
+      //     color: Colors.white,
+      //     border: Border(
+      //       top: BorderSide(width: 1.0, color: KwangColor.grey300),
+      //     ),
+      //   ),
+      //   child: GestureDetector(
+      //     onTap: () {
+      //       showDialog(
+      //           context: context,
+      //           builder: (context) =>
+      //               const CustomAlertDialog(type: AlertType.developing));
+      //     },
+      //     child: Container(
+      //       height: 44,
+      //       alignment: Alignment.center,
+      //       decoration: BoxDecoration(
+      //         color: KwangColor.primary400,
+      //         borderRadius: BorderRadius.circular(8),
+      //       ),
+      //       child: Text("전화하기",
+      //           style: KwangStyle.btn2B.copyWith(color: Colors.white)),
+      //     ),
+      //   ),
+      // ),
+    );
   }
 }

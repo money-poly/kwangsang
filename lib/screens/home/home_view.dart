@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/home_bottom_sheet.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
@@ -178,18 +179,22 @@ class HomeView extends StatelessWidget {
                                               MaterialPageRoute(
                                                 builder: (_) =>
                                                     ChangeNotifierProvider(
-                                                  create: (_) => MenuViewModel(
-                                                      viewModel
-                                                          .maxDiscountStores[
-                                                              tabIdx]!
-                                                          .menu
-                                                          .id),
-                                                  child: MenuView(
-                                                      menuId: viewModel
-                                                          .maxDiscountStores[
-                                                              tabIdx]!
-                                                          .menu
-                                                          .id),
+                                                  create: (_) =>
+                                                      MenuBottomSheetViewModel(),
+                                                  child: ChangeNotifierProvider(
+                                                    create: (_) =>
+                                                        MenuViewModel(viewModel
+                                                            .maxDiscountStores[
+                                                                tabIdx]!
+                                                            .menu
+                                                            .id),
+                                                    child: MenuView(
+                                                        menuId: viewModel
+                                                            .maxDiscountStores[
+                                                                tabIdx]!
+                                                            .menu
+                                                            .id),
+                                                  ),
                                                 ),
                                               ),
                                             );
@@ -260,7 +265,7 @@ class HomeView extends StatelessWidget {
                                                       height: 18,
                                                       colorFilter:
                                                           const ColorFilter
-                                                                  .mode(
+                                                              .mode(
                                                               KwangColor
                                                                   .grey700,
                                                               BlendMode.srcIn),
@@ -320,10 +325,15 @@ class HomeView extends StatelessWidget {
                                                           builder: (_) =>
                                                               ChangeNotifierProvider(
                                                             create: (_) =>
-                                                                MenuViewModel(
-                                                                    e.id),
-                                                            child: MenuView(
-                                                              menuId: e.id,
+                                                                MenuBottomSheetViewModel(),
+                                                            child:
+                                                                ChangeNotifierProvider(
+                                                              create: (_) =>
+                                                                  MenuViewModel(
+                                                                      e.id),
+                                                              child: MenuView(
+                                                                menuId: e.id,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),

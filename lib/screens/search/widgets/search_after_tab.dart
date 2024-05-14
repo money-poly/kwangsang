@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
@@ -136,8 +137,12 @@ class SearchAfterTab extends StatelessWidget {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) => ChangeNotifierProvider(
-                                        create: (_) => MenuViewModel(e.id),
-                                        child: MenuView(menuId: e.id),
+                                        create: (_) =>
+                                            MenuBottomSheetViewModel(),
+                                        child: ChangeNotifierProvider(
+                                          create: (_) => MenuViewModel(e.id),
+                                          child: MenuView(menuId: e.id),
+                                        ),
                                       ),
                                     ),
                                   );
