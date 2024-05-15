@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
@@ -213,9 +214,13 @@ class MapStoreView extends StatelessWidget {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) => ChangeNotifierProvider(
-                                        create: (_) => MenuViewModel(e.id),
-                                        child: MenuView(
-                                          menuId: e.id,
+                                        create: (_) =>
+                                            MenuBottomSheetViewModel(),
+                                        child: ChangeNotifierProvider(
+                                          create: (_) => MenuViewModel(e.id),
+                                          child: MenuView(
+                                            menuId: e.id,
+                                          ),
                                         ),
                                       ),
                                     ),
