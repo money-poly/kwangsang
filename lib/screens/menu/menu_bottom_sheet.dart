@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/widgets/menu_bottom_sheet_card.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/count_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
@@ -52,7 +51,7 @@ class MenuBottomSheet extends StatelessWidget {
                     child: Transform.rotate(
                       angle: viewModel.isExpanded ? math.pi : 0,
                       child: SvgPicture.asset(
-                        "assets/icons/expand_arrow.svg",
+                        "assets/icons/ic_30_arrow_up.svg",
                         width: 30,
                         height: 10,
                       ),
@@ -77,7 +76,17 @@ class MenuBottomSheet extends StatelessWidget {
                 height: 77,
                 child: Row(
                   children: [
-                    if (!viewModel.isExpanded) _counter(viewModel),
+                    if (!viewModel.isExpanded)
+                      CountWidget(
+                        count:
+                            viewModel.selectedMenuQty[viewModel.mainItem?.id] ??
+                                0,
+                        add: () => viewModel.plusMenu(viewModel.mainItem!),
+                        subtract: () =>
+                            viewModel.minusMenu(viewModel.mainItem!),
+                        size: CountWidgetSize.large,
+                      ),
+                    if (!viewModel.isExpanded) const SizedBox(width: 10),
                     Flexible(
                       flex: 1,
                       child: Container(
@@ -97,72 +106,13 @@ class MenuBottomSheet extends StatelessWidget {
                   ],
                 ),
               ),
+              // TODO: MediaQuery가 0으로 나오는 문제
+              SizedBox(
+                height: MediaQuery.of(context).padding.bottom + 10,
+              )
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _counter(MenuBottomSheetViewModel viewModel) {
-    var qty = viewModel.selectedMenuQty[viewModel.mainItem?.id] ?? 0;
-    return Container(
-      margin: const EdgeInsets.only(right: 10),
-      width: 122,
-      decoration: BoxDecoration(
-        color: KwangColor.grey300,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => viewModel.minusMenu(viewModel.mainItem!),
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              margin: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.remove_rounded,
-                  color: qty == 0 ? KwangColor.grey500 : KwangColor.grey700,
-                  size: 20,
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Center(
-              child: Text(
-                qty.toString(),
-                style: KwangStyle.btn2B,
-              ),
-            ),
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => viewModel.plusMenu(viewModel.mainItem!),
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              margin: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.add_rounded,
-                  color: KwangColor.grey700,
-                  size: 20,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

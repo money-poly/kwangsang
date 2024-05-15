@@ -3,6 +3,8 @@ import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/count_tag_widget.dart';
+import 'package:immersion_kwangsang/widgets/count_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +47,11 @@ class MenuBottomSheetCard extends StatelessWidget {
                     menu.name,
                     style: KwangStyle.btn2SB,
                   ),
-                  // TODO: 잔여수량 위젯 배치
+                  // TODO: connect with view model
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: CountTagWidget(count: 10),
+                  )
                 ],
               ),
               GestureDetector(
@@ -64,7 +70,12 @@ class MenuBottomSheetCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              _counter(viewModel),
+              CountWidget(
+                count: viewModel.selectedMenuQty[menu.id] ?? 0,
+                add: () => viewModel.plusMenu(menu),
+                subtract: () => viewModel.minusMenu(menu),
+                bgColor: KwangColor.grey400,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -84,69 +95,6 @@ class MenuBottomSheetCard extends StatelessWidget {
                 ],
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _counter(MenuBottomSheetViewModel viewModel) {
-    var qty = viewModel.selectedMenuQty[menu.id] ?? 0;
-    return Container(
-      margin: const EdgeInsets.only(right: 10),
-      width: 100,
-      decoration: BoxDecoration(
-        color: KwangColor.grey400,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => viewModel.minusMenu(viewModel.mainItem!),
-            child: Container(
-              padding: const EdgeInsets.all(1),
-              margin: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Icon(
-                  Icons.remove_rounded,
-                  color: qty == 0 ? KwangColor.grey500 : KwangColor.grey700,
-                  size: 16,
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Center(
-              child: Text(
-                qty.toString(),
-                style: KwangStyle.body1M,
-              ),
-            ),
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => viewModel.plusMenu(viewModel.mainItem!),
-            child: Container(
-              padding: const EdgeInsets.all(1),
-              margin: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.add_rounded,
-                  color: KwangColor.grey700,
-                  size: 16,
-                ),
-              ),
-            ),
           ),
         ],
       ),
