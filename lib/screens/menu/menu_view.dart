@@ -8,6 +8,7 @@ import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_more_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
@@ -248,8 +249,38 @@ class MenuView extends StatelessWidget {
                           Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 16, horizontal: 20),
-                              child: Text("이 매장 또 다른 메뉴",
-                                  style: KwangStyle.header2)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("이 매장 또 다른 메뉴",
+                                      style: KwangStyle.header2),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      var bottomSheetModel = context
+                                          .read<MenuBottomSheetViewModel>();
+                                      bottomSheetModel.hideCounter();
+                                      await Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              ChangeNotifierProvider.value(
+                                            value: Provider.of<
+                                                    MenuBottomSheetViewModel>(
+                                                context),
+                                            child: const MenuMoreView(),
+                                          ),
+                                        ),
+                                      );
+                                      bottomSheetModel.revealCounter();
+                                    },
+                                    child: Text(
+                                      "메뉴 전체보기",
+                                      style: KwangStyle.btn3
+                                          .copyWith(color: KwangColor.grey600),
+                                    ),
+                                  ),
+                                ],
+                              )),
                         if (viewModel.menu!.anotherMenus.isNotEmpty)
                           Padding(
                             padding: const EdgeInsets.symmetric(
@@ -276,12 +307,17 @@ class MenuView extends StatelessWidget {
                                   );
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) => ChangeNotifierProvider(
-                                        create: (_) => MenuViewModel(viewModel
-                                            .menu!.anotherMenus[idx].id),
-                                        child: MenuView(
-                                            menuId: viewModel
-                                                .menu!.anotherMenus[idx].id),
+                                      builder: (_) =>
+                                          ChangeNotifierProvider.value(
+                                        value: Provider.of<
+                                            MenuBottomSheetViewModel>(context),
+                                        child: ChangeNotifierProvider(
+                                          create: (_) => MenuViewModel(viewModel
+                                              .menu!.anotherMenus[idx].id),
+                                          child: MenuView(
+                                              menuId: viewModel
+                                                  .menu!.anotherMenus[idx].id),
+                                        ),
                                       ),
                                     ),
                                   );
