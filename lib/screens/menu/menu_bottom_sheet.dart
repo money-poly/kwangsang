@@ -60,11 +60,15 @@ class MenuBottomSheet extends StatelessWidget {
                 ),
               ),
               if (viewModel.isExpanded)
-                Column(
-                  children: [
-                    for (var menu in viewModel.selectedMenu)
-                      MenuBottomSheetCard(menu: menu),
-                  ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (var menu in viewModel.selectedMenu)
+                          MenuBottomSheetCard(menu: menu),
+                      ],
+                    ),
+                  ),
                 ),
               Container(
                 padding: const EdgeInsets.only(
