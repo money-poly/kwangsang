@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_card_h_spliter.dart';
+import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_detail.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_map.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_map_detail.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_progress_widget.dart';
@@ -53,6 +54,8 @@ class PurchaseInfoView extends StatelessWidget {
                 viewModel.phase == EPurchaseInfoPhase.pickup)
               const PurchaseInfoMapDetail(),
             const SizedBox(height: 6),
+            const PurchaseInfoCardHSpliter(),
+            const PurchaseInfoDetail(),
             const PurchaseInfoCardHSpliter(),
             SizedBox(height: MediaQuery.paddingOf(context).bottom),
           ],
