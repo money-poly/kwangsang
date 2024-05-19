@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_card_h_spliter.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_map.dart';
+import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_map_detail.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_progress_widget.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -39,15 +40,23 @@ class PurchaseInfoView extends StatelessWidget {
         ),
         leadingWidth: 44,
         backgroundColor: Colors.white,
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
       ),
-      body: const Column(
-        children: [
-          PurchaseInfoProgressWidget(),
-          PurchaseInfoCardHSpliter(),
-          PurchaseInfoMap(),
-          PurchaseInfoCardHSpliter(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const PurchaseInfoProgressWidget(),
+            const PurchaseInfoCardHSpliter(),
+            const PurchaseInfoMap(),
+            if (viewModel.phase == EPurchaseInfoPhase.accepted ||
+                viewModel.phase == EPurchaseInfoPhase.pickup)
+              const PurchaseInfoMapDetail(),
+            const SizedBox(height: 6),
+            const PurchaseInfoCardHSpliter(),
+            SizedBox(height: MediaQuery.paddingOf(context).bottom),
+          ],
+        ),
       ),
     );
   }
