@@ -17,6 +17,7 @@ enum EPurchaseInfoPhase {
 
 class PurchaseInfoViewModel extends ChangeNotifier {
   late final bool _isMember;
+  // TODO: Initialize with API
   EPurchaseInfoPhase _phase = EPurchaseInfoPhase.pending;
 
   PurchaseInfoViewModel({

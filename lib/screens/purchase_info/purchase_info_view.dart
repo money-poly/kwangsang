@@ -5,6 +5,7 @@ import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_detail.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_map.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_map_detail.dart';
+import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_method.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_progress_widget.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -57,10 +58,54 @@ class PurchaseInfoView extends StatelessWidget {
             const PurchaseInfoCardHSpliter(),
             const PurchaseInfoDetail(),
             const PurchaseInfoCardHSpliter(),
+            const PurchaseInfoMethod(),
             SizedBox(height: MediaQuery.paddingOf(context).bottom),
+            if (viewModel.phase == EPurchaseInfoPhase.pending)
+              const SizedBox(height: 90),
           ],
         ),
       ),
+      bottomSheet: viewModel.phase == EPurchaseInfoPhase.pending
+          ? Container(
+              height: 84 + MediaQuery.paddingOf(context).bottom,
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 20,
+              ),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 1,
+                    spreadRadius: 3,
+                    color: KwangColor.grey300,
+                  ),
+                ],
+              ),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 52,
+                    decoration: BoxDecoration(
+                      color: KwangColor.primary100,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '주문 취소',
+                        style: KwangStyle.btn2B.copyWith(
+                          color: KwangColor.primary400,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : null,
     );
   }
 }
