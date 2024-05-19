@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/widgets/menu_bottom_sheet_card.dart';
+import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view.dart';
+import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/count_widget.dart';
@@ -89,16 +92,30 @@ class MenuBottomSheet extends StatelessWidget {
                     if (!viewModel.isExpanded) const SizedBox(width: 10),
                     Flexible(
                       flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: KwangColor.primary400,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            '${NumberFormat('###,###,###,###').format(viewModel.totalCost())}원 주문하기',
-                            style:
-                                KwangStyle.btn2B.copyWith(color: Colors.white),
+                      child: GestureDetector(
+                        // TODO: Temporary routing to purchase info screem
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => ChangeNotifierProvider(
+                                create: (_) =>
+                                    PurchaseInfoViewModel(isMember: true),
+                                child: const PurchaseInfoView(),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: KwangColor.primary400,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${NumberFormat('###,###,###,###').format(viewModel.totalCost())}원 주문하기',
+                              style: KwangStyle.btn2B
+                                  .copyWith(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
