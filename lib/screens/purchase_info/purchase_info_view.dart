@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_card_h_spliter.dart';
+import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_map.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_progress_widget.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -43,6 +44,8 @@ class PurchaseInfoView extends StatelessWidget {
       body: const Column(
         children: [
           PurchaseInfoProgressWidget(),
+          PurchaseInfoCardHSpliter(),
+          PurchaseInfoMap(),
           PurchaseInfoCardHSpliter(),
         ],
       ),
