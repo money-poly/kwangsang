@@ -31,7 +31,7 @@ class NavView extends StatelessWidget {
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      if (item.index == 2) {
+                      if (item.index == 3) {
                         showDialog(
                           context: context,
                           builder: (_) => const CustomAlertDialog(
