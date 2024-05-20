@@ -51,12 +51,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
             TextFormField(
               controller: widget.controller,
               validator: (value) {
-                isValidated = true;
                 return widget.validator(value) == null ? null : "";
               },
-              onChanged: (value) => setState(() {
-                isValidated = true;
-              }),
+              onSaved: (value) {
+                setState(() {
+                  isValidated = true;
+                });
+              },
               keyboardType: widget.keyboardType,
               inputFormatters: widget.inputFormatters,
               minLines: widget.maxLines,
@@ -64,7 +65,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
               maxLength: widget.maxLength,
               obscureText: widget.isObsecure,
               readOnly: widget.readOnly,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
+              autovalidateMode: isValidated
+                  ? AutovalidateMode.onUserInteraction
+                  : AutovalidateMode.disabled,
               style: widget.maxLines == 1
                   ? KwangStyle.body1
                   : KwangStyle.paragraph,
