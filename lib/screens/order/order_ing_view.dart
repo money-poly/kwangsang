@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/screens/login/login_view.dart';
 import 'package:immersion_kwangsang/screens/login/login_view_model.dart';
+import 'package:immersion_kwangsang/screens/order/order_find_view.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +69,13 @@ class OrderIngView extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const OrderFindView(),
+              ),
+            );
+          },
           child: Text(
             "비회원 주문 조회",
             style: KwangStyle.btn2SB.copyWith(
