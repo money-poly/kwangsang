@@ -8,6 +8,7 @@ import 'package:immersion_kwangsang/screens/navigation/nav_view.dart';
 import 'package:immersion_kwangsang/screens/navigation/nav_view_model.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding_view_model.dart';
+import 'package:immersion_kwangsang/screens/order/order_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/theme.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
                   ChangeNotifierProvider(create: (_) => PositionProvider()),
                   ChangeNotifierProvider(create: (_) => HomeViewModel()),
                   ChangeNotifierProvider(create: (_) => MapMainViewModel()),
+                  ChangeNotifierProvider(create: (_) => OrderViewModel()),
                 ], child: const NavView())
               : ChangeNotifierProvider(
                   create: (_) => OnBoardingViewModel(),
