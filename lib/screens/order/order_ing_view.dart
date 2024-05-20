@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:immersion_kwangsang/screens/login/login_view.dart';
+import 'package:immersion_kwangsang/screens/login/login_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:provider/provider.dart';
 
 class OrderIngView extends StatelessWidget {
   const OrderIngView({super.key});
@@ -35,17 +38,29 @@ class OrderIngView extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: KwangColor.grey400),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  "로그인/회원가입",
-                  style: KwangStyle.btn2SB.copyWith(
-                    color: KwangColor.primary300,
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ChangeNotifierProvider(
+                        create: (_) => LoginViewModel(),
+                        child: const LoginView(),
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: KwangColor.grey400),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    "로그인/회원가입",
+                    style: KwangStyle.btn2SB.copyWith(
+                      color: KwangColor.primary300,
+                    ),
                   ),
                 ),
               )
