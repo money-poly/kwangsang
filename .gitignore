@@ -69,6 +69,8 @@ lib/generated_plugin_registrant.dart
 
 # 추가
 .DS_Store
+.env
+**/ios/Flutter/Kwang.xcconfig
 ## for flutterfire
 **/lib/firebase_options.dart
 **/android/app/google-services.json
