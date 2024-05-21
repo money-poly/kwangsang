@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/screens/purchase/purchase_check_view_model.dart';
 import 'package:immersion_kwangsang/screens/purchase/widgets/padding_title_widget.dart';
+import 'package:immersion_kwangsang/screens/purchase/widgets/purchase_check_dialog.dart';
 import 'package:immersion_kwangsang/screens/purchase/widgets/soldout_menu_card.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -250,7 +251,11 @@ class PurchaseCheckView extends StatelessWidget {
             txtColor: KwangColor.grey100,
             unableBgColor: KwangColor.primary400,
             unableTxtColor: KwangColor.grey100,
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => PurchaseCheckDialog());
+            },
             isEnable: true,
             type: CustomBtnType.big),
       ),
