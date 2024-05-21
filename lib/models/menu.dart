@@ -61,6 +61,7 @@ class Menu {
   List<Tag>? tags;
   List<Origin>? origins;
   MenuStatus? status;
+  int? count; // [TODO] count fromJson 추가
 
   Menu({
     required this.id,
@@ -75,6 +76,7 @@ class Menu {
     this.tags,
     this.origins,
     this.status,
+    this.count,
   });
 
   factory Menu.fromJson(Map<String, dynamic> json) => Menu(
