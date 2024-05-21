@@ -9,3 +9,7 @@ String kmNumberFormatter(int number) {
     return '${NumberFormat.compact().format(number / 1000000)}M';
   }
 }
+
+String commaNumberFormatter(int number) {
+  return "${NumberFormat('###,###,###,###').format(number).replaceAll(' ', ',')}원";
+}

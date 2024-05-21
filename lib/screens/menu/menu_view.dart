@@ -1,22 +1,18 @@
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
-import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_more_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
+import 'package:immersion_kwangsang/screens/menu/widgets/menu_info_col.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
-import 'package:immersion_kwangsang/utils/datetime_formatter.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
 import 'package:immersion_kwangsang/widgets/bullet_string.dart';
-import 'package:immersion_kwangsang/widgets/menu_card.dart';
+import 'package:immersion_kwangsang/widgets/countable_menu_card.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +39,7 @@ class MenuView extends StatelessWidget {
     return Scaffold(
       backgroundColor: KwangColor.grey100,
       appBar: AppBar(
-        title: Text("메뉴상세", style: KwangStyle.header2),
+        title: Text("상품상세", style: KwangStyle.header2),
         toolbarHeight: 52,
         titleSpacing: 8,
         centerTitle: false,
@@ -107,232 +103,139 @@ class MenuView extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 24),
+                              horizontal: 20, vertical: 20),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (viewModel.menu!.description != null)
-                                Text(
-                                  viewModel.menu!.description!,
-                                  style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: KwangColor.grey600),
+                              // if (viewModel.menu!.description != null)
+                              //   Text(
+                              //     viewModel.menu!.description!,
+                              //     style: const TextStyle(
+                              //         fontSize: 12,
+                              //         fontWeight: FontWeight.w500,
+                              //         color: KwangColor.grey600),
+                              //   ),
+                              // if (viewModel.menu!.description != null)
+                              //   const SizedBox(
+                              //     height: 4,
+                              //   ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      viewModel.menu!.store.name,
+                                      style: KwangStyle.btn2SB
+                                          .copyWith(color: KwangColor.grey700),
+                                    ),
+                                    SvgPicture.asset(
+                                      "assets/icons/ic_20_arrow_right.svg",
+                                      width: 20,
+                                      height: 20,
+                                      colorFilter: const ColorFilter.mode(
+                                          KwangColor.grey600, BlendMode.srcIn),
+                                    )
+                                  ],
                                 ),
-                              if (viewModel.menu!.description != null)
-                                const SizedBox(
-                                  height: 4,
-                                ),
+                              ),
+                              const SizedBox(height: 12),
                               Text(
                                 viewModel.menu!.name,
                                 style: KwangStyle.header1,
                                 softWrap: true,
                                 overflow: TextOverflow.visible,
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    NumberFormat('###,###,###,###')
-                                        .format(viewModel.menu!.regularPrice)
-                                        .replaceAll(' ', ','),
+                                    "${NumberFormat('###,###,###,###').format(viewModel.menu!.regularPrice).replaceAll(' ', ',')}원",
                                     style: KwangStyle.header1.copyWith(
                                         color: KwangColor.grey600,
                                         decoration: TextDecoration.lineThrough),
                                   ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "${viewModel.menu!.discountRate}%",
-                                        style: KwangStyle.header0
-                                            .copyWith(color: KwangColor.red),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                          "${NumberFormat('###,###,###,###').format(viewModel.menu!.discountPrice).replaceAll(' ', ',')}원",
-                                          style: KwangStyle.header0),
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 14),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "${viewModel.menu!.discountRate}%",
+                                          style: KwangStyle.header0
+                                              .copyWith(color: KwangColor.red),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                            "${NumberFormat('###,###,###,###').format(viewModel.menu!.discountPrice).replaceAll(' ', ',')}원",
+                                            style: KwangStyle.header0),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               )
                             ],
                           ),
                         ),
-                        if (viewModel.menu!.expiredDate != null)
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            padding: const EdgeInsets.symmetric(vertical: 24),
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                top: BorderSide(
-                                    color: KwangColor.grey300, width: 1),
-                              ),
-                            ),
-                            child: StoreInfoRow(
-                              title: "소비기한",
-                              content: dateToStr(DateTimStrType.korean,
-                                  viewModel.menu!.expiredDate!),
-                              hasPaddingBottom: false,
-                            ),
-                          ),
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           width: MediaQuery.of(context).size.width - 40,
                           height: 1,
                           color: KwangColor.grey300,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 24),
-                          child: Column(
-                            children: [
-                              StoreInfoRow(
-                                  title: "매장이름",
-                                  content: viewModel.menu!.store.name,
-                                  hasPaddingBottom: true),
-                              StoreInfoRow(
-                                  title: "매장주소",
-                                  content: viewModel.menu!.store.address,
-                                  hasPaddingBottom: true,
-                                  selectable: true),
-                              StoreInfoRow(
-                                  title: "픽업시간",
-                                  content:
-                                      "${viewModel.menu!.store.pickUpTime}분",
-                                  hasPaddingBottom: true),
-                              StoreInfoRow(
-                                  title: "전화번호",
-                                  content: viewModel.menu!.store.phone,
-                                  hasPaddingBottom: false),
-                            ],
-                          ),
-                        ),
                         Container(
-                          width: MediaQuery.of(context).size.width - 40,
                           margin: const EdgeInsets.symmetric(horizontal: 20),
                           decoration: BoxDecoration(
-                            border: Border.all(color: KwangColor.grey300),
+                            border: Border.all(color: KwangColor.grey350),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          height: 100,
-                          child: GoogleMap(
-                              initialCameraPosition: CameraPosition(
-                                target: viewModel.menu!.store.latLng,
-                                zoom: 16,
-                              ),
-                              myLocationButtonEnabled: false,
-                              zoomControlsEnabled: false,
-                              gestureRecognizers: {
-                                Factory<OneSequenceGestureRecognizer>(
-                                  () => EagerGestureRecognizer(),
-                                ),
-                              },
-                              markers: {
-                                Marker(
-                                  markerId: const MarkerId("store"),
-                                  position: viewModel.menu!.store.latLng,
-                                  icon: viewModel.markerOffIcon!,
-                                )
-                              }),
-                        ),
-                        if (viewModel.menu!.anotherMenus.isNotEmpty ||
-                            viewModel.menu!.origins.isNotEmpty)
-                          Container(
-                            margin: const EdgeInsets.only(top: 20, bottom: 8),
-                            height: 4,
-                            color: KwangColor.grey200,
-                          ),
-                        if (viewModel.menu!.anotherMenus.isNotEmpty)
-                          Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 16, horizontal: 20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("이 매장 또 다른 메뉴",
-                                      style: KwangStyle.header2),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      var bottomSheetModel = context
-                                          .read<MenuBottomSheetViewModel>();
-                                      bottomSheetModel.hideCounter();
-                                      await Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              ChangeNotifierProvider.value(
-                                            value: Provider.of<
-                                                    MenuBottomSheetViewModel>(
-                                                context),
-                                            child: const MenuMoreView(),
-                                          ),
-                                        ),
-                                      );
-                                      bottomSheetModel.revealCounter();
-                                    },
-                                    child: Text(
-                                      "메뉴 전체보기",
-                                      style: KwangStyle.btn3
-                                          .copyWith(color: KwangColor.grey600),
-                                    ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 8),
+                          child: IntrinsicHeight(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: MenuInfoCol(
+                                    title: "픽업 시간",
+                                    content:
+                                        "${viewModel.menu!.store.pickUpTime}분",
                                   ),
-                                ],
-                              )),
-                        if (viewModel.menu!.anotherMenus.isNotEmpty)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              separatorBuilder: (context, idx) {
-                                return const SizedBox(height: 20);
-                              },
-                              itemCount: viewModel.menu!.anotherMenus.length,
-                              itemBuilder: (context, idx) => GestureDetector(
-                                behavior: HitTestBehavior.translucent,
-                                onTap: () async {
-                                  analytics.changePage("메뉴상세", "메뉴상세");
-                                  analytics.clickMenu(
-                                    MenuSimple.fromMenu(
-                                        viewModel.menu!.anotherMenus[idx]),
-                                    {
-                                      "page": "메뉴상세",
-                                      "title": "이 매장 또 다른 메뉴",
-                                      "options": {}
-                                    },
-                                  );
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          ChangeNotifierProvider.value(
-                                        value: Provider.of<
-                                            MenuBottomSheetViewModel>(context),
-                                        child: ChangeNotifierProvider(
-                                          create: (_) => MenuViewModel(viewModel
-                                              .menu!.anotherMenus[idx].id),
-                                          child: MenuView(
-                                              menuId: viewModel
-                                                  .menu!.anotherMenus[idx].id),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                  analytics.changePage("메뉴상세", "메뉴상세");
-                                },
-                                child: MenuCard(
-                                    menu: viewModel.menu!.anotherMenus[idx],
-                                    type: MenuCardType.horizontal),
-                              ),
+                                ),
+                                const VerticalDivider(
+                                  color: KwangColor.grey300,
+                                  thickness: 1,
+                                  indent: 4,
+                                  endIndent: 4,
+                                ),
+                                const Expanded(
+                                  child: MenuInfoCol(
+                                    title: "소비 기한",
+                                    content: "2일 남음", // [TODO] 소비 기한 데이터 넣기
+                                  ),
+                                ),
+                                const VerticalDivider(
+                                  color: KwangColor.grey300,
+                                  thickness: 1,
+                                  indent: 4,
+                                  endIndent: 4,
+                                ),
+                                const Expanded(
+                                  child: MenuInfoCol(
+                                    title: "잔여 수량",
+                                    content: "3개 남음", // [TODO] 잔여 수량 데이터 넣기
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
+                        ),
                         if (viewModel.menu!.origins.isNotEmpty)
                           Container(
                             margin: const EdgeInsets.only(
-                                top: 20, left: 20, right: 20),
+                                top: 8, left: 20, right: 20),
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               border: Border.all(color: KwangColor.grey300),
@@ -357,6 +260,102 @@ class MenuView extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                            ),
+                          ),
+                        if (viewModel.menu!.anotherMenus.isNotEmpty ||
+                            viewModel.menu!.origins.isNotEmpty)
+                          Container(
+                            margin: const EdgeInsets.only(top: 20, bottom: 8),
+                            height: 4,
+                            color: KwangColor.grey200,
+                          ),
+                        if (viewModel.menu!.anotherMenus.isNotEmpty)
+                          Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text("할인율이 높은 메뉴", style: KwangStyle.header2),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      var bottomSheetModel = context
+                                          .read<MenuBottomSheetViewModel>();
+                                      bottomSheetModel.hideCounter();
+                                      await Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (_) =>
+                                              ChangeNotifierProvider.value(
+                                            value: Provider.of<
+                                                    MenuBottomSheetViewModel>(
+                                                context),
+                                            child: const MenuMoreView(),
+                                          ),
+                                        ),
+                                      );
+                                      bottomSheetModel.revealCounter();
+                                    },
+                                    child: Text(
+                                      "메뉴 전체보기",
+                                      style: KwangStyle.btn3.copyWith(
+                                        color: KwangColor.grey600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        if (viewModel.menu!.anotherMenus.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 20),
+                            child: ListView.separated(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              separatorBuilder: (context, idx) {
+                                return const SizedBox(height: 10);
+                              },
+                              itemCount: viewModel.menu!.anotherMenus.length,
+                              itemBuilder: (context, idx) => GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () async {
+                                  analytics.changePage("메뉴상세", "메뉴상세");
+                                  analytics.clickMenu(
+                                    MenuSimple.fromMenu(
+                                        viewModel.menu!.anotherMenus[idx]),
+                                    {
+                                      "page": "메뉴상세",
+                                      "title": "할인율이 높은 메뉴",
+                                      "options": {}
+                                    },
+                                  );
+                                  await Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          ChangeNotifierProvider.value(
+                                        value: Provider.of<
+                                            MenuBottomSheetViewModel>(context),
+                                        child: ChangeNotifierProvider(
+                                          create: (_) => MenuViewModel(viewModel
+                                              .menu!.anotherMenus[idx].id),
+                                          child: MenuView(
+                                              menuId: viewModel
+                                                  .menu!.anotherMenus[idx].id),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                  analytics.changePage("메뉴상세", "메뉴상세");
+                                },
+                                child: CountableMenuCard(
+                                  menu: viewModel.menu!.anotherMenus[idx],
+                                  type: CMenuCardType.small,
+                                  add: () {},
+                                  subtract: () {},
+                                ),
+                              ),
                             ),
                           ),
                         Container(
