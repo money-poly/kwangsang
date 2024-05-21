@@ -120,7 +120,7 @@ class CountableMenuCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CountTagWidget(count: 2),
+                  CountTagWidget(count: menu.count ?? 2),
                   CountWidget(count: 4, add: add, subtract: subtract)
                 ],
               )
@@ -219,7 +219,7 @@ class CountableMenuCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CountTagWidget(count: 2),
+                  CountTagWidget(count: menu.count ?? 2),
                   CountWidget(count: 3, add: add, subtract: subtract),
                 ],
               )
@@ -280,10 +280,15 @@ class CountableMenuCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Expanded(
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width - 212,
+                                ),
                                 child: Text(
                                   menu.name,
                                   style: KwangStyle.btn2SB.copyWith(
@@ -293,7 +298,7 @@ class CountableMenuCard extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(width: 4),
-                              const CountTagWidget(count: 8),
+                              CountTagWidget(count: menu.count ?? 2),
                             ],
                           ),
                         ),
