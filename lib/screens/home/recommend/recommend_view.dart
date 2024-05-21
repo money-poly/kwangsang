@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
+import 'package:immersion_kwangsang/widgets/menu_rank_card.dart';
 import 'package:immersion_kwangsang/widgets/rounded_selectable_button.dart';
 import 'package:provider/provider.dart';
 
@@ -70,12 +72,30 @@ class RecommendView extends StatelessWidget {
               ],
             ),
           ),
-          const SliverFillViewport(
+          SliverList(
             delegate: SliverChildListDelegate.fixed(
               [
-                Center(
-                  child: Text('RecommendView'),
-                ),
+                for (int i = 1; i < 10; i++)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 8,
+                    ),
+                    child: MenuRankCard(
+                      menu: Menu(
+                        id: i,
+                        store: '파리바게트 광운대점',
+                        name: 'Menu $i',
+                        imgUrl: i % 2 == 0
+                            ? 'https://lh4.googleusercontent.com/on7Yj1rShJRRBy88rTmptLVzMI4gEBDBabmSMv-GGsPIo5umfS5dpSJp3b4EoqKtnxdOYXeHSyct6m2fLYKckaikrUJn91PNWkIYXtkrCljcvdEnGdf_nQM5Qw6bQY4q6jvbWiBcC3WPTIcDS_lizv3R25oVAF_H0PNzvRo7JivPSiZR'
+                            : null,
+                        discountRate: 10,
+                        discountPrice: 8900,
+                        view: 2,
+                      ),
+                      rank: i,
+                    ),
+                  ),
               ],
             ),
           ),
