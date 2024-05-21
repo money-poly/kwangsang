@@ -6,6 +6,7 @@ class MenuBottomSheetViewModel with ChangeNotifier {
   final List<Menu> _selectedMenu = [];
   final Map<int, int> _selectedMenuQty = {};
   bool _isExpanded = false;
+  bool _isHideCounter = false;
 
   MenuBottomSheetViewModel();
 
@@ -13,6 +14,7 @@ class MenuBottomSheetViewModel with ChangeNotifier {
   List<Menu> get selectedMenu => _selectedMenu;
   Map<int, int> get selectedMenuQty => _selectedMenuQty;
   bool get isExpanded => _isExpanded;
+  bool get isHideCounter => _isHideCounter;
 
   void setMainItem(Menu menu) {
     if (_mainItem != null) return;
@@ -65,6 +67,16 @@ class MenuBottomSheetViewModel with ChangeNotifier {
 
   void shrink() {
     _isExpanded = false;
+    notifyListeners();
+  }
+
+  void hideCounter() {
+    _isHideCounter = true;
+    notifyListeners();
+  }
+
+  void revealCounter() {
+    _isHideCounter = false;
     notifyListeners();
   }
 }

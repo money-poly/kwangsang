@@ -60,11 +60,15 @@ class MenuBottomSheet extends StatelessWidget {
                 ),
               ),
               if (viewModel.isExpanded)
-                Column(
-                  children: [
-                    for (var menu in viewModel.selectedMenu)
-                      MenuBottomSheetCard(menu: menu),
-                  ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (var menu in viewModel.selectedMenu)
+                          MenuBottomSheetCard(menu: menu),
+                      ],
+                    ),
+                  ),
                 ),
               Container(
                 padding: const EdgeInsets.only(
@@ -76,7 +80,7 @@ class MenuBottomSheet extends StatelessWidget {
                 height: 77,
                 child: Row(
                   children: [
-                    if (!viewModel.isExpanded)
+                    if (!viewModel.isExpanded && !viewModel.isHideCounter)
                       CountWidget(
                         count:
                             viewModel.selectedMenuQty[viewModel.mainItem?.id] ??
@@ -86,7 +90,8 @@ class MenuBottomSheet extends StatelessWidget {
                             viewModel.minusMenu(viewModel.mainItem!),
                         size: CountWidgetSize.large,
                       ),
-                    if (!viewModel.isExpanded) const SizedBox(width: 10),
+                    if (!viewModel.isExpanded && !viewModel.isHideCounter)
+                      const SizedBox(width: 10),
                     Flexible(
                       flex: 1,
                       child: Container(
