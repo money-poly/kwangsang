@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
+import 'package:immersion_kwangsang/widgets/rounded_selectable_button.dart';
 import 'package:provider/provider.dart';
 
 class RecommendView extends StatelessWidget {
@@ -48,6 +49,24 @@ class RecommendView extends StatelessWidget {
                     ],
                   ),
                 ),
+              ],
+            ),
+          ),
+          SliverAppBar(
+            pinned: true,
+            title: Row(
+              children: [
+                const RoundedSelectableButton(
+                  text: '전체',
+                  isSelected: true,
+                ),
+                RoundedSelectableButton(
+                  text: '한식',
+                  onTap: () {
+                    print('한식');
+                  },
+                ),
+                const RoundedSelectableButton(text: '중식'),
               ],
             ),
           ),
