@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 
 enum CustomBtnType { small, big }
@@ -27,20 +28,25 @@ class CustomBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (type) {
       case CustomBtnType.big:
-        return GestureDetector(
-          onTap: isEnable ? onTap : null,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            child: Container(
-              height: 52,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: isEnable ? bgColor : unableBgColor),
-              child: Text(
-                txt,
-                style: KwangStyle.btn1B.copyWith(
-                  color: isEnable ? txtColor : unableTxtColor,
+        return Container(
+          color: KwangColor.grey100,
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+          child: GestureDetector(
+            onTap: isEnable ? onTap : null,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Container(
+                height: 52,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: isEnable ? bgColor : unableBgColor),
+                child: Text(
+                  txt,
+                  style: KwangStyle.btn1B.copyWith(
+                    color: isEnable ? txtColor : unableTxtColor,
+                  ),
                 ),
               ),
             ),

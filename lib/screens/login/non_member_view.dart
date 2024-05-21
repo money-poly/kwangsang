@@ -67,18 +67,15 @@ class NonMemberView extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-        child: CustomBtn(
-          txt: "광생 시작하기",
-          bgColor: KwangColor.primary400,
-          txtColor: KwangColor.grey100,
-          unableBgColor: KwangColor.grey400,
-          unableTxtColor: KwangColor.grey600,
-          onTap: () {},
-          isEnable: false,
-          type: CustomBtnType.big,
-        ),
+      bottomSheet: CustomBtn(
+        txt: "광생 시작하기",
+        bgColor: KwangColor.primary400,
+        txtColor: KwangColor.grey100,
+        unableBgColor: KwangColor.grey400,
+        unableTxtColor: KwangColor.grey600,
+        onTap: () {},
+        isEnable: false,
+        type: CustomBtnType.big,
       ),
     );
   }
