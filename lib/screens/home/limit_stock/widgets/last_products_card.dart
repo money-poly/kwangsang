@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -129,7 +127,6 @@ class _LastProductItem extends StatelessWidget {
   final Menu menu;
 
   const _LastProductItem({
-    super.key,
     required this.menu,
   });
 
