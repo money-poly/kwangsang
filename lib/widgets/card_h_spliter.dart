@@ -3,10 +3,12 @@ import 'package:immersion_kwangsang/styles/color.dart';
 
 class CardHSpliter extends StatelessWidget {
   final double size;
+  final Color color;
 
   const CardHSpliter({
     super.key,
     this.size = 4,
+    this.color = KwangColor.grey200,
   });
 
   @override
@@ -14,7 +16,7 @@ class CardHSpliter extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: size,
-      color: KwangColor.grey200,
+      color: color,
     );
   }
 }

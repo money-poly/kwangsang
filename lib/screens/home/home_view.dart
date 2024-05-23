@@ -116,6 +116,7 @@ class _HomeViewState extends State<HomeView>
             unselectedLabelStyle: KwangStyle.btn2SB,
             unselectedLabelColor: KwangColor.grey500,
             indicator: const UnderlineTabIndicator(
+              insets: EdgeInsets.symmetric(horizontal: -8),
               borderSide: BorderSide(
                 width: 3,
                 color: KwangColor.primary400,
