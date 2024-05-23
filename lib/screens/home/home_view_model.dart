@@ -9,6 +9,19 @@ enum Order {
   final String str;
 }
 
+enum ECategory {
+  all('전체'),
+  korean('한식'),
+  chinese('중식'),
+  japanese('일식'),
+  western('양식'),
+  snack('분식');
+
+  final String title;
+
+  const ECategory(this.title);
+}
+
 enum EHomeTab {
   recommend('추천상품'),
   limitStock('품절임박'),
