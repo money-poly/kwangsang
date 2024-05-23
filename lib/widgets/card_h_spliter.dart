@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 
-class PurchaseInfoCardHSpliter extends StatelessWidget {
+class CardHSpliter extends StatelessWidget {
   final double size;
 
-  const PurchaseInfoCardHSpliter({
+  const CardHSpliter({
     super.key,
     this.size = 4,
   });
