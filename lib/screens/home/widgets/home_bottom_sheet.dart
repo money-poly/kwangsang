@@ -41,7 +41,7 @@ class HomeBottomSheet extends StatelessWidget {
               Order.values.length,
               (idx) => GestureDetector(
                 onTap: () {
-                  viewModel.changeOrder(Order.values[idx]);
+                  // viewModel.changeOrder(Order.values[idx]);
                   Navigator.of(context).pop();
                 },
                 behavior: HitTestBehavior.translucent,
@@ -57,14 +57,14 @@ class HomeBottomSheet extends StatelessWidget {
                         child: Text(Order.values[idx].str,
                             style: KwangStyle.btn1SB),
                       ),
-                      if (viewModel.order == Order.values[idx])
-                        SvgPicture.asset(
-                          "assets/icons/ic_36_check.svg",
-                          width: 36,
-                          height: 36,
-                          colorFilter: const ColorFilter.mode(
-                              KwangColor.primary300, BlendMode.srcIn),
-                        )
+                      // if (viewModel.order == Order.values[idx])
+                      //   SvgPicture.asset(
+                      //     "assets/icons/ic_36_check.svg",
+                      //     width: 36,
+                      //     height: 36,
+                      //     colorFilter: const ColorFilter.mode(
+                      //         KwangColor.primary300, BlendMode.srcIn),
+                      //   )
                     ],
                   ),
                 ),
