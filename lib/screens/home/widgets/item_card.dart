@@ -26,6 +26,7 @@ class ItemCard extends StatelessWidget {
   final Menu menu;
   @override
   Widget build(BuildContext context) {
+    final miniWidth = (MediaQuery.of(context).size.width - 48) / 3;
     switch (type) {
       case ItemCardType.bigSquare:
         return Container(
@@ -53,7 +54,7 @@ class ItemCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: ExtendedImage.network(
-                        menu.imgUrl ?? "",
+                        menu.imgUrl ?? "", // [TODO] 이미지 null 일 때 예외처리 추가
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -139,124 +140,156 @@ class ItemCard extends StatelessWidget {
           ),
         );
       case ItemCardType.miniSoon:
-        return SizedBox(
-          width: 106,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  MenuImgCard(imgUrl: menu.imgUrl, size: 106),
-                  Container(
-                    width: 106,
-                    height: 106,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: KwangColor.grey600.withOpacity(0.4),
-                    ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Opacity(
+                  opacity: 0.6,
+                  child: MenuImgCard(
+                    imgUrl: menu.imgUrl,
+                    size: miniWidth,
                   ),
-                  const Positioned(
-                    right: 6,
-                    top: 6,
-                    child: DiscountWidget(size: 32, discountRate: 50),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                ),
+                const Positioned(
+                  right: 4,
+                  top: 4,
+                  child: DiscountWidget(size: 32, discountRate: 50),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(commaNumberFormatter(menu.discountPrice),
-                      style: KwangStyle.btn2B),
-                  const SizedBox(width: 4),
+                  Text(menu.name, style: KwangStyle.body2M),
                   Text(
-                    commaNumberFormatter(
-                        menu.regularPrice ?? 0), // [TODO] 정가로 교체
-                    style: KwangStyle.body3.copyWith(
+                    commaNumberFormatter(menu.discountPrice),
+                    style: KwangStyle.body2.copyWith(
                       color: KwangColor.grey600,
                       decoration: TextDecoration.lineThrough,
                     ),
-                  )
+                  ),
+                  Text(
+                    commaNumberFormatter(
+                        menu.regularPrice ?? 0), // [TODO] 정가로 교체
+                    style: KwangStyle.btn2B,
+                  ),
+                  const SizedBox(height: 4),
+                  IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "예상수량",
+                          style: KwangStyle.body2M.copyWith(
+                            color: KwangColor.grey700,
+                          ),
+                        ),
+                        const VerticalDivider(
+                          color: KwangColor.grey600,
+                          width: 12,
+                          thickness: 1,
+                          indent: 1,
+                          endIndent: 1,
+                        ),
+                        Text("${menu.count ?? 0}개",
+                            style: KwangStyle.body2M
+                                .copyWith(color: KwangColor.lightBlue)),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              const SizedBox(height: 2),
-              Text(menu.name, style: KwangStyle.body2),
-              const SizedBox(height: 4),
-              IntrinsicHeight(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("예상수량", style: KwangStyle.body3M),
-                    const VerticalDivider(
-                      color: KwangColor.grey600,
-                      width: 12,
-                      thickness: 1,
-                      indent: 1,
-                      endIndent: 1,
-                    ),
-                    Text("${menu.count ?? 0}개",
-                        style: KwangStyle.body3M
-                            .copyWith(color: KwangColor.lightBlue)),
-                  ],
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         );
       case ItemCardType.miniSelling:
-        return SizedBox(
-          width: 106,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MenuImgCard(imgUrl: menu.imgUrl, size: 106),
-              const SizedBox(height: 4),
-              Text(
-                menu.store ?? "가게명",
-                style: KwangStyle.body2.copyWith(
-                  color: KwangColor.grey700,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                MenuImgCard(
+                  imgUrl: menu.imgUrl,
+                  size: miniWidth,
                 ),
-              ), // [TODO] 매장명으로 변경
-              const SizedBox(height: 2),
-              Text(menu.name, style: KwangStyle.body2),
-              const SizedBox(height: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                Positioned(
+                  right: 8,
+                  bottom: 10,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: KwangColor.grey100.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/ic_14_view.svg",
+                          width: 16,
+                          height: 16,
+                          colorFilter: const ColorFilter.mode(
+                            KwangColor.grey800,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "${menu.view ?? 0}",
+                          style: KwangStyle.body3M
+                              .copyWith(color: KwangColor.grey800),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "${menu.discountRate}%",
-                    style: KwangStyle.btn3.copyWith(color: KwangColor.red),
+                    menu.store ?? "가게명",
+                    style: KwangStyle.body2.copyWith(
+                      color: KwangColor.grey600,
+                    ),
+                  ), // [TODO] 매장명으로 변경
+                  Text(menu.name, style: KwangStyle.body1M),
+                  const SizedBox(height: 4),
+                  Text(
+                    commaNumberFormatter(menu.regularPrice ?? 0),
+                    style: KwangStyle.body1M.copyWith(
+                      color: KwangColor.grey700,
+                      decoration: TextDecoration.lineThrough,
+                    ),
                   ),
-                  const SizedBox(width: 4),
-                  Text(commaNumberFormatter(menu.discountPrice),
-                      style: KwangStyle.btn3),
+                  const SizedBox(height: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${menu.discountRate}%",
+                        style: KwangStyle.btn2B.copyWith(color: KwangColor.red),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(commaNumberFormatter(menu.discountPrice),
+                          style: KwangStyle.btn2B),
+                    ],
+                  ),
                 ],
               ),
-              const SizedBox(height: 4),
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    "assets/icons/ic_24_view.svg",
-                    width: 16,
-                    height: 16,
-                    colorFilter: ColorFilter.mode(
-                      KwangColor.grey900.withOpacity(0.6),
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    "${menu.view ?? 0}", // [TODO] 조회수로 교체
-                    style: KwangStyle.body3.copyWith(
-                      color: KwangColor.grey700,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+            )
+          ],
         );
       case ItemCardType.vertical || ItemCardType.verticalCount:
         return Expanded(
@@ -265,24 +298,15 @@ class ItemCard extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Container(
-                    height: 180,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: KwangColor.grey400,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(4)),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: ExtendedImage.network(menu.imgUrl ?? ""),
+                  MenuImgCard(
+                      imgUrl: menu.imgUrl,
+                      size: (MediaQuery.of(context).size.width - 44) / 2),
+                  if (type == ItemCardType.verticalCount)
+                    Positioned(
+                      top: 12,
+                      right: 8,
+                      child: CountTagWidget(count: menu.count ?? 0),
                     ),
-                  ),
-                  Positioned(
-                    top: 12,
-                    right: 8,
-                    child: CountTagWidget(count: menu.count ?? 0),
-                  ),
                   Positioned(
                     right: 8,
                     bottom: 10,
