@@ -62,6 +62,7 @@ class Menu {
   List<Origin>? origins;
   MenuStatus? status;
   int? count; // [TODO] count fromJson 추가
+  DateTime? expiredDate; // [TODO] expiredDate fromJson 추가
 
   Menu({
     required this.id,
