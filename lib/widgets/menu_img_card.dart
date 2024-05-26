@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 
 class MenuImgCard extends StatelessWidget {
-  const MenuImgCard({super.key, required this.imgUrl, required this.size});
+  const MenuImgCard(
+      {super.key, required this.imgUrl, required this.size, this.border = 4});
 
   final String? imgUrl;
   final double size;
+  final double border;
   @override
   Widget build(BuildContext context) {
     if (imgUrl == null) {
@@ -15,7 +17,8 @@ class MenuImgCard extends StatelessWidget {
         width: size,
         padding: const EdgeInsets.only(top: 3, bottom: 5),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4), color: KwangColor.grey350),
+            borderRadius: BorderRadius.circular(border),
+            color: KwangColor.grey350),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,9 +37,9 @@ class MenuImgCard extends StatelessWidget {
       return Container(
         decoration: BoxDecoration(
             border: Border.all(color: KwangColor.grey300),
-            borderRadius: BorderRadius.circular(4)),
+            borderRadius: BorderRadius.circular(border)),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(border),
           child: ExtendedImage.network(
             imgUrl!,
             width: size,
