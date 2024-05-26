@@ -1,10 +1,13 @@
-enum DateTimStrType {
+enum DateTimeStrType {
   korean,
+  slash,
 }
 
-String dateToStr(DateTimStrType type, DateTime dateTime) {
+String dateToStr(DateTimeStrType type, DateTime dateTime) {
   switch (type) {
-    case DateTimStrType.korean:
+    case DateTimeStrType.korean:
       return '${dateTime.year}년 ${dateTime.month}월 ${dateTime.day}일';
+    case DateTimeStrType.slash:
+      return '${dateTime.year}/${dateTime.month}/${dateTime.day}';
   }
 }
