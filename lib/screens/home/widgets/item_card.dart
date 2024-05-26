@@ -2,8 +2,10 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/screens/home/widgets/item_discount_widget.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/datetime_formatter.dart';
 import 'package:immersion_kwangsang/utils/number_formatter.dart';
 import 'package:immersion_kwangsang/widgets/count_tag_widget.dart';
 import 'package:immersion_kwangsang/widgets/discount_widget.dart';
@@ -14,7 +16,7 @@ enum ItemCardType {
   miniSoon,
   vertical,
   verticalCount,
-  horizontal,
+  bigSquare,
 }
 
 class ItemCard extends StatelessWidget {
@@ -25,78 +27,116 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (type) {
-      case ItemCardType.horizontal:
-        return Stack(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 40,
-              height: 144,
-            ),
-            Positioned(
-              top: 4,
-              left: 0,
-              child: Container(
-                width: 52,
-                height: 52,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFEE3C32) // [TODO] 임시
-                    ),
+      case ItemCardType.bigSquare:
+        return Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: KwangColor.black.withOpacity(0.2),
+                blurRadius: 4,
+                offset: const Offset(0, 0),
               ),
-            ),
-            Positioned(
-              top: 14,
-              left: 10,
-              child: Container(
-                width: MediaQuery.of(context).size.width - 50,
-                decoration: BoxDecoration(
-                    border: Border.all(color: KwangColor.grey400, width: 1),
-                    borderRadius: BorderRadius.circular(8),
-                    color: KwangColor.grey100),
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: Image.asset(
-                        "assets/imgs/img_86_bird_exclamation.png",
-                        width: 108,
-                        height: 108,
+            ],
+            borderRadius: BorderRadius.circular(12),
+            color: KwangColor.grey100,
+          ),
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: KwangColor.grey500),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: ExtendedImage.network(
+                        menu.imgUrl ?? "",
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(width: 14),
-                    Expanded(
+                  ),
+                  Positioned(
+                    right: 8,
+                    bottom: 8,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: KwangColor.grey500, width: 1),
+                        borderRadius: BorderRadius.circular(5),
+                        color: KwangColor.grey100,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 10),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            "윤스쿡 왕돈까스", // [TODO] 매장명으로 변경
-                            style: KwangStyle.body2M.copyWith(
-                              color: KwangColor.grey600,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(menu.name, style: KwangStyle.header3),
+                          Text(menu.name, style: KwangStyle.btn2SB),
                           const SizedBox(height: 2),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(commaNumberFormatter(menu.discountPrice),
-                                  style: KwangStyle.header3),
-                            ],
+                          Text(
+                            "소비기한 : ${menu.expiredDate != null ? dateToStr(DateTimeStrType.slash, menu.expiredDate!) : "미정"}",
+                            style: KwangStyle.body3.copyWith(
+                              color: KwangColor.grey800,
+                            ),
                           )
                         ],
                       ),
-                    )
+                    ),
+                  ),
+                  Positioned(
+                    right: 52,
+                    bottom: 56,
+                    child: Transform.rotate(
+                      angle: 25,
+                      child: ItemDiscountWidget(menu: menu),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {},
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 32,
+                            height: 32,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: KwangColor.grey400,
+                            ),
+                            child: Text(
+                              "로고",
+                              style: KwangStyle.btn2B.copyWith(
+                                color: KwangColor.grey100,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(menu.store ?? "가게명"),
+                          SvgPicture.asset(
+                            "assets/icons/ic_20_arrow_right.svg",
+                            width: 18,
+                            height: 18,
+                          ),
+                        ],
+                      ),
+                    ),
+                    CountTagWidget(count: menu.count ?? 0),
                   ],
                 ),
-              ),
-            ),
-            const Positioned(
-                top: 0,
-                left: 0,
-                child: DiscountWidget(size: 52, discountRate: 50)),
-          ],
+              )
+            ],
+          ),
         );
       case ItemCardType.miniSoon:
         return SizedBox(
