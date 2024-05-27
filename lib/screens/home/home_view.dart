@@ -72,7 +72,7 @@ class HomeView extends StatelessWidget {
         children: [
           TabBar(
             controller: viewModel.tabController,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            // padding: const EdgeInsets.symmetric(horizontal: 20),
             tabs: viewModel.tabs,
             isScrollable: false,
             labelStyle: KwangStyle.btn2B,

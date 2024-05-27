@@ -47,7 +47,7 @@ class CustomNetworkImage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
-                  'assets/imgs/img_44_grey_bird_exclamation.png',
+                  'assets/imgs/img_44_bird_exclamation.png',
                   width: width * 0.7,
                   height: height * 0.7,
                 ),

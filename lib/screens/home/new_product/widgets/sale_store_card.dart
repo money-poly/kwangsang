@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/screens/home/widgets/item_card.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
@@ -79,17 +81,29 @@ class SaleStoreCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           SizedBox(
-            height: 188,
+            height: 205,
             child: GridView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
-                childAspectRatio: 3 / 2,
-                crossAxisSpacing: 5,
+                crossAxisSpacing: 4,
+                mainAxisSpacing: 26,
+                childAspectRatio:
+                    ((MediaQuery.sizeOf(context).width - 48) / 3) /
+                        (90 + ((MediaQuery.sizeOf(context).width - 48) / 3)),
               ),
-              itemBuilder: (context, index) => Container(
-                color: Colors.grey,
+              itemBuilder: (context, index) => ItemCard(
+                type: ItemCardType.miniSoon,
+                menu: Menu(
+                  id: 1,
+                  name: "고구마 휘낭시에",
+                  imgUrl:
+                      "https://image.idus.com/image/files/8a8f31577e754c079c372824a103b2a9_512.jpg",
+                  discountRate: 50,
+                  discountPrice: 1000,
+                ),
               ),
+              itemCount: 3,
             ),
           ),
         ],
