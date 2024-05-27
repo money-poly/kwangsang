@@ -27,6 +27,7 @@ class ItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final miniWidth = (MediaQuery.of(context).size.width - 48) / 3;
+    final verticalWidth = (MediaQuery.of(context).size.width - 44) / 2;
     switch (type) {
       case ItemCardType.bigSquare:
         return Container(
@@ -292,55 +293,57 @@ class ItemCard extends StatelessWidget {
           ],
         );
       case ItemCardType.vertical || ItemCardType.verticalCount:
-        return Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  MenuImgCard(
-                      imgUrl: menu.imgUrl,
-                      size: (MediaQuery.of(context).size.width - 44) / 2),
-                  if (type == ItemCardType.verticalCount)
-                    Positioned(
-                      top: 12,
-                      right: 8,
-                      child: CountTagWidget(count: menu.count ?? 0),
-                    ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
+              children: [
+                MenuImgCard(
+                  imgUrl: menu.imgUrl,
+                  size: verticalWidth,
+                ),
+                if (type == ItemCardType.verticalCount)
                   Positioned(
+                    top: 12,
                     right: 8,
-                    bottom: 10,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: KwangColor.grey100.withOpacity(0.6),
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/ic_14_view.svg",
-                            width: 16,
-                            height: 16,
-                            colorFilter: const ColorFilter.mode(
-                              KwangColor.grey800,
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            "${menu.view ?? 0}",
-                            style: KwangStyle.body3M
-                                .copyWith(color: KwangColor.grey800),
-                          )
-                        ],
-                      ),
+                    child: CountTagWidget(count: menu.count ?? 0),
+                  ),
+                Positioned(
+                  right: 8,
+                  bottom: 10,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: KwangColor.grey100.withOpacity(0.6),
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                  )
-                ],
-              ),
-              Padding(
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/icons/ic_14_view.svg",
+                          width: 16,
+                          height: 16,
+                          colorFilter: const ColorFilter.mode(
+                            KwangColor.grey800,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          "${menu.view ?? 0}",
+                          style: KwangStyle.body3M
+                              .copyWith(color: KwangColor.grey800),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              width: (MediaQuery.of(context).size.width - 44) / 2,
+              child: Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -362,24 +365,26 @@ class ItemCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        Text(
-                          "${menu.discountRate}%",
-                          style: KwangStyle.header3.copyWith(
-                            color: KwangColor.red,
+                    IntrinsicHeight(
+                      child: Row(
+                        children: [
+                          Text(
+                            "${menu.discountRate}%",
+                            style: KwangStyle.header3.copyWith(
+                              color: KwangColor.red,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(commaNumberFormatter(menu.discountPrice),
-                            style: KwangStyle.header3),
-                      ],
+                          const SizedBox(width: 4),
+                          Text(commaNumberFormatter(menu.discountPrice),
+                              style: KwangStyle.header3),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       default:
         return const Placeholder();
