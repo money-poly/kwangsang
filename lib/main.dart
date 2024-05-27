@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
               ? MultiProvider(providers: [
                   ChangeNotifierProvider(create: (_) => NavViewModel()),
                   ChangeNotifierProvider(create: (_) => PositionProvider()),
-                  ChangeNotifierProvider(create: (_) => HomeViewModel()),
+                  ChangeNotifierProvider(create: (_) => HomeViewModel(TickerProviderImpl())),
                   ChangeNotifierProvider(create: (_) => MapMainViewModel()),
                   ChangeNotifierProvider(create: (_) => OrderViewModel()),
                 ], child: const NavView())
@@ -65,5 +66,10 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
-  }
+  }  
+}
+
+class TickerProviderImpl extends TickerProvider {
+  @override
+  Ticker createTicker(TickerCallback onTick) => Ticker(onTick);
 }

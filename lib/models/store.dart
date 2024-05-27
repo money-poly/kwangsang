@@ -51,7 +51,7 @@ class Store {
 
   factory Store.fromStoreJson(Map<String, dynamic> json) => Store(
       name: json['name'],
-      maxDiscountMenu: MenuSimple(discountRate: int.parse(json['maxDiscount'])),
+      maxDiscountMenu: MenuSimple(discountRate: json['maxDiscount']),
       /* Optional */
       imgUrl: json['storePictureUrl'],
       description: json['description'],
