@@ -12,50 +12,13 @@ import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView>
-    with SingleTickerProviderStateMixin {
-  late final HomeViewModel _viewModel;
-  late final AnalyticsConfig _analytics;
-
-  late final TabController _tabController;
-
-  @override
-  void initState() {
-    _analytics = AnalyticsConfig();
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    _viewModel = Provider.of<HomeViewModel>(context);
-
-    _tabController = TabController(
-      length: _viewModel.tabs.length,
-      vsync: this,
-    );
-    _viewModel.initTabController(
-      tabController: _tabController,
-    );
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    _viewModel.dispose();
-    // TODO: _analytics.dispose();
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<HomeViewModel>(context);
+    final analytics = AnalyticsConfig();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: KwangColor.grey100,
@@ -83,7 +46,7 @@ class _HomeViewState extends State<HomeView>
             ),
             GestureDetector(
               onTap: () async {
-                _analytics.changePage("홈", "검색");
+                analytics.changePage("홈", "검색");
                 await Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => ChangeNotifierProvider(
@@ -92,7 +55,7 @@ class _HomeViewState extends State<HomeView>
                     ),
                   ),
                 );
-                _analytics.changePage("검색", "홈");
+                analytics.changePage("검색", "홈");
               },
               child: SvgPicture.asset(
                 "assets/icons/ic_36_search.svg",
@@ -108,8 +71,9 @@ class _HomeViewState extends State<HomeView>
       body: Column(
         children: [
           TabBar(
-            controller: _viewModel.tabController,
-            tabs: _viewModel.tabs,
+            controller: viewModel.tabController,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            tabs: viewModel.tabs,
             isScrollable: false,
             labelStyle: KwangStyle.btn2B,
             labelColor: KwangColor.primary400,
@@ -121,7 +85,6 @@ class _HomeViewState extends State<HomeView>
                 color: KwangColor.primary400,
               ),
             ),
-            dividerHeight: 0,
           ),
           const Divider(
             height: 1,
@@ -129,7 +92,7 @@ class _HomeViewState extends State<HomeView>
           ),
           Expanded(
             child: TabBarView(
-              controller: _viewModel.tabController,
+              controller: viewModel.tabController,
               children: const [
                 RecommendView(),
                 LimitStockView(),
