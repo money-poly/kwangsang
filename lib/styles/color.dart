@@ -29,4 +29,5 @@ class KwangColor {
   static const lightRed = Color(0xFFFAEAEA);
   static const lightOrange = Color(0xFFFFEDD2);
   static const lightGreen = Color(0xFFE6F7E6);
+  static const lightBlue = Color(0xFF7AA0FF);
 }

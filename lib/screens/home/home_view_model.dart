@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 enum Order {
@@ -35,33 +36,31 @@ enum EHomeTab {
 
 class HomeViewModel with ChangeNotifier {
   late final TabController _tabController;
-  late final List<Tab> _tabs;
+  final List<Tab> _tabs =
+      EHomeTab.values.map((e) => Tab(text: e.tabTitle)).toList();
+  
+  final CarouselController _carouselController = CarouselController();
+  int _recommendCurrIdx = 0;
 
   TabController get tabController => _tabController;
   List<Tab> get tabs => _tabs;
+  CarouselController get carouselController => _carouselController;
+  int get recommendCurrIdx => _recommendCurrIdx;
 
-  HomeViewModel() {
-    _tabs = [
-      for (var tab in EHomeTab.values)
-        Tab(
-          text: tab.tabTitle,
-        ),
-    ];
-  }
-
-  ///  viewModel에서 [tabController]에 접근하기 위한 초기화 메서드입니다. \
-  /// [initState]에서 1회만 호출하세요.
-  ///
-  /// 주입받은 [tabController]는 별도로 [dispose]되지 않으니 \
-  /// [tabController]을 생성한 위젯에서 [dispose]해야 합니다.
-  void initTabController({
-    required TabController tabController,
-  }) {
-    _tabController = tabController;
+  HomeViewModel(TickerProvider vsync) {
+    _tabController = TabController(
+      length: _tabs.length,
+      vsync: vsync,
+    );
   }
 
   void changeTab(EHomeTab tab) {
     var idx = EHomeTab.values.indexOf(tab);
     _tabController.animateTo(idx);
+  }
+
+  void changeRecommendCurridx(int idx) {
+    _recommendCurrIdx = idx;
+    notifyListeners();
   }
 }

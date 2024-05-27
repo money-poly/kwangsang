@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/screens/home/widgets/item_card.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
@@ -21,8 +22,17 @@ class MapStoreView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final menuWithImg = Menu(
+      id: 1,
+      name: "고구마 휘낭시에",
+      imgUrl:
+          "https://image.idus.com/image/files/8a8f31577e754c079c372824a103b2a9_512.jpg",
+      discountRate: 50,
+      discountPrice: 1000,
+    );
     final viewModel = Provider.of<MapStoreViewModel>(context);
     final analytics = AnalyticsConfig();
+    final sWidth = MediaQuery.of(context).size.width;
     if (viewModel.store == null) {
       return const Scaffold(
         backgroundColor: KwangColor.grey100,
@@ -175,7 +185,62 @@ class MapStoreView extends StatelessWidget {
                         }),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 20, bottom: 8),
+                    margin: const EdgeInsets.only(top: 26, bottom: 8),
+                    height: 4,
+                    color: KwangColor.grey200,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 16, 24, 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "세일 예정 메뉴",
+                            style: KwangStyle.header2,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              "assets/icons/ic_20_alarm.svg",
+                              width: 16,
+                              height: 16,
+                              fit: BoxFit.cover,
+                              colorFilter: const ColorFilter.mode(
+                                  KwangColor.red, BlendMode.srcIn),
+                            )
+                          ],
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          "00:15:35",
+                          style: KwangStyle.btn2SB.copyWith(
+                            color: KwangColor.red,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 4,
+                        mainAxisSpacing: 16,
+                        childAspectRatio:
+                            ((sWidth - 48) / 3) / (82 + ((sWidth - 48) / 3))),
+                    itemCount: 6,
+                    itemBuilder: (context, index) => ItemCard(
+                        type: ItemCardType.miniSoon, menu: menuWithImg),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 26, bottom: 8),
                     height: 4,
                     color: KwangColor.grey200,
                   ),
