@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 
-class PurchaseInfoCardHSpliter extends StatelessWidget {
+class CardHSpliter extends StatelessWidget {
   final double size;
+  final Color color;
 
-  const PurchaseInfoCardHSpliter({
+  const CardHSpliter({
     super.key,
     this.size = 4,
+    this.color = KwangColor.grey200,
   });
 
   @override
@@ -14,7 +16,7 @@ class PurchaseInfoCardHSpliter extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: size,
-      color: KwangColor.grey200,
+      color: color,
     );
   }
 }

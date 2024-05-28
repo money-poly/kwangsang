@@ -47,14 +47,14 @@ class CustomNetworkImage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
-                  'assets/imgs/img_44_grey_bird_exclamation.png',
-                  width: 44,
-                  height: 44,
+                  'assets/imgs/img_44_bird_exclamation.png',
+                  width: width * 0.7,
+                  height: height * 0.7,
                 ),
-                const Text(
+                Text(
                   '이미지 준비중',
                   style: TextStyle(
-                    fontSize: 10,
+                    fontSize: height > 44 ? 10 : 0,
                     color: KwangColor.grey500,
                     fontWeight: FontWeight.w700,
                   ),

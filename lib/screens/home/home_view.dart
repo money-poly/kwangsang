@@ -72,7 +72,7 @@ class HomeView extends StatelessWidget {
         children: [
           TabBar(
             controller: viewModel.tabController,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            // padding: const EdgeInsets.symmetric(horizontal: 20),
             tabs: viewModel.tabs,
             isScrollable: false,
             labelStyle: KwangStyle.btn2B,
@@ -80,6 +80,7 @@ class HomeView extends StatelessWidget {
             unselectedLabelStyle: KwangStyle.btn2SB,
             unselectedLabelColor: KwangColor.grey500,
             indicator: const UnderlineTabIndicator(
+              insets: EdgeInsets.symmetric(horizontal: -8),
               borderSide: BorderSide(
                 width: 3,
                 color: KwangColor.primary400,

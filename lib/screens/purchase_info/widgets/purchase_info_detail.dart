@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
-import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_card_h_spliter.dart';
+import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:intl/intl.dart';
@@ -59,7 +59,7 @@ class PurchaseInfoDetail extends StatelessWidget {
               qty: 1,
             ),
           const SizedBox(height: 18),
-          const PurchaseInfoCardHSpliter(size: 1),
+          const CardHSpliter(size: 1),
           const SizedBox(height: 18),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
