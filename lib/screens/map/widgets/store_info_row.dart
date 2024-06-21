@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/custom_toast.dart';
 
 class StoreInfoRow extends StatelessWidget {
   const StoreInfoRow(
@@ -39,7 +39,7 @@ class StoreInfoRow extends StatelessWidget {
               ? GestureDetector(
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: content));
-                    showToast("복사가 완료되었습니다!");
+                    CustomToast.showToast("복사가 완료되었습니다!");
                   },
                   behavior: HitTestBehavior.translucent,
                   child: Row(

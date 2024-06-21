@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
@@ -9,6 +8,7 @@ import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/custom_toast.dart';
 import 'package:immersion_kwangsang/widgets/empty_card.dart';
 import 'package:immersion_kwangsang/widgets/menu_card.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +37,7 @@ class SearchAfterTab extends StatelessWidget {
                   controller: viewModel.searchController,
                   onSubmitted: (value) {
                     if (value.length < 2) {
-                      showToast("2글자 이상으로 입력해주세요");
+                      CustomToast.showToast("2글자 이상으로 입력해주세요");
                     } else {
                       viewModel.search(value);
                     }

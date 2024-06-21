@@ -11,12 +11,9 @@ import 'package:immersion_kwangsang/screens/navigation/onboarding.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding_view_model.dart';
 import 'package:immersion_kwangsang/screens/order/order_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
-import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/theme.dart';
-import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 void main() async {
   WidgetsBinding widgetBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -40,30 +37,21 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => NavViewModel()),
         ChangeNotifierProvider(create: (_) => PositionProvider()),
       ],
-      child: StyledToast(
-        locale: const Locale("ko", "KR"),
-        textStyle: KwangStyle.body1.copyWith(color: Colors.white),
-        backgroundColor: KwangColor.grey700,
-        borderRadius: BorderRadius.circular(20),
-        toastAnimation: StyledToastAnimation.slideFromBottom,
-        animDuration: const Duration(milliseconds: 200),
-        duration: const Duration(milliseconds: 1500),
-        child: MaterialApp(
-          title: 'kwangsaeng',
-          theme: KwangTheme.kwangTheme,
-          home: isVisited
-              ? MultiProvider(providers: [
-                  ChangeNotifierProvider(create: (_) => NavViewModel()),
-                  ChangeNotifierProvider(create: (_) => PositionProvider()),
-                  ChangeNotifierProvider(create: (_) => HomeViewModel(TickerProviderImpl())),
-                  ChangeNotifierProvider(create: (_) => MapMainViewModel()),
-                  ChangeNotifierProvider(create: (_) => OrderViewModel()),
-                ], child: const NavView())
-              : ChangeNotifierProvider(
-                  create: (_) => OnBoardingViewModel(),
-                  child: const OnBoarding(),
-                ),
-        ),
+      child: MaterialApp(
+        title: 'kwangsaeng',
+        theme: KwangTheme.kwangTheme,
+        home: isVisited
+            ? MultiProvider(providers: [
+                ChangeNotifierProvider(create: (_) => NavViewModel()),
+                ChangeNotifierProvider(create: (_) => PositionProvider()),
+                ChangeNotifierProvider(create: (_) => HomeViewModel(TickerProviderImpl())),
+                ChangeNotifierProvider(create: (_) => MapMainViewModel()),
+                ChangeNotifierProvider(create: (_) => OrderViewModel()),
+              ], child: const NavView())
+            : ChangeNotifierProvider(
+                create: (_) => OnBoardingViewModel(),
+                child: const OnBoarding(),
+              ),
       ),
     );
   }  
