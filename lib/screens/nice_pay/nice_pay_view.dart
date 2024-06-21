@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:immersion_kwangsang/models/nice_payments/nice_accept_req_model.dart';
+import 'package:immersion_kwangsang/models/nice_payments/nice_pay_res_model.dart';
+import 'package:immersion_kwangsang/services/nice_payments_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:convert/convert.dart';
 
@@ -13,8 +16,8 @@ class NicePayView extends StatelessWidget {
   const NicePayView({super.key});
 
   String _getRequestBody() {
-    var code = 'N123456';
-    var amt = '10000';
+    var code = 'N000001';
+    var amt = '100';
     var mid = 'immersionm';
     var mkey = dotenv.env["NICE_PAY_KEY"];
 
@@ -40,7 +43,7 @@ class NicePayView extends StatelessWidget {
         "&SignData=$signData"; // hex(sha256(EdiDate + MID + Amt + MerchantKey)) , 위변조 검증 데이터
     result +=
         "&PayMethod=CARD"; // CARD: 신용카드 / BANK: 계좌이체 / VBANK: 가상계좌 / CELLPHONE: 휴대폰결제
-    result += "&ReturnURL=asd"; // 요청 응답 URL (절대 경로)
+    result += "&ReturnURL=intent://redirect/pay_request"; // 요청 응답 URL (절대 경로)
     return result;
   }
 
@@ -51,6 +54,11 @@ class NicePayView extends StatelessWidget {
         title: const Text('NICE 결제'),
       ),
       body: InAppWebView(
+        initialSettings: InAppWebViewSettings(
+          cacheEnabled: false,
+          clearCache: true,
+          resourceCustomSchemes: ['intent'],
+        ),
         initialUrlRequest: URLRequest(
           url: WebUri('https://pg-web.nicepay.co.kr/v3/gwPayment.jsp'),
           body: Uint8List.fromList(
@@ -62,16 +70,6 @@ class NicePayView extends StatelessWidget {
             'Accept-Charset': "euc-kr",
           },
         ),
-        onWebViewCreated: (controller) {
-          // js method chennel
-          controller.addJavaScriptHandler(
-            handlerName: 'goPay',
-            callback: (arguments) {
-              // result callback
-              print(arguments);
-            },
-          );
-        },
         onLoadStop: (controller, url) async {
           var title = await controller.getTitle();
           print(title);
@@ -79,7 +77,73 @@ class NicePayView extends StatelessWidget {
             Navigator.pop(context);
           }
         },
+        onLoadResourceWithCustomScheme: (controller, url) async {
+          await controller.stopLoading();
+
+          print('requestUrl: $url');
+          if (url.url.toString() == 'intent://redirect/pay_request') {
+            var postPayload = await controller.evaluateJavascript(
+              source: '''
+                (function() {
+                  var requestPayload = {};
+                  var inputs = document.querySelectorAll('input');
+                  inputs.forEach(function(input) {
+                    requestPayload[input.name] = input.value;
+                  });
+                  return JSON.stringify(requestPayload);
+                })();
+              ''',
+            );
+            print('POST 요청의 페이로드: $postPayload');
+            var resPayload = NicePayResModel.fromJson(
+              json.decode(postPayload as String),
+            );
+
+            if (resPayload.authResultCode != '0000') {
+              Navigator.pop(context);
+            } else {
+              var mkey = dotenv.env["NICE_PAY_KEY"];
+
+              var now = DateTime.now();
+              var ediDate = '';
+              ediDate += now.year.toString().padLeft(4, '0');
+              ediDate += now.month.toString().padLeft(2, '0');
+              ediDate += now.day.toString().padLeft(2, '0');
+              ediDate += now.hour.toString().padLeft(2, '0');
+              ediDate += now.minute.toString().padLeft(2, '0');
+              ediDate += now.second.toString().padLeft(2, '0');
+
+              var sha = sha256.convert(utf8.encode(
+                  '${resPayload.authToken}${resPayload.mid}${resPayload.amt}$ediDate$mkey'));
+              var signData = hex.encode(sha.bytes);
+
+              var res = await NicePaymentsService().postAcceptPayments(
+                nextAppUrl: resPayload.nextAppUrl,
+                reqModel: NiceAcceptReqModel(
+                  tid: resPayload.txTid,
+                  authToken: resPayload.authToken,
+                  mid: resPayload.mid,
+                  amt: resPayload.amt,
+                  ediDate: ediDate,
+                  signData: signData,
+                ),
+              );
+
+              print(res.resultCode);
+              print(res.resultMsg);
+              print(res.tid);
+            }
+          }
+
+          // Server side code
+
+          return null;
+        },
         shouldOverrideUrlLoading: (controller, navigationAction) async {
+          if (!navigationAction.isForMainFrame) {
+            await controller.stopLoading();
+          }
+
           String requestUrl = navigationAction.request.url.toString();
           debugPrint('웹뷰 [onUpdateVisitedHistory]: $requestUrl');
 
@@ -87,24 +151,16 @@ class NicePayView extends StatelessWidget {
               !requestUrl.startsWith('https')) {
             if (Platform.isAndroid) {
               var platform = const MethodChannel('net.immersion.kwangsaeng');
-              await platform.invokeMethod(
+              var appUrl = await platform.invokeMethod(
                 'getAppUrl',
                 <String, Object>{'url': requestUrl},
-              ).then(
-                (value) async {
-                  print('paring url : $value');
-
-                  if (await canLaunchUrl(Uri.parse(value))) {
-                    await launchUrl(
-                      Uri.parse(value),
-                    );
-                    return;
-                  } else {
-                    print('이동 불가능한 URL입니다.');
-                    return;
-                  }
-                },
               );
+
+              if (await canLaunchUrl(Uri.parse(appUrl))) {
+                await launchUrl(Uri.parse(appUrl));
+              } else {
+                print('이동 불가능한 URL입니다.');
+              }
               return NavigationActionPolicy.CANCEL;
             } else if (Platform.isIOS) {
               await launchUrl(

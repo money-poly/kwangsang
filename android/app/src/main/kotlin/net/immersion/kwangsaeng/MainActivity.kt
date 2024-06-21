@@ -2,6 +2,7 @@ package net.immersion.kwangsaeng
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.Intent.URI_INTENT_SCHEME
 import android.net.Uri
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.KeyData.CHANNEL
@@ -20,7 +21,8 @@ class MainActivity: FlutterActivity() {
             if (call.method == "getAppUrl") {
                 try {
                     val url: String = call.argument("url")!!
-                    startSchemeIntent(url)
+                    val intent = Intent.parseUri(url, URI_INTENT_SCHEME)
+                    result.success(intent.dataString)
                 } catch (e: URISyntaxException) {
                     result.notImplemented()
                 } catch (e: ActivityNotFoundException) {
@@ -29,32 +31,7 @@ class MainActivity: FlutterActivity() {
             }
         }
 
-        val channel = MethodChannel(flutterEngine.dartExecutor, CHANNEL)
+        val channel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "net.immersion.kwangsaeng")
         channel.setMethodCallHandler(handler)
-    }
-
-    private fun startSchemeIntent(url: String): Boolean {
-        val schemeIntent: Intent = try {
-            Intent.parseUri(url, Intent.URI_INTENT_SCHEME) // Intent 스킴을 파싱
-        } catch (e: URISyntaxException) {
-            return false
-        }
-        try {
-            startActivity(schemeIntent) // 앱으로 이동
-            return true
-        } catch (e: ActivityNotFoundException) { // 앱이 설치 안 되어 있는 경우
-            val packageName = schemeIntent.getPackage()
-
-            if (!packageName.isNullOrBlank()) {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=$packageName") // 스토어로 이동
-                    )
-                )
-                return true
-            }
-        }
-        return false
     }
 }
