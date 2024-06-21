@@ -6,6 +6,7 @@ import 'package:immersion_kwangsang/screens/home/limit_stock/limit_stock_view.da
 import 'package:immersion_kwangsang/screens/home/new_product/new_product_view.dart';
 import 'package:immersion_kwangsang/screens/home/recommend/recommend_view.dart';
 import 'package:immersion_kwangsang/screens/nice_pay/nice_pay_view.dart';
+import 'package:immersion_kwangsang/screens/nice_pay/nice_pay_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
@@ -50,7 +51,10 @@ class HomeView extends StatelessWidget {
               onTap: () async {
                 await Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (_) => const NicePayView(),
+                    builder: (_) => ChangeNotifierProvider(
+                      create: (context) => NicePayViewModel(),
+                      child: const NicePayView(),
+                    ),
                   ),
                 );
               },
