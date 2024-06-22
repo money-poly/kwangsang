@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/map_main_view_model.dart';
-import 'package:immersion_kwangsang/screens/map/map_store_view.dart';
-import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/map_store_card.dart';
-import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
-import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:provider/provider.dart';
 
@@ -33,14 +30,7 @@ class MapMainView extends StatelessWidget {
           GestureDetector(
             onTap: () async {
               analytics.changePage("지도", "검색");
-              await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => ChangeNotifierProvider(
-                    create: (_) => SearchMainViewModel(),
-                    child: const SearchMainView(),
-                  ),
-                ),
-              );
+              await context.push("/search");
               analytics.changePage("검색", "지도");
             },
             child: SvgPicture.asset(
@@ -112,15 +102,8 @@ class MapMainView extends StatelessWidget {
                     GestureDetector(
                       onTap: () async {
                         analytics.changePage("지도", "가게상세");
-                        await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => ChangeNotifierProvider(
-                              create: (_) => MapStoreViewModel(
-                                  viewModel.selectedMarkerId!),
-                              child: const MapStoreView(),
-                            ),
-                          ),
-                        );
+                        await context.push("/storeDetail",
+                            extra: viewModel.selectedMarkerId);
                         analytics.changePage("가게상세", "지도");
                       },
                       child: MapStoreCard(store: viewModel.store!),

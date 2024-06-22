@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 
@@ -27,7 +28,7 @@ class CustomAlertDialog extends StatelessWidget {
           actionsPadding: EdgeInsets.zero,
           actions: [
             GestureDetector(
-              onTap: () => Navigator.pop(context),
+              onTap: () => context.pop(),
               child: Container(
                 margin: const EdgeInsets.all(16),
                 width: MediaQuery.of(context).size.width - 64,

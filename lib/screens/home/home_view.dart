@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/screens/home/best_product/best_product_view.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/limit_stock/limit_stock_view.dart';
 import 'package:immersion_kwangsang/screens/home/new_product/new_product_view.dart';
 import 'package:immersion_kwangsang/screens/home/recommend/recommend_view.dart';
-import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
-import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -47,14 +46,7 @@ class HomeView extends StatelessWidget {
             GestureDetector(
               onTap: () async {
                 analytics.changePage("홈", "검색");
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => ChangeNotifierProvider(
-                      create: (_) => SearchMainViewModel(),
-                      child: const SearchMainView(),
-                    ),
-                  ),
-                );
+                await context.push("/search");
                 analytics.changePage("검색", "홈");
               },
               child: SvgPicture.asset(

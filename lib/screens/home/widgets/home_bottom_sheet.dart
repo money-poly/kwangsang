@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -41,7 +42,7 @@ class HomeBottomSheet extends StatelessWidget {
               (idx) => GestureDetector(
                 onTap: () {
                   // viewModel.changeOrder(Order.values[idx]);
-                  Navigator.of(context).pop();
+                  context.pop();
                 },
                 behavior: HitTestBehavior.translucent,
                 child: Container(

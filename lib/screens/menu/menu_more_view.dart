@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
@@ -26,7 +27,7 @@ class MenuMoreView extends StatelessWidget {
           padding: const EdgeInsets.only(left: 8),
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+              context.pop();
             },
             child: SvgPicture.asset(
               "assets/icons/ic_36_back.svg",

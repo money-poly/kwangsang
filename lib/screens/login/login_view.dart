@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/screens/login/login_view_model.dart';
-import 'package:immersion_kwangsang/screens/login/non_member_view.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/custom_btn.dart';
@@ -234,13 +234,7 @@ class LoginView extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const NonMemberView(),
-                            ),
-                          );
-                        },
+                        onTap: () => context.push("/nonMember"),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
