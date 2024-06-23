@@ -237,7 +237,7 @@ class LoginView extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => context.push("/nonMember"),
+                        onTap: () => context.push("/nonMemberLogin"),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
