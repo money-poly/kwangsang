@@ -26,8 +26,8 @@ enum ECategory {
 enum EHomeTab {
   recommend('추천상품'),
   limitStock('품절임박'),
-  newProduct('신상품'),
-  bestProduct('베스트');
+  newProduct('세일예정'),
+  bestProduct('랭킹');
 
   final String tabTitle;
 
@@ -38,7 +38,7 @@ class HomeViewModel with ChangeNotifier {
   late final TabController _tabController;
   final List<Tab> _tabs =
       EHomeTab.values.map((e) => Tab(text: e.tabTitle)).toList();
-  
+
   final CarouselController _carouselController = CarouselController();
   int _recommendCurrIdx = 0;
 
