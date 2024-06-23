@@ -17,7 +17,10 @@ void main() async {
   await PositionProvider.instance.initMyPosition();
   AnalyticsConfig().init();
   FlutterNativeSplash.remove();
-  runApp(MyApp(isVisited: prefs.getBool("visited") ?? false));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => NavViewModel()),
+    ChangeNotifierProvider(create: (_) => PositionProvider()),
+  ], child: MyApp(isVisited: prefs.getBool("visited") ?? false)));
 }
 
 class MyApp extends StatelessWidget {
@@ -26,16 +29,10 @@ class MyApp extends StatelessWidget {
   final bool isVisited;
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => NavViewModel()),
-        ChangeNotifierProvider(create: (_) => PositionProvider()),
-      ],
-      child: MaterialApp.router(
-        title: 'kwangsaeng',
-        theme: KwangTheme.kwangTheme,
-        routerConfig: CustomRouter(isVisited).router,
-      ),
+    return MaterialApp.router(
+      title: 'kwangsaeng',
+      theme: KwangTheme.kwangTheme,
+      routerConfig: CustomRouter(isVisited, context).router,
     );
   }
 }

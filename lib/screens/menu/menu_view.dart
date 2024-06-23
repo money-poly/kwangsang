@@ -46,9 +46,7 @@ class MenuView extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: GestureDetector(
-            onTap: () {
-              context.pop();
-            },
+            onTap: () => context.pop(),
             child: SvgPicture.asset(
               "assets/icons/ic_36_back.svg",
               width: 36,
@@ -311,7 +309,6 @@ class MenuView extends StatelessWidget {
                               itemBuilder: (context, idx) => GestureDetector(
                                 behavior: HitTestBehavior.translucent,
                                 onTap: () async {
-                                  analytics.changePage("메뉴상세", "메뉴상세");
                                   analytics.clickMenu(
                                     MenuSimple.fromMenu(
                                         viewModel.menu!.anotherMenus[idx]),
@@ -324,7 +321,6 @@ class MenuView extends StatelessWidget {
                                   await context.push("/menuDetail",
                                       extra:
                                           viewModel.menu!.anotherMenus[idx].id);
-                                  analytics.changePage("메뉴상세", "메뉴상세");
                                 },
                                 child: CountableMenuCard(
                                   menu: viewModel.menu!.anotherMenus[idx],

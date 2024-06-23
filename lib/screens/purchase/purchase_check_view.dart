@@ -22,9 +22,7 @@ class PurchaseCheckView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: KwangColor.grey100,
         leading: GestureDetector(
-          onTap: () {
-            context.pop();
-          },
+          onTap: () => context.pop(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SvgPicture.asset("assets/icons/ic_36_back.svg"),

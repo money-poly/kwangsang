@@ -51,9 +51,7 @@ class MapStoreView extends StatelessWidget {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8),
             child: GestureDetector(
-              onTap: () {
-                context.pop();
-              },
+              onTap: () => context.pop(),
               child: SvgPicture.asset(
                 "assets/icons/ic_36_back.svg",
                 width: 36,
@@ -265,8 +263,7 @@ class MapStoreView extends StatelessWidget {
                             .map(
                               (e) => GestureDetector(
                                 behavior: HitTestBehavior.translucent,
-                                onTap: () async {
-                                  analytics.changePage("가게상세", "메뉴상세");
+                                onTap: () {
                                   analytics.clickMenu(
                                     MenuSimple.fromMenu(e),
                                     {
@@ -276,7 +273,6 @@ class MapStoreView extends StatelessWidget {
                                     },
                                   );
                                   context.push("/menuDetail", extra: e.id);
-                                  analytics.changePage("메뉴상세", "가게상세");
                                 },
                                 child: MenuCard(
                                   menu: e,

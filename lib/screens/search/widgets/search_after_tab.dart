@@ -122,8 +122,7 @@ class SearchAfterTab extends StatelessWidget {
                                     196),
                         children: viewModel.menus!
                             .map((e) => GestureDetector(
-                                onTap: () async {
-                                  analytics.changePage("검색", "메뉴상세");
+                                onTap: () {
                                   analytics.clickMenu(
                                     MenuSimple.fromMenu(e),
                                     {

@@ -26,9 +26,7 @@ class MenuMoreView extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: GestureDetector(
-            onTap: () {
-              context.pop();
-            },
+            onTap: () => context.pop(),
             child: SvgPicture.asset(
               "assets/icons/ic_36_back.svg",
               width: 36,

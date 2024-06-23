@@ -37,9 +37,7 @@ class OrderIngView extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  context.push("/login");
-                },
+                onTap: () => context.push("/login"),
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

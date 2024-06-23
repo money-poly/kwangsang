@@ -41,9 +41,7 @@ class PurchaseCheckDialog extends StatelessWidget {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () {
-                    context.pop();
-                  },
+                  onTap: () => context.pop(),
                   child: Container(
                     height: 52,
                     alignment: Alignment.center,
