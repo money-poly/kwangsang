@@ -60,30 +60,10 @@ class HomeView extends StatelessWidget {
         centerTitle: false,
         elevation: 0,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          TabBar(
-            controller: viewModel.tabController,
-            // padding: const EdgeInsets.symmetric(horizontal: 20),
-            tabs: viewModel.tabs,
-            isScrollable: false,
-            labelStyle: KwangStyle.btn2B,
-            labelColor: KwangColor.primary400,
-            unselectedLabelStyle: KwangStyle.btn2SB,
-            unselectedLabelColor: KwangColor.grey500,
-            indicator: const UnderlineTabIndicator(
-              insets: EdgeInsets.symmetric(horizontal: -8),
-              borderSide: BorderSide(
-                width: 3,
-                color: KwangColor.primary400,
-              ),
-            ),
-          ),
-          const Divider(
-            height: 1,
-            color: KwangColor.grey350,
-          ),
-          Expanded(
+          Padding(
+            padding: const EdgeInsets.only(top: 48),
             child: TabBarView(
               controller: viewModel.tabController,
               children: const [
@@ -92,6 +72,36 @@ class HomeView extends StatelessWidget {
                 NewProductView(),
                 BestProductView(),
               ],
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  offset: const Offset(0, 5),
+                  blurRadius: 10,
+                ),
+              ],
+              color: Colors.white,
+            ),
+            child: TabBar(
+              controller: viewModel.tabController,
+              tabs: viewModel.tabs,
+              isScrollable: false,
+              labelStyle: KwangStyle.btn2B,
+              labelColor: KwangColor.primary400,
+              unselectedLabelStyle: KwangStyle.btn2SB,
+              unselectedLabelColor: KwangColor.grey500,
+              indicator: const UnderlineTabIndicator(
+                insets: EdgeInsets.symmetric(horizontal: -8),
+                borderSide: BorderSide(
+                  width: 3,
+                  color: KwangColor.primary400,
+                ),
+              ),
+              indicatorColor: Colors.transparent,
+              dividerHeight: 0,
             ),
           ),
         ],
