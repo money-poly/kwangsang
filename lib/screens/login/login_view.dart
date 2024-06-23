@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/screens/login/login_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
@@ -15,14 +16,16 @@ class LoginView extends StatelessWidget {
     final viewModel = Provider.of<LoginViewModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          "assets/imgs/img_104_logo_appbar.png",
-          width: 104,
-          height: 46,
+        toolbarHeight: 52,
+        leading: GestureDetector(
+          onTap: () => context.pop(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SvgPicture.asset("assets/icons/ic_36_back.svg",
+                width: 36, height: 36),
+          ),
         ),
-        toolbarHeight: 58,
-        centerTitle: false,
-        leadingWidth: 0,
+        leadingWidth: 52,
         backgroundColor: Colors.white,
         elevation: 0,
       ),
