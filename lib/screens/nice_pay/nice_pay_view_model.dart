@@ -61,7 +61,7 @@ class NicePayViewModel with ChangeNotifier {
     return result;
   }
 
-  Future<dynamic> getPostPayload() async {
+  Future<NicePayResModel> getPostPayload() async {
     var res = await _controller.evaluateJavascript(
       source: '''
                 (function() {
@@ -77,7 +77,11 @@ class NicePayViewModel with ChangeNotifier {
 
     print('POST 요청의 페이로드: $res');
 
-    return res;
+    var resModel = NicePayResModel.fromJson(
+      json.decode(res as String),
+    );
+
+    return resModel;
   }
 
   Future<void> postPayAccept({
@@ -118,5 +122,13 @@ class NicePayViewModel with ChangeNotifier {
     } finally {
       notifyListeners();
     }
+  }
+
+  void setError({
+    required String message,
+  }) {
+    _status = ENicePayState.failed;
+    _failMsg = message;
+    notifyListeners();
   }
 }
