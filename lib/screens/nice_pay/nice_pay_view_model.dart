@@ -105,14 +105,11 @@ class NicePayViewModel with ChangeNotifier {
         ),
       );
 
-      print(res.resultCode);
-      print(res.resultMsg);
-      print(res.tid);
-
-      if ([].contains(res.resultCode)) {
+      // TODO: 결제 성공시 코드들로 변경해야 합니다.
+      if (['1512'].contains(res.resultCode)) {
         _status = ENicePayState.success;
       } else {
-        _status = ENicePayState.success;
+        _status = ENicePayState.failed;
         _failMsg = cp949.decode(res.resultMsg.codeUnits);
       }
     } catch (e) {
