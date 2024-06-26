@@ -19,6 +19,7 @@ class NicePayPaying extends StatelessWidget {
         cacheEnabled: false,
         clearCache: true,
         resourceCustomSchemes: ['intent'],
+        useHybridComposition: false,
       ),
       // NICE process 1: 결제창 호출
       initialUrlRequest: URLRequest(
