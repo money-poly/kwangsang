@@ -10,11 +10,12 @@ class KwangTheme {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       appBarTheme: const AppBarTheme(
+          surfaceTintColor: Colors.transparent,
           systemOverlayStyle: SystemUiOverlayStyle(
-        systemNavigationBarColor: KwangColor.grey100,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-      )));
+            systemNavigationBarColor: KwangColor.grey100,
+            systemNavigationBarIconBrightness: Brightness.dark,
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
+          )));
 }
