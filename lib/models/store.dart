@@ -1,7 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/models/origin.dart';
-import 'package:immersion_kwangsang/models/tag.dart';
+import 'package:immersion_kwangsang/models/tag/tag_model.dart';
 
 class StoreSimple {
   int id;

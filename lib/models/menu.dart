@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/models/origin.dart';
 import 'package:immersion_kwangsang/models/store.dart';
-import 'package:immersion_kwangsang/models/tag.dart';
+import 'package:immersion_kwangsang/models/tag/tag_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/utils/menu_status_util.dart';
 
