@@ -7,7 +7,7 @@ part 'origin_model.g.dart';
 class Origin with _$Origin {
   factory Origin({
     required String ingredient,
-    required String country,
+    @JsonKey(name: 'origin') required String country,
   }) = _Origin;
 
   factory Origin.fromJson(Map<String, dynamic> json) => _$OriginFromJson(json);

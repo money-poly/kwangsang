@@ -14,8 +14,6 @@ class NicePaymentsService {
       body: reqModel.toJson(),
     );
 
-    print(res.body);
-
     var resModel = NiceAcceptResModel.fromJson(
       json.decode(res.body),
     );

@@ -39,7 +39,6 @@ mixin _$NiceAcceptReqModel {
   @JsonKey(name: 'MallReserved')
   String? get mallReserved => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $NiceAcceptReqModelCopyWith<NiceAcceptReqModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -210,8 +209,8 @@ class __$$NiceAcceptReqModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$NiceAcceptReqModelImpl implements _NiceAcceptReqModel {
+@JsonSerializable(createToJson: false)
+class _$NiceAcceptReqModelImpl extends _NiceAcceptReqModel {
   _$NiceAcceptReqModelImpl(
       {@JsonKey(name: 'TID') required this.tid,
       @JsonKey(name: 'AuthToken') required this.authToken,
@@ -221,7 +220,8 @@ class _$NiceAcceptReqModelImpl implements _NiceAcceptReqModel {
       @JsonKey(name: 'SignData') required this.signData,
       @JsonKey(name: 'CharSet') this.charSet,
       @JsonKey(name: 'EdiType') this.ediType,
-      @JsonKey(name: 'MallReserved') this.mallReserved});
+      @JsonKey(name: 'MallReserved') this.mallReserved})
+      : super._();
 
   factory _$NiceAcceptReqModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$NiceAcceptReqModelImplFromJson(json);
@@ -289,16 +289,9 @@ class _$NiceAcceptReqModelImpl implements _NiceAcceptReqModel {
   _$$NiceAcceptReqModelImplCopyWith<_$NiceAcceptReqModelImpl> get copyWith =>
       __$$NiceAcceptReqModelImplCopyWithImpl<_$NiceAcceptReqModelImpl>(
           this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$NiceAcceptReqModelImplToJson(
-      this,
-    );
-  }
 }
 
-abstract class _NiceAcceptReqModel implements NiceAcceptReqModel {
+abstract class _NiceAcceptReqModel extends NiceAcceptReqModel {
   factory _NiceAcceptReqModel(
           {@JsonKey(name: 'TID') required final String tid,
           @JsonKey(name: 'AuthToken') required final String authToken,
@@ -310,6 +303,7 @@ abstract class _NiceAcceptReqModel implements NiceAcceptReqModel {
           @JsonKey(name: 'EdiType') final String? ediType,
           @JsonKey(name: 'MallReserved') final String? mallReserved}) =
       _$NiceAcceptReqModelImpl;
+  _NiceAcceptReqModel._() : super._();
 
   factory _NiceAcceptReqModel.fromJson(Map<String, dynamic> json) =
       _$NiceAcceptReqModelImpl.fromJson;

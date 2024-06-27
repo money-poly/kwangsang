@@ -21,6 +21,7 @@ Origin _$OriginFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Origin {
   String get ingredient => throw _privateConstructorUsedError;
+  @JsonKey(name: 'origin')
   String get country => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +34,7 @@ abstract class $OriginCopyWith<$Res> {
   factory $OriginCopyWith(Origin value, $Res Function(Origin) then) =
       _$OriginCopyWithImpl<$Res, Origin>;
   @useResult
-  $Res call({String ingredient, String country});
+  $Res call({String ingredient, @JsonKey(name: 'origin') String country});
 }
 
 /// @nodoc
@@ -72,7 +73,7 @@ abstract class _$$OriginImplCopyWith<$Res> implements $OriginCopyWith<$Res> {
       __$$OriginImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String ingredient, String country});
+  $Res call({String ingredient, @JsonKey(name: 'origin') String country});
 }
 
 /// @nodoc
@@ -105,7 +106,9 @@ class __$$OriginImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$OriginImpl implements _Origin {
-  _$OriginImpl({required this.ingredient, required this.country});
+  _$OriginImpl(
+      {required this.ingredient,
+      @JsonKey(name: 'origin') required this.country});
 
   factory _$OriginImpl.fromJson(Map<String, dynamic> json) =>
       _$$OriginImplFromJson(json);
@@ -113,6 +116,7 @@ class _$OriginImpl implements _Origin {
   @override
   final String ingredient;
   @override
+  @JsonKey(name: 'origin')
   final String country;
 
   @override
@@ -151,13 +155,14 @@ class _$OriginImpl implements _Origin {
 abstract class _Origin implements Origin {
   factory _Origin(
       {required final String ingredient,
-      required final String country}) = _$OriginImpl;
+      @JsonKey(name: 'origin') required final String country}) = _$OriginImpl;
 
   factory _Origin.fromJson(Map<String, dynamic> json) = _$OriginImpl.fromJson;
 
   @override
   String get ingredient;
   @override
+  @JsonKey(name: 'origin')
   String get country;
   @override
   @JsonKey(ignore: true)

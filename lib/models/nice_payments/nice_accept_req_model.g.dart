@@ -19,17 +19,3 @@ _$NiceAcceptReqModelImpl _$$NiceAcceptReqModelImplFromJson(
       ediType: json['EdiType'] as String?,
       mallReserved: json['MallReserved'] as String?,
     );
-
-Map<String, dynamic> _$$NiceAcceptReqModelImplToJson(
-        _$NiceAcceptReqModelImpl instance) =>
-    <String, dynamic>{
-      'TID': instance.tid,
-      'AuthToken': instance.authToken,
-      'MID': instance.mid,
-      'Amt': instance.amt,
-      'EdiDate': instance.ediDate,
-      'SignData': instance.signData,
-      'CharSet': instance.charSet,
-      'EdiType': instance.ediType,
-      'MallReserved': instance.mallReserved,
-    };

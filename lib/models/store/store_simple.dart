@@ -1,18 +1,41 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:immersion_kwangsang/utils/latlon_serializer.dart';
 
-part 'store_simple.freezed.dart';
-part 'store_simple.g.dart';
+class StoreSimple extends Equatable {
+  final int id;
+  final String name;
+  final LatLng latLng;
 
-@freezed
-class StoreSimple with _$StoreSimple {
-  factory StoreSimple({
-    required int id,
-    required String name,
-    @LatLngSerializer() required LatLng latLng,
-  }) = _StoreSimple;
+  const StoreSimple({
+    required this.id,
+    required this.name,
+    required this.latLng,
+  });
 
-  factory StoreSimple.fromJson(Map<String, dynamic> json) =>
-      _$StoreSimpleFromJson(json);
+  StoreSimple copyWith({
+    int? id,
+    String? name,
+    LatLng? latLng,
+  }) =>
+      StoreSimple(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        latLng: latLng ?? this.latLng,
+      );
+
+  factory StoreSimple.fromJson(Map<String, dynamic> json) => StoreSimple(
+        id: json['id'],
+        name: json['name'],
+        latLng: LatLng(
+          json['lat'],
+          json['lon'],
+        ),
+      );
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        latLng,
+      ];
 }
