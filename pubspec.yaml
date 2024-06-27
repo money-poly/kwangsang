@@ -56,6 +56,7 @@ dependencies:
   cp949_codec: ^1.0.2
   freezed_annotation: ^2.4.1
   json_annotation: ^4.9.0
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:
