@@ -1,10 +1,10 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/models/menu.dart';
 import 'package:immersion_kwangsang/screens/purchase/widgets/soldout_chart_widget.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/count_widget.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:intl/intl.dart';
 
 class SoldoutMenuCard extends StatelessWidget {
@@ -99,9 +99,9 @@ class SoldoutMenuCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4)),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
-                          child: ExtendedImage.network(
-                            menu.imgUrl!,
-                            fit: BoxFit.cover,
+                          child: CustomNetworkImage(
+                            imageUrl: menu.imgUrl,
+                            isFull: true,
                           ),
                         ),
                       ),

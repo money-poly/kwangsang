@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +12,7 @@ import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
 import 'package:immersion_kwangsang/widgets/bullet_string.dart';
 import 'package:immersion_kwangsang/widgets/countable_menu_card.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -75,12 +75,10 @@ class MenuView extends StatelessWidget {
                     if (viewModel.menu!.menuPictureUrl != null)
                       Stack(
                         children: [
-                          SizedBox(
+                          CustomNetworkImage(
+                            imageUrl: viewModel.menu!.menuPictureUrl!,
                             width: MediaQuery.of(context).size.width,
                             height: 244,
-                            child: ExtendedImage.network(
-                                viewModel.menu!.menuPictureUrl!,
-                                fit: BoxFit.cover),
                           ),
                           if (viewModel.menu!.count == 0)
                             Container(

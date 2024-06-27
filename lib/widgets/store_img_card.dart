@@ -1,7 +1,7 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 
 enum ImgCardType {
   store("가게"),
@@ -45,12 +45,10 @@ class ImgCard extends StatelessWidget {
           )
         : ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: ExtendedImage.network(
-              imgUrl!,
+            child: CustomNetworkImage(
+              imageUrl: imgUrl!,
               width: 96,
               height: 96,
-              fit: BoxFit.cover,
-              cache: true,
             ),
           );
   }

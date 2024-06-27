@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +11,7 @@ import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
 import 'package:immersion_kwangsang/widgets/bullet_string.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:immersion_kwangsang/widgets/menu_card.dart';
 import 'package:provider/provider.dart';
 
@@ -67,11 +67,10 @@ class MapStoreView extends StatelessWidget {
           child: Column(
             children: [
               if (viewModel.store!.imgUrl != null)
-                SizedBox(
+                CustomNetworkImage(
+                  imageUrl: viewModel.store!.imgUrl,
                   width: MediaQuery.of(context).size.width,
                   height: 244,
-                  child: ExtendedImage.network(viewModel.store!.imgUrl!,
-                      fit: BoxFit.cover),
                 ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
