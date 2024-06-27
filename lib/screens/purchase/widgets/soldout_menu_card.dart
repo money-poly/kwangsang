@@ -56,6 +56,7 @@ class SoldoutMenuCard extends StatelessWidget {
                               style: KwangStyle.body2M.copyWith(
                                 color: KwangColor.grey600,
                                 decoration: TextDecoration.lineThrough,
+                                decorationColor: KwangColor.grey600,
                               ),
                             ),
                           ],

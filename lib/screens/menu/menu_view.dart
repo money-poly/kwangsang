@@ -152,8 +152,10 @@ class MenuView extends StatelessWidget {
                                   Text(
                                     "${NumberFormat('###,###,###,###').format(viewModel.menu!.regularPrice).replaceAll(' ', ',')}원",
                                     style: KwangStyle.header1.copyWith(
-                                        color: KwangColor.grey600,
-                                        decoration: TextDecoration.lineThrough),
+                                      color: KwangColor.grey600,
+                                      decoration: TextDecoration.lineThrough,
+                                      decorationColor: KwangColor.grey600,
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 14),

@@ -95,6 +95,7 @@ class CountableMenuCard extends StatelessWidget {
                       style: KwangStyle.body1M.copyWith(
                         color: KwangColor.grey600,
                         decoration: TextDecoration.lineThrough,
+                        decorationColor: KwangColor.grey600,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -192,6 +193,7 @@ class CountableMenuCard extends StatelessWidget {
                           style: KwangStyle.body1M.copyWith(
                             color: KwangColor.grey600,
                             decoration: TextDecoration.lineThrough,
+                            decorationColor: KwangColor.grey600,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -329,6 +331,7 @@ class CountableMenuCard extends StatelessWidget {
                               style: KwangStyle.body1M.copyWith(
                                 color: KwangColor.grey600,
                                 decoration: TextDecoration.lineThrough,
+                                decorationColor: KwangColor.grey600,
                               ),
                             ),
                             const SizedBox(height: 4),

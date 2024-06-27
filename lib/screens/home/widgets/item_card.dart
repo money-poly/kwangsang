@@ -175,6 +175,7 @@ class ItemCard extends StatelessWidget {
                     style: KwangStyle.body2.copyWith(
                       color: KwangColor.grey600,
                       decoration: TextDecoration.lineThrough,
+                      decorationColor: KwangColor.grey600,
                     ),
                   ),
                   Text(
@@ -275,6 +276,7 @@ class ItemCard extends StatelessWidget {
                     style: KwangStyle.body1M.copyWith(
                       color: KwangColor.grey700,
                       decoration: TextDecoration.lineThrough,
+                      decorationColor: KwangColor.grey700,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -365,6 +367,7 @@ class ItemCard extends StatelessWidget {
                       style: KwangStyle.body1M.copyWith(
                         color: KwangColor.grey700,
                         decoration: TextDecoration.lineThrough,
+                        decorationColor: KwangColor.grey700,
                       ),
                     ),
                     const SizedBox(height: 2),
