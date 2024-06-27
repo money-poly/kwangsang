@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 
 enum PurchaseWay {
   simple("간편 결제"),

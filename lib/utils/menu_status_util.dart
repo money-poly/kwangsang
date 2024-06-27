@@ -1,4 +1,4 @@
-import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 
 MenuStatus strToMenuStatus(String str) {
   switch (str) {
