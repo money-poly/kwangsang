@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:immersion_kwangsang/models/menu.dart';
-import 'package:immersion_kwangsang/models/store.dart';
+import 'package:immersion_kwangsang/models/store/store_home_model.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/services/api.dart';
@@ -21,8 +21,9 @@ class HomeService {
       Map<String, StoreHome?> stores = {};
       for (var e in (jsonDecode(res.body)["data"] as List)) {
         String category = e["category"];
-        StoreHome? store = StoreHome.fromJson(e["store"]);
-        store.category = category;
+        StoreHome? store = StoreHome.fromJson(e["store"]).copyWith(
+          category: category,
+        );
         stores[category] = store;
       }
       return stores;
