@@ -44,6 +44,7 @@ class CustomAlertDialog extends StatelessWidget {
               ),
             )
           ],
+          backgroundColor: KwangColor.grey100,
         );
     }
   }
