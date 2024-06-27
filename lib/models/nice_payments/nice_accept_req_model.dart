@@ -1,37 +1,22 @@
-class NiceAcceptReqModel {
-  final String tid;
-  final String authToken;
-  final String mid;
-  final String amt;
-  final String ediDate;
-  final String signData;
-  final String? charSet;
-  final String? ediType;
-  final String? mallReserved;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  NiceAcceptReqModel({
-    required this.tid,
-    required this.authToken,
-    required this.mid,
-    required this.amt,
-    required this.ediDate,
-    required this.signData,
-    this.charSet,
-    this.ediType,
-    this.mallReserved,
-  });
+part 'nice_accept_req_model.freezed.dart';
+part 'nice_accept_req_model.g.dart';
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> res = {};
-    res['TID'] = tid;
-    res['AuthToken'] = authToken;
-    res['MID'] = mid;
-    res['Amt'] = amt;
-    res['EdiDate'] = ediDate;
-    res['SignData'] = signData;
-    if (charSet != null) res['CharSet'] = charSet!;
-    if (ediType != null) res['EdiType'] = ediType!;
-    if (mallReserved != null) res['MallReserved'] = mallReserved!;
-    return res;
-  }
+@freezed
+class NiceAcceptReqModel with _$NiceAcceptReqModel {
+  factory NiceAcceptReqModel({
+    @JsonKey(name: 'TID') required String tid,
+    @JsonKey(name: 'AuthToken') required String authToken,
+    @JsonKey(name: 'MID') required String mid,
+    @JsonKey(name: 'Amt') required String amt,
+    @JsonKey(name: 'EdiDate') required String ediDate,
+    @JsonKey(name: 'SignData') required String signData,
+    @JsonKey(name: 'CharSet') String? charSet,
+    @JsonKey(name: 'EdiType') String? ediType,
+    @JsonKey(name: 'MallReserved') String? mallReserved,
+  }) = _NiceAcceptReqModel;
+
+  factory NiceAcceptReqModel.fromJson(Map<String, dynamic> json) =>
+      _$NiceAcceptReqModelFromJson(json);
 }

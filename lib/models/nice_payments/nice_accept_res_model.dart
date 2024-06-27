@@ -1,54 +1,28 @@
-class NiceAcceptResModel {
-  final String resultCode;
-  final String resultMsg;
-  final String amt;
-  final String mid;
-  final String moid;
-  final String signature;
-  final String buyerEmail;
-  final String buyerTel;
-  final String buyerName;
-  final String goodsName;
-  final String tid;
-  final String authCode;
-  final String authDate;
-  final String payMethod;
-  final String mallReserved;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const NiceAcceptResModel({
-    required this.resultCode,
-    required this.resultMsg,
-    required this.amt,
-    required this.mid,
-    required this.moid,
-    required this.signature,
-    required this.buyerEmail,
-    required this.buyerTel,
-    required this.buyerName,
-    required this.goodsName,
-    required this.tid,
-    required this.authCode,
-    required this.authDate,
-    required this.payMethod,
-    required this.mallReserved,
-  });
+part 'nice_accept_res_model.freezed.dart';
+part 'nice_accept_res_model.g.dart';
+
+@freezed
+class NiceAcceptResModel with _$NiceAcceptResModel {
+  factory NiceAcceptResModel({
+    @JsonKey(name: 'ResultCode') required String resultCode,
+    @JsonKey(name: 'ResultMsg') required String resultMsg,
+    @JsonKey(name: 'Amt') required String amt,
+    @JsonKey(name: 'MID') required String mid,
+    @JsonKey(name: 'Moid') required String moid,
+    @JsonKey(name: 'Signature') required String signature,
+    @JsonKey(name: 'BuyerEmail') required String buyerEmail,
+    @JsonKey(name: 'BuyerTel') required String buyerTel,
+    @JsonKey(name: 'BuyerName') required String buyerName,
+    @JsonKey(name: 'GoodsName') required String goodsName,
+    @JsonKey(name: 'TID') required String tid,
+    @JsonKey(name: 'AuthCode') required String authCode,
+    @JsonKey(name: 'AuthDate') required String authDate,
+    @JsonKey(name: 'PayMethod') required String payMethod,
+    @JsonKey(name: 'MallReserved') required String mallReserved,
+  }) = _NiceAcceptResModel;
 
   factory NiceAcceptResModel.fromJson(Map<String, dynamic> json) =>
-      NiceAcceptResModel(
-        resultCode: json['ResultCode'],
-        resultMsg: json['ResultMsg'],
-        amt: json['Amt'],
-        mid: json['MID'],
-        moid: json['Moid'],
-        signature: json['Signature'],
-        buyerEmail: json['BuyerEmail'],
-        buyerTel: json['BuyerTel'],
-        buyerName: json['BuyerName'],
-        goodsName: json['GoodsName'],
-        tid: json['TID'],
-        authCode: json['AuthCode'],
-        authDate: json['AuthDate'],
-        payMethod: json['PayMethod'],
-        mallReserved: json['MallReserved'],
-      );
+      _$NiceAcceptResModelFromJson(json);
 }

@@ -1,45 +1,25 @@
-class NicePayResModel {
-  final String authResultCode;
-  final String authResultMsg;
-  final String authToken;
-  final String payMethod;
-  final String mid;
-  final String moid;
-  final String amt;
-  final String reqReserved;
-  final String txTid;
-  final String nextAppUrl;
-  final String netCancelUrl;
-  final String signature;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const NicePayResModel({
-    required this.authResultCode,
-    required this.authResultMsg,
-    required this.authToken,
-    required this.payMethod,
-    required this.mid,
-    required this.moid,
-    required this.amt,
-    required this.reqReserved,
-    required this.txTid,
-    required this.nextAppUrl,
-    required this.netCancelUrl,
-    required this.signature,
-  });
+part 'nice_pay_res_model.freezed.dart';
+part 'nice_pay_res_model.g.dart';
+
+@freezed
+class NicePayResModel with _$NicePayResModel {
+  factory NicePayResModel({
+    @JsonKey(name: 'AuthResultCode') required String authResultCode,
+    @JsonKey(name: 'AuthResultMsg') required String authResultMsg,
+    @JsonKey(name: 'AuthToken') required String authToken,
+    @JsonKey(name: 'PayMethod') required String payMethod,
+    @JsonKey(name: 'MID') required String mid,
+    @JsonKey(name: 'Moid') required String moid,
+    @JsonKey(name: 'Amt') required String amt,
+    @JsonKey(name: 'ReqReserved') required String reqReserved,
+    @JsonKey(name: 'TxTid') required String txTid,
+    @JsonKey(name: 'NextAppURL') required String nextAppUrl,
+    @JsonKey(name: 'NetCancelURL') required String netCancelUrl,
+    @JsonKey(name: 'Signature') required String signature,
+  }) = _NicePayResModel;
 
   factory NicePayResModel.fromJson(Map<String, dynamic> json) =>
-      NicePayResModel(
-        authResultCode: json['AuthResultCode'],
-        authResultMsg: json['AuthResultMsg'],
-        authToken: json['AuthToken'],
-        payMethod: json['PayMethod'],
-        mid: json['MID'],
-        moid: json['Moid'],
-        amt: json['Amt'],
-        reqReserved: json['ReqReserved'],
-        txTid: json['TxTid'],
-        nextAppUrl: json['NextAppURL'],
-        netCancelUrl: json['NetCancelURL'],
-        signature: json['Signature'],
-      );
+      _$NicePayResModelFromJson(json);
 }
