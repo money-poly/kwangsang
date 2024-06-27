@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:immersion_kwangsang/models/store.dart';
+import 'package:immersion_kwangsang/models/store/store_detail_model.dart';
 import 'package:immersion_kwangsang/services/map_service.dart';
 
 class MapStoreViewModel with ChangeNotifier {

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:immersion_kwangsang/models/category.dart';
+import 'package:immersion_kwangsang/models/category/category_model.dart';
 import 'package:immersion_kwangsang/services/api.dart';
 
 class AdminService {

@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/recommend/widgets/item_ranking_row.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/item_card.dart';
@@ -206,7 +206,8 @@ class RecommendView extends StatelessWidget {
                           activeTrackColor: KwangColor.primary400,
                           inactiveTrackColor: KwangColor.grey400,
                           thumbShape: const RoundSliderThumbShape(
-                              enabledThumbRadius: 14), // [TODO] 커스텀 슬라이더 thumb 적용
+                              enabledThumbRadius:
+                                  14), // [TODO] 커스텀 슬라이더 thumb 적용
                           overlayShape:
                               const RoundSliderOverlayShape(overlayRadius: 14),
                         ),

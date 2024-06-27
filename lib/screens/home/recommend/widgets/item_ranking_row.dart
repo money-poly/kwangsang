@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 
@@ -19,7 +19,8 @@ class ItemRankingRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: KwangColor.lightRed,
                   borderRadius: BorderRadius.circular(16),
@@ -36,8 +37,8 @@ class ItemRankingRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text('$rank',
-                        style:
-                            KwangStyle.body2.copyWith(color: KwangColor.grey800)),
+                        style: KwangStyle.body2
+                            .copyWith(color: KwangColor.grey800)),
                     const SizedBox(width: 8),
                     Text(menu.name, style: KwangStyle.body1M),
                   ],
