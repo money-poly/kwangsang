@@ -1,4 +1,4 @@
-import 'package:immersion_kwangsang/models/origin.dart';
+import 'package:immersion_kwangsang/models/origin/origin_model.dart';
 
 String originFormatter(List<Origin> origins) {
   Map<String, List<String>> resultMap = {};
@@ -11,7 +11,7 @@ String originFormatter(List<Origin> origins) {
       }
     }
   }
-  
+
   return resultMap.entries
       .map((e) => "${e.key}(${e.value.join("ㆍ")})")
       .toList()
