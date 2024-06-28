@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/map_main_view_model.dart';
-import 'package:immersion_kwangsang/screens/map/map_store_view.dart';
-import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/map_store_card.dart';
-import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
-import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
-import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:provider/provider.dart';
 
 class MapMainView extends StatelessWidget {
@@ -18,7 +14,6 @@ class MapMainView extends StatelessWidget {
   Widget build(BuildContext context) {
     final positionProvider = Provider.of<PositionProvider>(context);
     final viewModel = Provider.of<MapMainViewModel>(context);
-    final analytics = AnalyticsConfig();
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -31,18 +26,7 @@ class MapMainView extends StatelessWidget {
         centerTitle: false,
         actions: [
           GestureDetector(
-            onTap: () async {
-              analytics.changePage("지도", "검색");
-              await Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => ChangeNotifierProvider(
-                    create: (_) => SearchMainViewModel(),
-                    child: const SearchMainView(),
-                  ),
-                ),
-              );
-              analytics.changePage("검색", "지도");
-            },
+            onTap: () => context.push("/search"),
             child: SvgPicture.asset(
               "assets/icons/ic_36_search.svg",
               width: 36,
@@ -110,19 +94,8 @@ class MapMainView extends StatelessWidget {
                   ),
                   if (viewModel.store != null)
                     GestureDetector(
-                      onTap: () async {
-                        analytics.changePage("지도", "가게상세");
-                        await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => ChangeNotifierProvider(
-                              create: (_) => MapStoreViewModel(
-                                  viewModel.selectedMarkerId!),
-                              child: const MapStoreView(),
-                            ),
-                          ),
-                        );
-                        analytics.changePage("가게상세", "지도");
-                      },
+                      onTap: () => context.push("/storeDetail",
+                          extra: viewModel.selectedMarkerId),
                       child: MapStoreCard(store: viewModel.store!),
                     ),
                 ],

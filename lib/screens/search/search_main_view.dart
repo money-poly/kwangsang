@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/widgets/search_after_tab.dart';
 import 'package:immersion_kwangsang/screens/search/widgets/search_before_tab.dart';
@@ -29,7 +30,7 @@ class SearchMainView extends StatelessWidget {
                 if (viewModel.status == SearchStatus.after) {
                   viewModel.changeStatus(SearchStatus.before);
                 } else {
-                  Navigator.of(context).pop();
+                  context.pop();
                 }
               },
               behavior: HitTestBehavior.translucent,

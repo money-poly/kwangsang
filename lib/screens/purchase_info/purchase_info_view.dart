@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_detail.dart';
@@ -30,9 +31,7 @@ class PurchaseInfoView extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
+            onTap: () => context.pop(),
             child: SvgPicture.asset(
               "assets/icons/ic_36_back.svg",
               width: 36,

@@ -7,7 +7,7 @@ import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class PurchaseInfoDetail extends StatelessWidget {
   const PurchaseInfoDetail({super.key});
@@ -27,7 +27,7 @@ class PurchaseInfoDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<PurchaseInfoViewModel>(context);
+    // final viewModel = Provider.of<PurchaseInfoViewModel>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 20,

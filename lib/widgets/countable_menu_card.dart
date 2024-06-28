@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
@@ -6,6 +5,7 @@ import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/count_tag_widget.dart';
 import 'package:immersion_kwangsang/widgets/count_widget.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:intl/intl.dart';
 
 enum CMenuCardType { small, large, removable }
@@ -70,9 +70,9 @@ class CountableMenuCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4),
-                        child: ExtendedImage.network(
-                          menu.imgUrl!,
-                          fit: BoxFit.cover,
+                        child: CustomNetworkImage(
+                          imageUrl: menu.imgUrl,
+                          isFull: true,
                         ),
                       ),
                     ),
@@ -95,6 +95,7 @@ class CountableMenuCard extends StatelessWidget {
                       style: KwangStyle.body1M.copyWith(
                         color: KwangColor.grey600,
                         decoration: TextDecoration.lineThrough,
+                        decorationColor: KwangColor.grey600,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -164,9 +165,9 @@ class CountableMenuCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4),
-                        child: ExtendedImage.network(
-                          menu.imgUrl!,
-                          fit: BoxFit.cover,
+                        child: CustomNetworkImage(
+                          imageUrl: menu.imgUrl,
+                          isFull: true,
                         ),
                       ),
                     ),
@@ -192,6 +193,7 @@ class CountableMenuCard extends StatelessWidget {
                           style: KwangStyle.body1M.copyWith(
                             color: KwangColor.grey600,
                             decoration: TextDecoration.lineThrough,
+                            decorationColor: KwangColor.grey600,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -264,9 +266,9 @@ class CountableMenuCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4),
-                        child: ExtendedImage.network(
-                          menu.imgUrl!,
-                          fit: BoxFit.cover,
+                        child: CustomNetworkImage(
+                          imageUrl: menu.imgUrl,
+                          isFull: true,
                         ),
                       ),
                     ),
@@ -329,6 +331,7 @@ class CountableMenuCard extends StatelessWidget {
                               style: KwangStyle.body1M.copyWith(
                                 color: KwangColor.grey600,
                                 decoration: TextDecoration.lineThrough,
+                                decorationColor: KwangColor.grey600,
                               ),
                             ),
                             const SizedBox(height: 4),

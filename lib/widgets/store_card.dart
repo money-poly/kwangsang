@@ -56,6 +56,7 @@ class StoreCard extends StatelessWidget {
                     style: KwangStyle.body1M.copyWith(
                       color: KwangColor.grey600,
                       decoration: TextDecoration.lineThrough,
+                      decorationColor: KwangColor.grey600,
                     ),
                   ),
                 ],

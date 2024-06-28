@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/screens/purchase/purchase_check_view_model.dart';
 import 'package:immersion_kwangsang/screens/purchase/widgets/padding_title_widget.dart';
 import 'package:immersion_kwangsang/screens/purchase/widgets/purchase_check_dialog.dart';
@@ -21,9 +22,7 @@ class PurchaseCheckView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: KwangColor.grey100,
         leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
+          onTap: () => context.pop(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SvgPicture.asset("assets/icons/ic_36_back.svg"),

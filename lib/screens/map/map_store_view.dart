@@ -1,20 +1,18 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_simple_model.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/item_card.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
-import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
-import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
-import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
 import 'package:immersion_kwangsang/widgets/bullet_string.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:immersion_kwangsang/widgets/menu_card.dart';
 import 'package:provider/provider.dart';
 
@@ -54,9 +52,7 @@ class MapStoreView extends StatelessWidget {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8),
             child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
+              onTap: () => context.pop(),
               child: SvgPicture.asset(
                 "assets/icons/ic_36_back.svg",
                 width: 36,
@@ -72,11 +68,10 @@ class MapStoreView extends StatelessWidget {
           child: Column(
             children: [
               if (viewModel.store!.imgUrl != null)
-                SizedBox(
+                CustomNetworkImage(
+                  imageUrl: viewModel.store!.imgUrl,
                   width: MediaQuery.of(context).size.width,
                   height: 244,
-                  child: ExtendedImage.network(viewModel.store!.imgUrl!,
-                      fit: BoxFit.cover),
                 ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,8 +263,7 @@ class MapStoreView extends StatelessWidget {
                             .map(
                               (e) => GestureDetector(
                                 behavior: HitTestBehavior.translucent,
-                                onTap: () async {
-                                  analytics.changePage("가게상세", "메뉴상세");
+                                onTap: () {
                                   analytics.clickMenu(
                                     MenuSimple.fromMenu(e),
                                     {
@@ -278,21 +272,7 @@ class MapStoreView extends StatelessWidget {
                                       "options": {}
                                     },
                                   );
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => ChangeNotifierProvider(
-                                        create: (_) =>
-                                            MenuBottomSheetViewModel(),
-                                        child: ChangeNotifierProvider(
-                                          create: (_) => MenuViewModel(e.id),
-                                          child: MenuView(
-                                            menuId: e.id,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                  analytics.changePage("메뉴상세", "가게상세");
+                                  context.push("/menuDetail", extra: e.id);
                                 },
                                 child: MenuCard(
                                   menu: e,

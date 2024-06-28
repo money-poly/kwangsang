@@ -73,6 +73,7 @@ class ItemDiscountWidget extends StatelessWidget {
                   style: KwangStyle.body2M.copyWith(
                     color: KwangColor.grey600,
                     decoration: TextDecoration.lineThrough,
+                    decorationColor: KwangColor.grey600,
                   ),
                 ),
                 const SizedBox(width: 12),

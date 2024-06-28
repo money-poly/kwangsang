@@ -1,6 +1,6 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 
 class MenuImgCard extends StatelessWidget {
   const MenuImgCard(
@@ -40,11 +40,10 @@ class MenuImgCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(border)),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(border),
-          child: ExtendedImage.network(
-            imgUrl!,
+          child: CustomNetworkImage(
+            imageUrl: imgUrl!,
             width: size,
             height: size,
-            fit: BoxFit.cover,
           ),
         ),
       );

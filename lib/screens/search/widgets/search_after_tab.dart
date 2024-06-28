@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/models/menu/menu_simple_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
@@ -9,6 +9,7 @@ import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/widgets/custom_toast.dart';
 import 'package:immersion_kwangsang/widgets/empty_card.dart';
 import 'package:immersion_kwangsang/widgets/menu_card.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +38,7 @@ class SearchAfterTab extends StatelessWidget {
                   controller: viewModel.searchController,
                   onSubmitted: (value) {
                     if (value.length < 2) {
-                      showToast("2글자 이상으로 입력해주세요");
+                      CustomToast.showToast("2글자 이상으로 입력해주세요");
                     } else {
                       viewModel.search(value);
                     }
@@ -124,8 +125,7 @@ class SearchAfterTab extends StatelessWidget {
                                     196),
                         children: viewModel.menus!
                             .map((e) => GestureDetector(
-                                onTap: () async {
-                                  analytics.changePage("검색", "메뉴상세");
+                                onTap: () {
                                   analytics.clickMenu(
                                     MenuSimple.fromMenu(e),
                                     {
@@ -134,18 +134,7 @@ class SearchAfterTab extends StatelessWidget {
                                       "options": {}
                                     },
                                   );
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => ChangeNotifierProvider(
-                                        create: (_) =>
-                                            MenuBottomSheetViewModel(),
-                                        child: ChangeNotifierProvider(
-                                          create: (_) => MenuViewModel(e.id),
-                                          child: MenuView(menuId: e.id),
-                                        ),
-                                      ),
-                                    ),
-                                  );
+                                  context.push("/menuDetail", extra: e.id);
                                 },
                                 child: MenuCard(
                                     menu: e, type: MenuCardType.vertical)))

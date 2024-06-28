@@ -1,10 +1,10 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/number_formatter.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:immersion_kwangsang/widgets/menu_status_widget.dart';
 // import 'package:immersion_kwangsang/widgets/tag_widget.dart';
 import 'package:intl/intl.dart';
@@ -92,9 +92,8 @@ class MenuCard extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(4),
-                          child: ExtendedImage.network(
-                            menu.imgUrl!,
-                            fit: BoxFit.cover,
+                          child: CustomNetworkImage(
+                            imageUrl: menu.imgUrl,
                             width: 80,
                             height: 80,
                           ),
@@ -152,9 +151,9 @@ class MenuCard extends StatelessWidget {
                         )
                       : ClipRRect(
                           borderRadius: BorderRadius.circular(4),
-                          child: ExtendedImage.network(
-                            menu.imgUrl!,
-                            fit: BoxFit.cover,
+                          child: CustomNetworkImage(
+                            imageUrl: menu.imgUrl,
+                            isFull: true,
                           ),
                         ),
                 ),

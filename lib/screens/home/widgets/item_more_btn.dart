@@ -13,16 +13,18 @@ class ItemMoreBtn extends StatelessWidget {
       onTap: onTap,
       child: Container(
           width: 103,
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border.all(width: 1, color: KwangColor.grey400),
             borderRadius: BorderRadius.circular(18),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 5, right: 2),
+                padding: const EdgeInsets.only(left: 6, right: 3),
                 child: Text(
                   "상품 더 보기",
                   style: KwangStyle.btn3SB.copyWith(color: KwangColor.grey600),

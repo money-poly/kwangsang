@@ -1,11 +1,10 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_simple_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
-import 'package:immersion_kwangsang/screens/menu/menu_more_view.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/widgets/menu_info_col.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
@@ -14,6 +13,7 @@ import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
 import 'package:immersion_kwangsang/widgets/bullet_string.dart';
 import 'package:immersion_kwangsang/widgets/countable_menu_card.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -47,9 +47,7 @@ class MenuView extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
+            onTap: () => context.pop(),
             child: SvgPicture.asset(
               "assets/icons/ic_36_back.svg",
               width: 36,
@@ -78,12 +76,10 @@ class MenuView extends StatelessWidget {
                     if (viewModel.menu!.menuPictureUrl != null)
                       Stack(
                         children: [
-                          SizedBox(
+                          CustomNetworkImage(
+                            imageUrl: viewModel.menu!.menuPictureUrl!,
                             width: MediaQuery.of(context).size.width,
                             height: 244,
-                            child: ExtendedImage.network(
-                                viewModel.menu!.menuPictureUrl!,
-                                fit: BoxFit.cover),
                           ),
                           if (viewModel.menu!.count == 0)
                             Container(
@@ -157,8 +153,10 @@ class MenuView extends StatelessWidget {
                                   Text(
                                     "${NumberFormat('###,###,###,###').format(viewModel.menu!.regularPrice).replaceAll(' ', ',')}원",
                                     style: KwangStyle.header1.copyWith(
-                                        color: KwangColor.grey600,
-                                        decoration: TextDecoration.lineThrough),
+                                      color: KwangColor.grey600,
+                                      decoration: TextDecoration.lineThrough,
+                                      decorationColor: KwangColor.grey600,
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 14),
@@ -285,17 +283,7 @@ class MenuView extends StatelessWidget {
                                       var bottomSheetModel = context
                                           .read<MenuBottomSheetViewModel>();
                                       bottomSheetModel.hideCounter();
-                                      await Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) =>
-                                              ChangeNotifierProvider.value(
-                                            value: Provider.of<
-                                                    MenuBottomSheetViewModel>(
-                                                context),
-                                            child: const MenuMoreView(),
-                                          ),
-                                        ),
-                                      );
+                                      await context.push("/menuMore");
                                       bottomSheetModel.revealCounter();
                                     },
                                     child: Text(
@@ -322,7 +310,6 @@ class MenuView extends StatelessWidget {
                               itemBuilder: (context, idx) => GestureDetector(
                                 behavior: HitTestBehavior.translucent,
                                 onTap: () async {
-                                  analytics.changePage("메뉴상세", "메뉴상세");
                                   analytics.clickMenu(
                                     MenuSimple.fromMenu(
                                         viewModel.menu!.anotherMenus[idx]),
@@ -332,23 +319,9 @@ class MenuView extends StatelessWidget {
                                       "options": {}
                                     },
                                   );
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          ChangeNotifierProvider.value(
-                                        value: Provider.of<
-                                            MenuBottomSheetViewModel>(context),
-                                        child: ChangeNotifierProvider(
-                                          create: (_) => MenuViewModel(viewModel
-                                              .menu!.anotherMenus[idx].id),
-                                          child: MenuView(
-                                              menuId: viewModel
-                                                  .menu!.anotherMenus[idx].id),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                  analytics.changePage("메뉴상세", "메뉴상세");
+                                  await context.push("/menuDetail",
+                                      extra:
+                                          viewModel.menu!.anotherMenus[idx].id);
                                 },
                                 child: CountableMenuCard(
                                   menu: viewModel.menu!.anotherMenus[idx],

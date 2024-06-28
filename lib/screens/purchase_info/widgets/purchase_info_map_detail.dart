@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
+// import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class PurchaseInfoMapDetail extends StatelessWidget {
   const PurchaseInfoMapDetail({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<PurchaseInfoViewModel>(context);
+    // final viewModel = Provider.of<PurchaseInfoViewModel>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(

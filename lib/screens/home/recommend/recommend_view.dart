@@ -36,6 +36,7 @@ class RecommendView extends StatelessWidget {
     final viewModel = Provider.of<HomeViewModel>(context);
     final sWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: KwangColor.grey300,
       body: SingleChildScrollView(
         key: const PageStorageKey(EHomeTab.recommend),
         child: Column(
@@ -186,7 +187,8 @@ class RecommendView extends StatelessWidget {
                     )
                   ],
                 ),
-                Padding(
+                Container(
+                  color: KwangColor.grey100,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,48 +272,51 @@ class RecommendView extends StatelessWidget {
                 )
               ],
             ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 8),
-                  child: Divider(
-                    height: 4,
-                    thickness: 4,
-                    color: KwangColor.grey200,
+            Container(
+              padding: const EdgeInsets.only(bottom: 40),
+              color: KwangColor.grey100,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 8),
+                    child: Divider(
+                      height: 4,
+                      thickness: 4,
+                      color: KwangColor.grey200,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  child: CountAndSortTitle(
-                    title: "전체 세일 상품이에요",
-                    count: 159,
-                    sort: "거리순",
-                    onTap: () {},
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    child: CountAndSortTitle(
+                      title: "전체 세일 상품이에요",
+                      count: 159,
+                      sort: "거리순",
+                      onTap: () {},
+                    ),
                   ),
-                ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 26,
-                    crossAxisSpacing: 4,
-                    childAspectRatio:
-                        ((sWidth - 44) / 2) / (((sWidth - 44) / 2) + 90),
-                  ),
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  itemBuilder: (context, idx) => ItemCard(
-                    type: ItemCardType.vertical,
-                    menu: menuWithImg,
-                  ),
-                  itemCount: 6,
-                )
-              ],
+                  GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 26,
+                      crossAxisSpacing: 4,
+                      childAspectRatio:
+                          ((sWidth - 44) / 2) / (((sWidth - 44) / 2) + 90),
+                    ),
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    itemBuilder: (context, idx) => ItemCard(
+                      type: ItemCardType.vertical,
+                      menu: menuWithImg,
+                    ),
+                    itemCount: 6,
+                  )
+                ],
+              ),
             ),
-            const SizedBox(height: 40)
           ],
         ),
       ),

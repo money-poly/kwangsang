@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/custom_textfield.dart';
@@ -15,9 +16,7 @@ class OrderFindView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: KwangColor.grey100,
         leading: GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
+          onTap: () => context.pop(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: SvgPicture.asset("assets/icons/ic_36_back.svg"),

@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
@@ -8,6 +7,7 @@ import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/datetime_formatter.dart';
 import 'package:immersion_kwangsang/utils/number_formatter.dart';
 import 'package:immersion_kwangsang/widgets/count_tag_widget.dart';
+import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:immersion_kwangsang/widgets/discount_widget.dart';
 import 'package:immersion_kwangsang/widgets/menu_img_card.dart';
 
@@ -45,57 +45,60 @@ class ItemCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: KwangColor.grey500),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: ExtendedImage.network(
-                        menu.imgUrl ?? "", // [TODO] 이미지 null 일 때 예외처리 추가
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    right: 8,
-                    bottom: 8,
-                    child: Container(
+              Expanded(
+                child: Stack(
+                  children: [
+                    Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: KwangColor.grey500, width: 1),
-                        borderRadius: BorderRadius.circular(5),
-                        color: KwangColor.grey100,
+                        border: Border.all(color: KwangColor.grey500),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(menu.name, style: KwangStyle.btn2SB),
-                          const SizedBox(height: 2),
-                          Text(
-                            "소비기한 : ${menu.expiredDate != null ? dateToStr(DateTimeStrType.slash, menu.expiredDate!) : "미정"}",
-                            style: KwangStyle.body3.copyWith(
-                              color: KwangColor.grey800,
-                            ),
-                          )
-                        ],
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: CustomNetworkImage(
+                          imageUrl: menu.imgUrl,
+                          isFull: true,
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    right: 52,
-                    bottom: 56,
-                    child: Transform.rotate(
-                      angle: 25,
-                      child: ItemDiscountWidget(menu: menu),
+                    Positioned(
+                      right: 8,
+                      bottom: 8,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border:
+                              Border.all(color: KwangColor.grey500, width: 1),
+                          borderRadius: BorderRadius.circular(5),
+                          color: KwangColor.grey100,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(menu.name, style: KwangStyle.btn2SB),
+                            const SizedBox(height: 2),
+                            Text(
+                              "소비기한 : ${menu.expiredDate != null ? dateToStr(DateTimeStrType.slash, menu.expiredDate!) : "미정"}",
+                              style: KwangStyle.body3.copyWith(
+                                color: KwangColor.grey800,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
-                  )
-                ],
+                    Positioned(
+                      right: 52,
+                      bottom: 56,
+                      child: Transform.rotate(
+                        angle: 25,
+                        child: ItemDiscountWidget(menu: menu),
+                      ),
+                    )
+                  ],
+                ),
               ),
               const SizedBox(height: 12),
               Padding(
@@ -172,6 +175,7 @@ class ItemCard extends StatelessWidget {
                     style: KwangStyle.body2.copyWith(
                       color: KwangColor.grey600,
                       decoration: TextDecoration.lineThrough,
+                      decorationColor: KwangColor.grey600,
                     ),
                   ),
                   Text(
@@ -272,6 +276,7 @@ class ItemCard extends StatelessWidget {
                     style: KwangStyle.body1M.copyWith(
                       color: KwangColor.grey700,
                       decoration: TextDecoration.lineThrough,
+                      decorationColor: KwangColor.grey700,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -362,6 +367,7 @@ class ItemCard extends StatelessWidget {
                       style: KwangStyle.body1M.copyWith(
                         color: KwangColor.grey700,
                         decoration: TextDecoration.lineThrough,
+                        decorationColor: KwangColor.grey700,
                       ),
                     ),
                     const SizedBox(height: 2),
