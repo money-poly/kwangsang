@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 
 class MenuBottomSheetViewModel with ChangeNotifier {
   Menu? _mainItem;

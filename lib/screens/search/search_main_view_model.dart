@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/services/search_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

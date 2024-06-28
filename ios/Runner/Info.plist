@@ -28,6 +28,48 @@
 	<string>$(GOOGLE_MAP_KEY)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>shinhan-sr-ansimclick://</string>
+		<string>smshinhanansimclick://</string>
+		<string>hdcardappcardansimclick://</string>
+		<string>smhyundaiansimclick://</string>
+		<string>mpocket.online.ansimclick://</string>
+		<string>scardcertiapp://</string>
+		<string>monimopay://</string>
+		<string>monimopayauth://</string>
+		<string>cloudpay://</string>
+		<string>nhappcardansimclick://</string>
+		<string>nonghyupcardansimclick://</string>
+		<string>kb-acp://</string>
+		<string>lotteappcard://</string>
+		<string>lottesmartpay://</string>
+		<string>Ipayapp://</string>
+		<string>citispay://</string>
+		<string>ispmobile://</string>
+		<string>shinsegaeeasypayment://</string>
+		<string>tswansimclick://</string>
+		<string>nhallonepayansimclick://</string>
+		<string>citimobileapp://</string>
+		<string>payco://</string>
+		<string>kakaotalk://</string>
+		<string>hanaskcardmobileportal://</string>
+		<string>wooripay://</string>
+		<string>com.wooricard.wcard://</string>
+		<string>NewSmartPib://</string>
+		<string>hanawalletmembers://</string>
+		<string>tauthlink://</string>
+		<string>ktauthexternalcall://</string>
+		<string>upluscorporation://</string>
+		<string>naversearchthirdlogin://</string>
+		<string>Imslpay://</string>
+		<string>newliiv://</string>
+		<string>kbbank://</string>
+		<string>kftc-bankpay://</string>
+		<string>liivbank://</string>
+		<string>kb-bankpay://</string>
+		<string>Ukbanksmartbanknonloginpay://</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

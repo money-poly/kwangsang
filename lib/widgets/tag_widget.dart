@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:immersion_kwangsang/models/tag.dart';
+import 'package:immersion_kwangsang/models/tag/tag_model.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 
 class TagWidget extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:immersion_kwangsang/models/store.dart';
+import 'package:immersion_kwangsang/models/store/store_home_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/store_img_card.dart';

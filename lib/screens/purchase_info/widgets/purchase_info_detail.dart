@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:immersion_kwangsang/models/menu.dart';
-// import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
+import 'package:immersion_kwangsang/models/menu/menu_model.dart';
+import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';

@@ -6,6 +6,11 @@ import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/limit_stock/limit_stock_view.dart';
 import 'package:immersion_kwangsang/screens/home/new_product/new_product_view.dart';
 import 'package:immersion_kwangsang/screens/home/recommend/recommend_view.dart';
+import 'package:immersion_kwangsang/screens/nice_pay/nice_pay_view.dart';
+import 'package:immersion_kwangsang/screens/nice_pay/nice_pay_view_model.dart';
+import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
+import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
+import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +45,20 @@ class HomeView extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            // TODO: test widget, remove required
+            GestureDetector(
+              onTap: () async {
+                await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => ChangeNotifierProvider(
+                      create: (context) => NicePayViewModel(),
+                      child: const NicePayView(),
+                    ),
+                  ),
+                );
+              },
+              child: const Text('페이 테스트'),
             ),
             GestureDetector(
               onTap: () => context.push("/search"),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/menu/menu_simple_model.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_view.dart';
+import 'package:immersion_kwangsang/screens/menu/menu_view_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';

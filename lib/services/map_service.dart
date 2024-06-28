@@ -1,5 +1,7 @@
 import 'dart:convert';
-import 'package:immersion_kwangsang/models/store.dart';
+import 'package:immersion_kwangsang/models/store/store_detail_model.dart';
+import 'package:immersion_kwangsang/models/store/store_model.dart';
+import 'package:immersion_kwangsang/models/store/store_simple.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/services/api.dart';
 

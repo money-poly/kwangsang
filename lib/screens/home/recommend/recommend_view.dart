@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:immersion_kwangsang/models/menu.dart';
+import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/recommend/widgets/item_ranking_row.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/item_card.dart';
