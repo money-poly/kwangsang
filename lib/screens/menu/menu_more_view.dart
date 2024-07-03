@@ -100,7 +100,10 @@ class MenuMoreView extends StatelessWidget {
           ),
         ],
       ),
-      bottomSheet: const MenuBottomSheet(),
+      bottomSheet: MediaQuery.removePadding(
+        context: context,
+        child: const MenuBottomSheet(),
+      ),
     );
   }
 
