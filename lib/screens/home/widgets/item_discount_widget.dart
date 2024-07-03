@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
-import 'package:immersion_kwangsang/utils/number_formatter.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/utils/txt_size.dart';
 
 class ItemDiscountWidget extends StatelessWidget {
@@ -69,7 +69,7 @@ class ItemDiscountWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  commaNumberFormatter(menu.regularPrice ?? 0),
+                  menu.regularPrice.price(),
                   style: KwangStyle.body2M.copyWith(
                     color: KwangColor.grey600,
                     decoration: TextDecoration.lineThrough,

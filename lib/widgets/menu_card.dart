@@ -3,11 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/utils/number_formatter.dart';
 import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:immersion_kwangsang/widgets/menu_status_widget.dart';
 // import 'package:immersion_kwangsang/widgets/tag_widget.dart';
-import 'package:intl/intl.dart';
 
 enum MenuCardType {
   vertical,
@@ -78,8 +78,9 @@ class MenuCard extends StatelessWidget {
                                     : KwangColor.red),
                           ),
                         Text(
-                            "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
-                            style: KwangStyle.btn2B),
+                          "${menu.discountPrice.price()}원",
+                          style: KwangStyle.btn2B,
+                        ),
                       ],
                     )
                   ],
@@ -217,7 +218,7 @@ class MenuCard extends StatelessWidget {
                               KwangStyle.btn2B.copyWith(color: KwangColor.red),
                         ),
                       Text(
-                        "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
+                        "${menu.discountPrice.price()}원",
                         style: KwangStyle.btn2B,
                       ),
                     ],

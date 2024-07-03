@@ -5,7 +5,7 @@ import 'package:immersion_kwangsang/screens/home/widgets/item_discount_widget.da
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/datetime_formatter.dart';
-import 'package:immersion_kwangsang/utils/number_formatter.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/count_tag_widget.dart';
 import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 import 'package:immersion_kwangsang/widgets/discount_widget.dart';
@@ -171,7 +171,7 @@ class ItemCard extends StatelessWidget {
                 children: [
                   Text(menu.name, style: KwangStyle.body2M),
                   Text(
-                    commaNumberFormatter(menu.discountPrice),
+                    menu.discountPrice.price(),
                     style: KwangStyle.body2.copyWith(
                       color: KwangColor.grey600,
                       decoration: TextDecoration.lineThrough,
@@ -179,8 +179,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    commaNumberFormatter(
-                        menu.regularPrice ?? 0), // [TODO] 정가로 교체
+                    menu.regularPrice.price(), // [TODO] 정가로 교체
                     style: KwangStyle.btn2B,
                   ),
                   const SizedBox(height: 4),
@@ -272,7 +271,7 @@ class ItemCard extends StatelessWidget {
                   Text(menu.name, style: KwangStyle.body1M),
                   const SizedBox(height: 4),
                   Text(
-                    commaNumberFormatter(menu.regularPrice ?? 0),
+                    menu.regularPrice.price(),
                     style: KwangStyle.body1M.copyWith(
                       color: KwangColor.grey700,
                       decoration: TextDecoration.lineThrough,
@@ -288,8 +287,10 @@ class ItemCard extends StatelessWidget {
                         style: KwangStyle.btn2B.copyWith(color: KwangColor.red),
                       ),
                       const SizedBox(width: 4),
-                      Text(commaNumberFormatter(menu.discountPrice),
-                          style: KwangStyle.btn2B),
+                      Text(
+                        menu.discountPrice.price(),
+                        style: KwangStyle.btn2B,
+                      ),
                     ],
                   ),
                 ],
@@ -363,7 +364,7 @@ class ItemCard extends StatelessWidget {
                     Text(menu.name, style: KwangStyle.body1M),
                     const SizedBox(height: 2),
                     Text(
-                      commaNumberFormatter(menu.regularPrice ?? 0),
+                      menu.regularPrice.price(),
                       style: KwangStyle.body1M.copyWith(
                         color: KwangColor.grey700,
                         decoration: TextDecoration.lineThrough,
@@ -381,8 +382,10 @@ class ItemCard extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 4),
-                          Text(commaNumberFormatter(menu.discountPrice),
-                              style: KwangStyle.header3),
+                          Text(
+                            menu.discountPrice.price(),
+                            style: KwangStyle.header3,
+                          ),
                         ],
                       ),
                     ),

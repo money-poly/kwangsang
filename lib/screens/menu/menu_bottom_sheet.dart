@@ -5,8 +5,8 @@ import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.da
 import 'package:immersion_kwangsang/screens/menu/widgets/menu_bottom_sheet_card.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/count_widget.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
@@ -104,7 +104,7 @@ class MenuBottomSheet extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              '${NumberFormat('###,###,###,###').format(viewModel.totalCost())}원 주문하기',
+                              '${viewModel.totalCost().price()}원 주문하기',
                               style: KwangStyle.btn2B
                                   .copyWith(color: Colors.white),
                             ),

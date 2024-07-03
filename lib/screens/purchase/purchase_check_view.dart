@@ -7,7 +7,7 @@ import 'package:immersion_kwangsang/screens/purchase/widgets/purchase_check_dial
 import 'package:immersion_kwangsang/screens/purchase/widgets/soldout_menu_card.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
-import 'package:immersion_kwangsang/utils/number_formatter.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/countable_menu_card.dart';
 import 'package:immersion_kwangsang/widgets/custom_btn.dart';
 import 'package:provider/provider.dart';
@@ -105,7 +105,7 @@ class PurchaseCheckView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        commaNumberFormatter(10000),
+                        10000.price(),
                         style: KwangStyle.body1M.copyWith(
                           color: KwangColor.grey600,
                         ),
@@ -122,7 +122,7 @@ class PurchaseCheckView extends StatelessWidget {
                             .copyWith(color: KwangColor.grey600),
                       ),
                       Text(
-                        commaNumberFormatter(-1150),
+                        (-1150).price(),
                         style:
                             KwangStyle.body1M.copyWith(color: KwangColor.red),
                       ),
@@ -133,8 +133,10 @@ class PurchaseCheckView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("총 결제 금액", style: KwangStyle.header3),
-                      Text(commaNumberFormatter(8850),
-                          style: KwangStyle.header3),
+                      Text(
+                        8850.price(),
+                        style: KwangStyle.header3,
+                      ),
                     ],
                   ),
                 ],
@@ -245,7 +247,7 @@ class PurchaseCheckView extends StatelessWidget {
         color: KwangColor.grey100,
         padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
         child: CustomBtn(
-            txt: "총 ${commaNumberFormatter(8850)} 결제하기", // [TODO] 실제 가격으로 변경
+            txt: "총 ${8850.price()} 결제하기", // [TODO] 실제 가격으로 변경
             bgColor: KwangColor.primary400,
             txtColor: KwangColor.grey100,
             unableBgColor: KwangColor.primary400,
@@ -253,7 +255,7 @@ class PurchaseCheckView extends StatelessWidget {
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (context) => PurchaseCheckDialog());
+                  builder: (context) => const PurchaseCheckDialog());
             },
             isEnable: true,
             type: CustomBtnType.big),

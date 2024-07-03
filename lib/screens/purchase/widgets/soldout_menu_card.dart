@@ -3,9 +3,9 @@ import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/screens/purchase/widgets/soldout_chart_widget.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/count_widget.dart';
 import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
-import 'package:intl/intl.dart';
 
 class SoldoutMenuCard extends StatelessWidget {
   const SoldoutMenuCard({super.key, required this.menu});
@@ -48,11 +48,12 @@ class SoldoutMenuCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                                "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
-                                style: KwangStyle.btn2B),
+                              "${menu.discountPrice.price()}원",
+                              style: KwangStyle.btn2B,
+                            ),
                             const SizedBox(width: 10),
                             Text(
-                              "${NumberFormat('###,###,###,###').format(menu.regularPrice ?? 2800).replaceAll(' ', ',')}원", // [TODO] 정가로 수정
+                              "${menu.regularPrice?.price() ?? 2800.price()}원", // [TODO] 정가로 수정
                               style: KwangStyle.body2M.copyWith(
                                 color: KwangColor.grey600,
                                 decoration: TextDecoration.lineThrough,
