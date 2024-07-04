@@ -104,20 +104,9 @@ class MenuView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // if (viewModel.menu!.description != null)
-                              //   Text(
-                              //     viewModel.menu!.description!,
-                              //     style: const TextStyle(
-                              //         fontSize: 12,
-                              //         fontWeight: FontWeight.w500,
-                              //         color: KwangColor.grey600),
-                              //   ),
-                              // if (viewModel.menu!.description != null)
-                              //   const SizedBox(
-                              //     height: 4,
-                              //   ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () => context.push("/storeDetail",
+                                    extra: viewModel.menu!.store.id),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,6 +133,18 @@ class MenuView extends StatelessWidget {
                                 softWrap: true,
                                 overflow: TextOverflow.visible,
                               ),
+                              if (viewModel.menu!.description != null)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 4, bottom: 8),
+                                  child: Text(
+                                    viewModel.menu!.description!,
+                                    style: KwangStyle.body2M.copyWith(
+                                      color: KwangColor.grey700,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ),
+                                ),
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment:
