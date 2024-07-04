@@ -367,7 +367,10 @@ class MenuView extends StatelessWidget {
                 ),
               ),
             ),
-      bottomSheet: const MenuBottomSheet(),
+      bottomSheet: MediaQuery.removePadding(
+        context: context,
+        child: const MenuBottomSheet(),
+      ),
 
       // Container(
       //   padding: EdgeInsets.fromLTRB(

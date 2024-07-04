@@ -61,7 +61,7 @@ class MenuBottomSheet extends StatelessWidget {
                 ),
               ),
               if (viewModel.isExpanded)
-                Expanded(
+                Flexible(
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -115,7 +115,6 @@ class MenuBottomSheet extends StatelessWidget {
                   ],
                 ),
               ),
-              // TODO: MediaQuery가 0으로 나오는 문제
               SizedBox(
                 height: MediaQuery.of(context).padding.bottom + 10,
               )
