@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_simple_model.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/item_card.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
@@ -166,19 +167,21 @@ class MapStoreView extends StatelessWidget {
                     ),
                     height: 100,
                     child: GoogleMap(
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(viewModel.store!.latLng.latitude,
-                              viewModel.store!.latLng.longitude),
-                          zoom: 16,
-                        ),
-                        myLocationButtonEnabled: false,
-                        zoomControlsEnabled: false,
-                        markers: {
-                          Marker(
-                              markerId: const MarkerId("store"),
-                              position: viewModel.store!.latLng,
-                              icon: viewModel.markerOffIcon!)
-                        }),
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(viewModel.store!.latLng.latitude,
+                            viewModel.store!.latLng.longitude),
+                        zoom: 16,
+                      ),
+                      myLocationButtonEnabled: false,
+                      zoomControlsEnabled: false,
+                      markers: {
+                        Marker(
+                          markerId: const MarkerId("store"),
+                          position: viewModel.store!.latLng,
+                          icon: PositionProvider.instance.markerOffIcon,
+                        )
+                      },
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 26, bottom: 8),

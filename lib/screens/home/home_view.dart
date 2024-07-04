@@ -8,9 +8,6 @@ import 'package:immersion_kwangsang/screens/home/new_product/new_product_view.da
 import 'package:immersion_kwangsang/screens/home/recommend/recommend_view.dart';
 import 'package:immersion_kwangsang/screens/nice_pay/nice_pay_view.dart';
 import 'package:immersion_kwangsang/screens/nice_pay/nice_pay_view_model.dart';
-import 'package:immersion_kwangsang/screens/search/search_main_view.dart';
-import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
-import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:provider/provider.dart';

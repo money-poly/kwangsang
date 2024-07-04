@@ -1,9 +1,8 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/store/store_model.dart';
 import 'package:immersion_kwangsang/models/store/store_simple.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/services/map_service.dart';
 
 class MapMainViewModel with ChangeNotifier {
@@ -11,18 +10,15 @@ class MapMainViewModel with ChangeNotifier {
   bool _isDisposed = false;
 
   GoogleMapController? _mapController;
-  BitmapDescriptor _markerOffIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor _markerOnIcon = BitmapDescriptor.defaultMarker;
+  final BitmapDescriptor _markerOffIcon =
+      PositionProvider.instance.markerOffIcon;
+  final BitmapDescriptor _markerOnIcon = PositionProvider.instance.markerOnIcon;
   int? selectedMarkerId;
   List<Marker> _markers = [];
   Store? _store;
 
   List<Marker> get markers => _markers;
   Store? get store => _store;
-
-  MapMainViewModel() {
-    initMarkerIcon();
-  }
 
   @override
   void dispose() {
@@ -46,26 +42,6 @@ class MapMainViewModel with ChangeNotifier {
         LatLng(_service.position.latitude, _service.position.longitude)));
   }
 
-  void initMarkerIcon() async {
-    await getBytesFromAsset("assets/imgs/img_30_marker_off.png", 90)
-        .then((value) => _markerOffIcon = BitmapDescriptor.fromBytes(value));
-    await getBytesFromAsset("assets/imgs/img_50_marker_on.png", 150)
-        .then((value) => _markerOnIcon = BitmapDescriptor.fromBytes(value));
-    if (!_isDisposed) {
-      notifyListeners();
-    }
-  }
-
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    final data = await rootBundle.load(path);
-    final codec = await instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
-    final frameInfo = await codec.getNextFrame();
-    return (await frameInfo.image.toByteData(format: ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
-  }
-
   Future<void> getMarkers() async {
     final List<StoreSimple> stores = await _service.getStores();
 
@@ -77,7 +53,7 @@ class MapMainViewModel with ChangeNotifier {
               selectedMarkerId = e.id;
               await updateMarker(e.id);
             },
-            icon: selectedMarkerId == e.id ? _markerOnIcon : _markerOffIcon))
+            icon: selectedMarkerId == e.id ? _markerOffIcon : _markerOffIcon))
         .toList();
     if (!_isDisposed) {
       notifyListeners();

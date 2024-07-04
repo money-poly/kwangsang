@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -65,10 +66,10 @@ class PurchaseInfoMap extends StatelessWidget {
                 ),
               },
               markers: {
-                const Marker(
-                  markerId: MarkerId("store"),
-                  position: LatLng(37.6203769557633, 127.057749200082),
-                  // icon: viewModel.markerOffIcon!,
+                Marker(
+                  markerId: const MarkerId("store"),
+                  position: const LatLng(37.6203769557633, 127.057749200082),
+                  icon: PositionProvider.instance.markerOffIcon,
                 ),
               },
             ),
