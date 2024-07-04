@@ -39,7 +39,6 @@ class StoreInfoRow extends StatelessWidget {
               ? GestureDetector(
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: content));
-                    CustomToast.showToast("복사가 완료되었습니다!");
                   },
                   behavior: HitTestBehavior.translucent,
                   child: Row(
