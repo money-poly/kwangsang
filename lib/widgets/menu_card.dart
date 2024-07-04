@@ -142,21 +142,13 @@ class MenuCard extends StatelessWidget {
                       border: Border.all(color: KwangColor.grey300, width: 1),
                       borderRadius: BorderRadius.circular(4),
                       color: KwangColor.grey200),
-                  child: menu.imgUrl == null
-                      ? Center(
-                          child: Text(
-                            "이미지 준비중입니다",
-                            style: KwangStyle.btn3
-                                .copyWith(color: KwangColor.grey500),
-                          ),
-                        )
-                      : ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: CustomNetworkImage(
-                            imageUrl: menu.imgUrl,
-                            isFull: true,
-                          ),
-                        ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: CustomNetworkImage(
+                      imageUrl: menu.imgUrl,
+                      isFull: true,
+                    ),
+                  ),
                 ),
                 Positioned(
                   right: 8,

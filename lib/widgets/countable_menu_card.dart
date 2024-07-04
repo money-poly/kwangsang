@@ -37,45 +37,20 @@ class CountableMenuCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              menu.imgUrl == null
-                  ? Container(
-                      height: 72,
-                      width: 72,
-                      padding: const EdgeInsets.only(top: 3, bottom: 5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: KwangColor.grey350),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset("assets/imgs/img_44_bird_exclamation.png",
-                              width: 44, height: 44),
-                          const Text(
-                            "이미지 준비중",
-                            style: TextStyle(
-                                fontSize: 10,
-                                height: 14 / 10,
-                                color: KwangColor.grey500),
-                          )
-                        ],
-                      ),
-                    )
-                  : Container(
-                      width: 72,
-                      height: 72,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: KwangColor.grey300, width: 1),
-                          borderRadius: BorderRadius.circular(4)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: CustomNetworkImage(
-                          imageUrl: menu.imgUrl,
-                          isFull: true,
-                        ),
-                      ),
-                    ),
+              Container(
+                width: 72,
+                height: 72,
+                decoration: BoxDecoration(
+                    border: Border.all(color: KwangColor.grey300, width: 1),
+                    borderRadius: BorderRadius.circular(4)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: CustomNetworkImage(
+                    imageUrl: menu.imgUrl,
+                    isFull: true,
+                  ),
+                ),
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
@@ -131,44 +106,20 @@ class CountableMenuCard extends StatelessWidget {
           height: 86,
           child: Row(
             children: [
-              menu.imgUrl == null
-                  ? Container(
-                      height: 86,
-                      width: 86,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: KwangColor.grey350),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset("assets/imgs/img_44_bird_exclamation.png",
-                              width: 44, height: 44),
-                          const Text(
-                            "이미지 준비중",
-                            style: TextStyle(
-                                fontSize: 10,
-                                height: 14 / 10,
-                                color: KwangColor.grey500),
-                          )
-                        ],
-                      ),
-                    )
-                  : Container(
-                      width: 86,
-                      height: 86,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: KwangColor.grey300, width: 1),
-                          borderRadius: BorderRadius.circular(4)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: CustomNetworkImage(
-                          imageUrl: menu.imgUrl,
-                          isFull: true,
-                        ),
-                      ),
-                    ),
+              Container(
+                width: 86,
+                height: 86,
+                decoration: BoxDecoration(
+                    border: Border.all(color: KwangColor.grey300, width: 1),
+                    borderRadius: BorderRadius.circular(4)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: CustomNetworkImage(
+                    imageUrl: menu.imgUrl,
+                    isFull: true,
+                  ),
+                ),
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -230,44 +181,20 @@ class CountableMenuCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              menu.imgUrl == null
-                  ? Container(
-                      height: 78,
-                      width: 78,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: KwangColor.grey350),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset("assets/imgs/img_44_bird_exclamation.png",
-                              width: 44, height: 44),
-                          const Text(
-                            "이미지 준비중",
-                            style: TextStyle(
-                                fontSize: 10,
-                                height: 14 / 10,
-                                color: KwangColor.grey500),
-                          )
-                        ],
-                      ),
-                    )
-                  : Container(
-                      width: 78,
-                      height: 78,
-                      decoration: BoxDecoration(
-                          border:
-                              Border.all(color: KwangColor.grey300, width: 1),
-                          borderRadius: BorderRadius.circular(4)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: CustomNetworkImage(
-                          imageUrl: menu.imgUrl,
-                          isFull: true,
-                        ),
-                      ),
-                    ),
+              Container(
+                width: 78,
+                height: 78,
+                decoration: BoxDecoration(
+                    border: Border.all(color: KwangColor.grey300, width: 1),
+                    borderRadius: BorderRadius.circular(4)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: CustomNetworkImage(
+                    imageUrl: menu.imgUrl,
+                    isFull: true,
+                  ),
+                ),
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
