@@ -8,6 +8,7 @@ import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:go_router/go_router.dart';
 
 void main() async {
   WidgetsBinding widgetBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -23,16 +24,30 @@ void main() async {
   ], child: MyApp(isVisited: prefs.getBool("visited") ?? false)));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key, required this.isVisited});
 
   final bool isVisited;
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late GoRouter _routerConfig;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _routerConfig = CustomRouter(widget.isVisited, context).router;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'kwangsaeng',
       theme: KwangTheme.kwangTheme,
-      routerConfig: CustomRouter(isVisited, context).router,
+      routerConfig: _routerConfig,
     );
   }
 }

@@ -126,22 +126,22 @@ class _ProgressBarPainter extends CustomPainter {
       if (isPassed) {
         var dotPaint = Paint()
           ..color = KwangColor.primary300
-          ..strokeWidth = 8
-          ..style = PaintingStyle.stroke;
+          ..strokeWidth = 1
+          ..style = PaintingStyle.fill;
         var dotOffset = Offset(offset.dx + textPainter.width / 2, 6);
-        canvas.drawCircle(dotOffset, 0, dotPaint);
+        canvas.drawCircle(dotOffset, 4, dotPaint);
       } else {
         var dotPaint = Paint()
           ..color = KwangColor.primary100
-          ..strokeWidth = 10
-          ..style = PaintingStyle.stroke;
+          ..strokeWidth = 1
+          ..style = PaintingStyle.fill;
         var dotOffset = Offset(offset.dx + textPainter.width / 2, 6);
-        canvas.drawCircle(dotOffset, 0, dotPaint);
+        canvas.drawCircle(dotOffset, 5, dotPaint);
 
         dotPaint
           ..color = KwangColor.primary200
-          ..strokeWidth = 6;
-        canvas.drawCircle(dotOffset, 0, dotPaint);
+          ..strokeWidth = 1;
+        canvas.drawCircle(dotOffset, 3, dotPaint);
       }
 
       if (phase == phaseIdx) {
