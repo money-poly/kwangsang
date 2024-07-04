@@ -328,7 +328,7 @@ class MapStoreView extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(
                         top: 8,
-                        bottom: MediaQuery.of(context).viewPadding.bottom + 52),
+                        bottom: MediaQuery.of(context).padding.bottom + 52),
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: viewModel.store!.notes

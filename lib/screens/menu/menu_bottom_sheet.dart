@@ -72,6 +72,8 @@ class MenuBottomSheet extends StatelessWidget {
                   ),
                 ),
               Container(
+                margin: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).padding.bottom),
                 padding: const EdgeInsets.only(
                   left: 20,
                   right: 20,
@@ -115,9 +117,6 @@ class MenuBottomSheet extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).padding.bottom + 10,
-              )
             ],
           ),
         ),
