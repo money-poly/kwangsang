@@ -9,14 +9,20 @@ import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
 import 'package:immersion_kwangsang/widgets/rounded_selectable_button.dart';
 
-class LimitStockView extends StatelessWidget {
+class LimitStockView extends StatefulWidget {
   const LimitStockView({super.key});
 
   @override
+  State<LimitStockView> createState() => _LimitStockViewState();
+}
+
+class _LimitStockViewState extends State<LimitStockView>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: CustomScrollView(
-        key: const PageStorageKey(EHomeTab.limitStock),
         slivers: [
           const SliverToBoxAdapter(
             child: LastProductsCard(),
@@ -130,4 +136,7 @@ class LimitStockView extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -6,11 +6,18 @@ import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
 
-class NewProductView extends StatelessWidget {
+class NewProductView extends StatefulWidget {
   const NewProductView({super.key});
 
   @override
+  State<NewProductView> createState() => _NewProductViewState();
+}
+
+class _NewProductViewState extends State<NewProductView>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: CustomScrollView(
         key: const PageStorageKey(EHomeTab.newProduct),
@@ -93,4 +100,7 @@ class NewProductView extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

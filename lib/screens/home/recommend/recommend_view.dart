@@ -13,11 +13,18 @@ import 'package:immersion_kwangsang/utils/number_formatter.dart';
 import 'package:immersion_kwangsang/widgets/carousel_indicator.dart';
 import 'package:provider/provider.dart';
 
-class RecommendView extends StatelessWidget {
+class RecommendView extends StatefulWidget {
   const RecommendView({super.key});
 
   @override
+  State<RecommendView> createState() => _RecommendViewState();
+}
+
+class _RecommendViewState extends State<RecommendView>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final menu = Menu(
       id: 1,
       name: "고구마 휘낭시에",
@@ -322,4 +329,7 @@ class RecommendView extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

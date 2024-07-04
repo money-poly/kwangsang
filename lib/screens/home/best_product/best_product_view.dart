@@ -7,14 +7,20 @@ import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/menu_rank_card.dart';
 import 'package:immersion_kwangsang/widgets/rounded_selectable_button.dart';
 
-class BestProductView extends StatelessWidget {
+class BestProductView extends StatefulWidget {
   const BestProductView({super.key});
 
   @override
+  State<BestProductView> createState() => _BestProductViewState();
+}
+
+class _BestProductViewState extends State<BestProductView>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: CustomScrollView(
-        key: const PageStorageKey(EHomeTab.bestProduct),
         slivers: [
           SliverAppBar(
             pinned: true,
@@ -111,4 +117,7 @@ class BestProductView extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
