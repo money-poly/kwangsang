@@ -42,12 +42,7 @@ class MenuMoreView extends StatelessWidget {
       body: Column(
         children: [
           SingleChildScrollView(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 10,
-              bottom: 20,
-              top: 6,
-            ),
+            padding: const EdgeInsets.fromLTRB(20, 6, 12, 12),
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
@@ -63,13 +58,14 @@ class MenuMoreView extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.only(
-                bottom: 110 + MediaQuery.paddingOf(context).bottom,
+                top: 10,
+                bottom: 158 + MediaQuery.of(context).padding.bottom,
               ),
               itemBuilder: (context, index) {
                 var menuMock = Menu(
                   id: 100 + index,
                   name: '메뉴 ${index + 1}',
-                  imgUrl:
+                  imgUrl: index % 2 == 0 ? null :
                       "https://lh4.googleusercontent.com/on7Yj1rShJRRBy88rTmptLVzMI4gEBDBabmSMv-GGsPIo5umfS5dpSJp3b4EoqKtnxdOYXeHSyct6m2fLYKckaikrUJn91PNWkIYXtkrCljcvdEnGdf_nQM5Qw6bQY4q6jvbWiBcC3WPTIcDS_lizv3R25oVAF_H0PNzvRo7JivPSiZR",
                   discountRate: 10,
                   regularPrice: 11000,
@@ -117,19 +113,23 @@ class MenuMoreView extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       child: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: 14,
-          vertical: 10,
+          horizontal: 15,
+          vertical: 8,
         ),
-        margin: const EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 8),
         decoration: BoxDecoration(
-          color: isSelected ? KwangColor.primary400 : KwangColor.grey300,
-          borderRadius: BorderRadius.circular(8),
+          color: isSelected ? KwangColor.primary400 : KwangColor.grey100,
+          border: Border.all(
+            width: 1,
+            color: isSelected ? KwangColor.primary400 : KwangColor.grey500,
+          ),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
           child: Text(
             option.text,
             style: KwangStyle.btn2B.copyWith(
-              color: isSelected ? Colors.white : KwangColor.grey600,
+              color: isSelected ? Colors.white : KwangColor.grey700,
             ),
           ),
         ),
