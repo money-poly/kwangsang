@@ -133,7 +133,7 @@ class MenuView extends StatelessWidget {
                                 softWrap: true,
                                 overflow: TextOverflow.visible,
                               ),
-                              if (viewModel.menu!.description != null)
+                              if (viewModel.menu!.description.isValidDesc())
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(top: 4, bottom: 8),

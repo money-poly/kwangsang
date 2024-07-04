@@ -52,8 +52,7 @@ class MenuCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    if (menu.description != null &&
-                        menu.description!.isNotEmpty)
+                    if (menu.description.isValidDesc())
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(

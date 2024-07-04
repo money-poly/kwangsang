@@ -11,6 +11,7 @@ import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
 import 'package:immersion_kwangsang/widgets/bullet_string.dart';
 import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
@@ -113,8 +114,7 @@ class MapStoreView extends StatelessWidget {
                           softWrap: true,
                           overflow: TextOverflow.visible,
                         ),
-                        if (viewModel.store!.description != null &&
-                            viewModel.store!.description!.isNotEmpty)
+                        if (viewModel.store!.description.isValidDesc())
                           Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
