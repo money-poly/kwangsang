@@ -166,21 +166,24 @@ class MapStoreView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     height: 100,
-                    child: GoogleMap(
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(viewModel.store!.latLng.latitude,
-                            viewModel.store!.latLng.longitude),
-                        zoom: 16,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: GoogleMap(
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(viewModel.store!.latLng.latitude,
+                              viewModel.store!.latLng.longitude),
+                          zoom: 16,
+                        ),
+                        myLocationButtonEnabled: false,
+                        zoomControlsEnabled: false,
+                        markers: {
+                          Marker(
+                            markerId: const MarkerId("store"),
+                            position: viewModel.store!.latLng,
+                            icon: PositionProvider.instance.markerOffIcon,
+                          )
+                        },
                       ),
-                      myLocationButtonEnabled: false,
-                      zoomControlsEnabled: false,
-                      markers: {
-                        Marker(
-                          markerId: const MarkerId("store"),
-                          position: viewModel.store!.latLng,
-                          icon: PositionProvider.instance.markerOffIcon,
-                        )
-                      },
                     ),
                   ),
                   Container(

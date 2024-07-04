@@ -49,29 +49,31 @@ class PurchaseInfoMap extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(8),
             ),
-            clipBehavior: Clip.hardEdge,
             height: 132,
             // TODO: connect with viewModel
-            child: GoogleMap(
-              initialCameraPosition: const CameraPosition(
-                // target: viewModel.menu!.store.latLng,
-                target: LatLng(37.6203769557633, 127.057749200082),
-                zoom: 16,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: GoogleMap(
+                initialCameraPosition: const CameraPosition(
+                  // target: viewModel.menu!.store.latLng,
+                  target: LatLng(37.6203769557633, 127.057749200082),
+                  zoom: 16,
+                ),
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                gestureRecognizers: {
+                  Factory<OneSequenceGestureRecognizer>(
+                    () => EagerGestureRecognizer(),
+                  ),
+                },
+                markers: {
+                  Marker(
+                    markerId: const MarkerId("store"),
+                    position: const LatLng(37.6203769557633, 127.057749200082),
+                    icon: PositionProvider.instance.markerOffIcon,
+                  ),
+                },
               ),
-              myLocationButtonEnabled: false,
-              zoomControlsEnabled: false,
-              gestureRecognizers: {
-                Factory<OneSequenceGestureRecognizer>(
-                  () => EagerGestureRecognizer(),
-                ),
-              },
-              markers: {
-                Marker(
-                  markerId: const MarkerId("store"),
-                  position: const LatLng(37.6203769557633, 127.057749200082),
-                  icon: PositionProvider.instance.markerOffIcon,
-                ),
-              },
             ),
           ),
         Padding(
