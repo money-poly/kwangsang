@@ -9,7 +9,7 @@ import 'package:immersion_kwangsang/screens/home/widgets/count_and_sort_title.da
 import 'package:immersion_kwangsang/screens/home/widgets/item_more_btn.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
-import 'package:immersion_kwangsang/utils/number_formatter.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/carousel_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -202,7 +202,7 @@ class _RecommendViewState extends State<RecommendView>
                     children: [
                       Text("오늘 사용할 식비는", style: KwangStyle.body1M),
                       Text(
-                        commaNumberFormatter(5000),
+                        5000.price(),
                         style: KwangStyle.header0,
                       ),
                       const SizedBox(height: 12),
@@ -251,7 +251,7 @@ class _RecommendViewState extends State<RecommendView>
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: CountAndSortTitle(
-                            title: "${commaNumberFormatter(5000)} 이하 상품이에요",
+                            title: "${5000.price()} 이하 상품이에요",
                             count: 9,
                             sort: "거리순",
                             onTap: () {}),

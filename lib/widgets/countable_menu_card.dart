@@ -3,10 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/count_tag_widget.dart';
 import 'package:immersion_kwangsang/widgets/count_widget.dart';
 import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
-import 'package:intl/intl.dart';
 
 enum CMenuCardType { small, large, removable }
 
@@ -89,9 +89,7 @@ class CountableMenuCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      NumberFormat('###,###,###,###')
-                          .format(2500) // [TODO] 정가로 값 변경)
-                          .replaceAll(' ', ','),
+                      2500.price(),
                       style: KwangStyle.body1M.copyWith(
                         color: KwangColor.grey600,
                         decoration: TextDecoration.lineThrough,
@@ -108,7 +106,7 @@ class CountableMenuCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
+                          "${menu.discountPrice.price()}원",
                           style: KwangStyle.btn2B,
                         ),
                       ],
@@ -187,9 +185,7 @@ class CountableMenuCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          NumberFormat('###,###,###,###')
-                              .format(2500) // [TODO] 정가로 값 변경)
-                              .replaceAll(' ', ','),
+                          2500.price(),
                           style: KwangStyle.body1M.copyWith(
                             color: KwangColor.grey600,
                             decoration: TextDecoration.lineThrough,
@@ -206,7 +202,7 @@ class CountableMenuCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
+                              "${menu.discountPrice.price()}원",
                               style: KwangStyle.btn2B,
                             ),
                           ],
@@ -325,9 +321,7 @@ class CountableMenuCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              NumberFormat('###,###,###,###')
-                                  .format(2500) // [TODO] 정가로 값 변경)
-                                  .replaceAll(' ', ','),
+                              2500.price(),
                               style: KwangStyle.body1M.copyWith(
                                 color: KwangColor.grey600,
                                 decoration: TextDecoration.lineThrough,
@@ -344,7 +338,7 @@ class CountableMenuCard extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
-                                  "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
+                                  "${menu.discountPrice.price()}원",
                                   style: KwangStyle.btn2B,
                                 ),
                               ],

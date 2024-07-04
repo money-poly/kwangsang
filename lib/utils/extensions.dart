@@ -1,7 +1,8 @@
 import 'package:intl/intl.dart';
 
-extension PriceParse on int {
+extension PriceParse on int? {
   String price() {
+    if (this == null) return '0';
     return NumberFormat('###,###,###').format(this);
   }
 }

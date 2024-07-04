@@ -3,9 +3,9 @@ import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/count_tag_widget.dart';
 import 'package:immersion_kwangsang/widgets/count_widget.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class MenuBottomSheetCard extends StatelessWidget {
@@ -80,7 +80,7 @@ class MenuBottomSheetCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    "${NumberFormat('###,###,###,###').format(menu.regularPrice).replaceAll(' ', ',')}원",
+                    "${menu.regularPrice.price()}원",
                     style: KwangStyle.body1.copyWith(
                       color: KwangColor.grey600,
                       decoration: TextDecoration.lineThrough,
@@ -89,7 +89,7 @@ class MenuBottomSheetCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 7),
                   Text(
-                    "${NumberFormat('###,###,###,###').format(menu.discountPrice).replaceAll(' ', ',')}원",
+                    "${menu.discountPrice.price()}원",
                     style: KwangStyle.btn1B,
                   ),
                 ],

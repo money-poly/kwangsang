@@ -10,11 +10,11 @@ import 'package:immersion_kwangsang/screens/menu/widgets/menu_info_col.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
 import 'package:immersion_kwangsang/widgets/bullet_string.dart';
 import 'package:immersion_kwangsang/widgets/countable_menu_card.dart';
 import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class MenuView extends StatelessWidget {
@@ -151,7 +151,7 @@ class MenuView extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${NumberFormat('###,###,###,###').format(viewModel.menu!.regularPrice).replaceAll(' ', ',')}원",
+                                    "${viewModel.menu!.regularPrice.price()}원",
                                     style: KwangStyle.header1.copyWith(
                                       color: KwangColor.grey600,
                                       decoration: TextDecoration.lineThrough,
@@ -169,7 +169,7 @@ class MenuView extends StatelessWidget {
                                         ),
                                         const SizedBox(width: 8),
                                         Text(
-                                            "${NumberFormat('###,###,###,###').format(viewModel.menu!.discountPrice).replaceAll(' ', ',')}원",
+                                            "${viewModel.menu!.discountPrice.price()}원",
                                             style: KwangStyle.header0),
                                       ],
                                     ),

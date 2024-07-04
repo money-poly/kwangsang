@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
-import 'package:intl/intl.dart';
 // import 'package:provider/provider.dart';
 
 class PurchaseInfoDetail extends StatelessWidget {
@@ -71,11 +71,7 @@ class PurchaseInfoDetail extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '${NumberFormat(
-                      '###,###,###,###',
-                    ).format(
-                          items.fold(0, (prev, e) => prev + e.regularPrice!),
-                        ).replaceAll(' ', ',')}원',
+                    '${items.fold(0, (prev, e) => prev + e.regularPrice!).price()}원',
                     style: KwangStyle.header3.copyWith(
                       color: KwangColor.grey500,
                       decoration: TextDecoration.lineThrough,
@@ -84,11 +80,7 @@ class PurchaseInfoDetail extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '${NumberFormat(
-                      '###,###,###,###',
-                    ).format(
-                          items.fold(0, (prev, e) => prev + e.discountPrice),
-                        ).replaceAll(' ', ',')}원',
+                    '${items.fold(0, (prev, e) => prev + e.discountPrice).price()}원',
                     style: KwangStyle.header3.copyWith(
                       color: KwangColor.grey800,
                     ),
@@ -108,13 +100,7 @@ class PurchaseInfoDetail extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '-${NumberFormat(
-                      '###,###,###,###',
-                    ).format(
-                          items.fold(0, (prev, e) => prev + e.regularPrice!) -
-                              items.fold(
-                                  0, (prev, e) => prev + e.discountPrice),
-                        ).replaceAll(' ', ',')}원',
+                    '-${((items.fold(0, (prev, e) => prev + e.regularPrice!) - items.fold(0, (prev, e) => prev + e.discountPrice)) as int).price()}원',
                     style: KwangStyle.btn2SB.copyWith(
                       color: KwangColor.red,
                     ),
@@ -163,7 +149,7 @@ class PurchaseInfoDetail extends StatelessWidget {
           Row(
             children: [
               Text(
-                '${NumberFormat('###,###,###,###').format(regularPrice).replaceAll(' ', ',')}원',
+                '${regularPrice.price()}원',
                 style: KwangStyle.body1M.copyWith(
                   color: KwangColor.grey500,
                   decoration: TextDecoration.lineThrough,
@@ -172,7 +158,7 @@ class PurchaseInfoDetail extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                '${NumberFormat('###,###,###,###').format(discountPrice).replaceAll(' ', ',')}원',
+                '${discountPrice.price()}원',
                 style: KwangStyle.body1M.copyWith(
                   color: KwangColor.grey800,
                 ),
