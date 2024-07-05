@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:immersion_kwangsang/constants/routes.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet_view_model.dart';
 import 'package:immersion_kwangsang/screens/menu/widgets/menu_bottom_sheet_card.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
@@ -98,7 +99,7 @@ class MenuBottomSheet extends StatelessWidget {
                     Flexible(
                       flex: 1,
                       child: GestureDetector(
-                        onTap: () => context.push("/purchase"),
+                        onTap: () => context.push(Routes.purchase),
                         child: Container(
                           decoration: BoxDecoration(
                             color: KwangColor.primary400,

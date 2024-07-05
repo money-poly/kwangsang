@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:immersion_kwangsang/constants/routes.dart';
 import 'package:immersion_kwangsang/screens/home/best_product/best_product_view.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/limit_stock/limit_stock_view.dart';
@@ -58,7 +59,7 @@ class HomeView extends StatelessWidget {
               child: const Text('페이 테스트'),
             ),
             GestureDetector(
-              onTap: () => context.push("/search"),
+              onTap: () => context.push(Routes.search),
               child: SvgPicture.asset(
                 "assets/icons/ic_36_search.svg",
                 width: 36,

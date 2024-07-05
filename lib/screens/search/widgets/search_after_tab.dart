@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:immersion_kwangsang/constants/routes.dart';
 import 'package:immersion_kwangsang/models/menu/menu_simple_model.dart';
 import 'package:immersion_kwangsang/screens/search/search_main_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
@@ -131,7 +132,9 @@ class SearchAfterTab extends StatelessWidget {
                                       "options": {}
                                     },
                                   );
-                                  context.push("/menuDetail", extra: e.id);
+                                  context.push(
+                                    "${Routes.menuDetail}/${e.id}",
+                                  );
                                 },
                                 child: MenuCard(
                                     menu: e, type: MenuCardType.vertical)))

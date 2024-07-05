@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
+import 'package:immersion_kwangsang/constants/routes.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/login/login_view.dart';
 import 'package:immersion_kwangsang/screens/login/login_view_model.dart';
@@ -32,11 +33,11 @@ class CustomRouter {
   CustomRouter(this.isVisited, BuildContext context) {
     final nav = Provider.of<NavViewModel>(context);
     router = GoRouter(
-      initialLocation: isVisited ? "/nav" : "/onBoarding",
+      initialLocation: isVisited ? Routes.nav : Routes.onBoarding,
       observers: [RouterObserver()],
       routes: [
         GoRoute(
-          path: "/nav",
+          path: Routes.nav,
           name: NavItems.values[nav.currIdx].label,
           builder: (context, state) => MultiProvider(
             providers: [
@@ -49,7 +50,7 @@ class CustomRouter {
           ),
         ),
         GoRoute(
-          path: "/onBoarding",
+          path: Routes.onBoarding,
           name: "온보딩",
           builder: (context, state) => ChangeNotifierProvider(
             create: (_) => OnBoardingViewModel(),
@@ -57,7 +58,7 @@ class CustomRouter {
           ),
         ),
         GoRoute(
-          path: "/search",
+          path: Routes.search,
           name: "검색",
           builder: (context, state) => ChangeNotifierProvider(
             create: (_) => SearchMainViewModel(),
@@ -65,28 +66,33 @@ class CustomRouter {
           ),
         ),
         GoRoute(
-          path: "/storeDetail",
+          path: '${Routes.storeDetail}/:storeId',
           name: "가게상세",
           builder: (context, state) => ChangeNotifierProvider(
-            create: (_) => MapStoreViewModel(state.extra as int),
+            create: (_) => MapStoreViewModel(
+              int.parse(state.pathParameters['storeId']!),
+            ),
             child: const MapStoreView(),
           ),
         ),
         GoRoute(
-          path: "/menuDetail",
+          path: "${Routes.menuDetail}/:menuId",
           name: "메뉴상세",
           builder: (context, state) => ChangeNotifierProvider(
             create: (_) => MenuBottomSheetViewModel(),
             child: ChangeNotifierProvider(
-              create: (_) => MenuViewModel(state.extra as int),
+              create: (_) => MenuViewModel(
+                int.parse(state.pathParameters['menuId']!),
+              ),
               child: MenuView(
-                menuId: state.extra as int,
+                menuId: int.parse(state.pathParameters['menuId']!),
               ),
             ),
           ),
         ),
         GoRoute(
-          path: "/purchase", // TODO: Temporary routing to purchase info screem
+          // TODO: Temporary routing to purchase info screen
+          path: Routes.purchase,
           name: "구매",
           builder: (context, state) => ChangeNotifierProvider(
             create: (_) => PurchaseInfoViewModel(isMember: true),
@@ -94,15 +100,15 @@ class CustomRouter {
           ),
         ),
         GoRoute(
-          path: "/menuMore",
+          path: Routes.menuMore,
           name: "더보기",
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (_) => MenuBottomSheetViewModel(),
+          builder: (context, state) => ChangeNotifierProvider.value(
+            value: state.extra as MenuBottomSheetViewModel,
             child: const MenuMoreView(),
           ),
         ),
         GoRoute(
-          path: "/login",
+          path: Routes.login,
           name: "로그인",
           builder: (context, state) => ChangeNotifierProvider(
             create: (_) => LoginViewModel(),
@@ -110,12 +116,12 @@ class CustomRouter {
           ),
         ),
         GoRoute(
-          path: "/nonMemberLogin",
+          path: Routes.nonMemberLogin,
           name: "비회원로그인",
           builder: (context, state) => const NonMemberView(),
         ),
         GoRoute(
-          path: "/findOrder",
+          path: Routes.findOrder,
           name: "주문조회",
           builder: (context, state) => const OrderFindView(),
         ),

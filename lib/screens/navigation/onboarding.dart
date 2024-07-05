@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:immersion_kwangsang/constants/routes.dart';
 import 'package:immersion_kwangsang/screens/navigation/onboarding_view_model.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
@@ -121,7 +122,7 @@ class OnBoarding extends StatelessWidget {
                 await SharedPreferences.getInstance().then((value) {
                   value.setBool("visited", true);
                   analytics.changePage("온보딩", "홈");
-                  context.go("/nav");
+                  context.go(Routes.nav);
                 });
               },
               child: Container(

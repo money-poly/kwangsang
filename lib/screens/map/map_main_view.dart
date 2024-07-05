@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/constants/routes.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/map/map_main_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/map_store_card.dart';
@@ -26,7 +27,7 @@ class MapMainView extends StatelessWidget {
         centerTitle: false,
         actions: [
           GestureDetector(
-            onTap: () => context.push("/search"),
+            onTap: () => context.push(Routes.search),
             child: SvgPicture.asset(
               "assets/icons/ic_36_search.svg",
               width: 36,
@@ -94,8 +95,9 @@ class MapMainView extends StatelessWidget {
                   ),
                   if (viewModel.store != null)
                     GestureDetector(
-                      onTap: () => context.push("/storeDetail",
-                          extra: viewModel.selectedMarkerId),
+                      onTap: () => context.push(
+                        '${Routes.storeDetail}/${viewModel.selectedMarkerId}',
+                      ),
                       child: MapStoreCard(store: viewModel.store!),
                     ),
                 ],
