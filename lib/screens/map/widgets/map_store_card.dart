@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/store/store_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/store_img_card.dart';
 import 'package:immersion_kwangsang/widgets/tag_widget.dart';
 
@@ -58,8 +59,9 @@ class MapStoreCard extends StatelessWidget {
                       store.name,
                       style: KwangStyle.header2,
                     ),
-                    if (store.description != null) const SizedBox(height: 6),
-                    if (store.description != null)
+                    if (store.description.isValidDesc())
+                      const SizedBox(height: 6),
+                    if (store.description.isValidDesc())
                       Text(
                         store.description!,
                         style: KwangStyle.body1M

@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_simple_model.dart';
+import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/item_card.dart';
 import 'package:immersion_kwangsang/screens/map/map_store_view_model.dart';
 import 'package:immersion_kwangsang/screens/map/widgets/store_info_row.dart';
 import 'package:immersion_kwangsang/services/amplitude.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/utils/origin_formatter.dart';
 import 'package:immersion_kwangsang/widgets/bullet_string.dart';
 import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
@@ -112,8 +114,7 @@ class MapStoreView extends StatelessWidget {
                           softWrap: true,
                           overflow: TextOverflow.visible,
                         ),
-                        if (viewModel.store!.description != null &&
-                            viewModel.store!.description!.isNotEmpty)
+                        if (viewModel.store!.description.isValidDesc())
                           Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
@@ -165,7 +166,9 @@ class MapStoreView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     height: 100,
-                    child: GoogleMap(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: GoogleMap(
                         initialCameraPosition: CameraPosition(
                           target: LatLng(viewModel.store!.latLng.latitude,
                               viewModel.store!.latLng.longitude),
@@ -175,10 +178,13 @@ class MapStoreView extends StatelessWidget {
                         zoomControlsEnabled: false,
                         markers: {
                           Marker(
-                              markerId: const MarkerId("store"),
-                              position: viewModel.store!.latLng,
-                              icon: viewModel.markerOffIcon!)
-                        }),
+                            markerId: const MarkerId("store"),
+                            position: viewModel.store!.latLng,
+                            icon: PositionProvider.instance.markerOffIcon,
+                          )
+                        },
+                      ),
+                    ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 26, bottom: 8),
@@ -325,7 +331,7 @@ class MapStoreView extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(
                         top: 8,
-                        bottom: MediaQuery.of(context).viewPadding.bottom + 52),
+                        bottom: MediaQuery.of(context).padding.bottom + 52),
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: viewModel.store!.notes

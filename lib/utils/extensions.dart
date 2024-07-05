@@ -27,3 +27,12 @@ extension NicePayDateToStr on DateTime {
     return ediDate;
   }
 }
+
+extension DescriptionValidator on String? {
+  bool isValidDesc() {
+    if (this == null || this!.isEmpty) {
+      return false;
+    }
+    return true;
+  }
+}

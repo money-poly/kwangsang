@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PositionProvider with ChangeNotifier {
   late Position _myPosition;
+  late BitmapDescriptor _markerOffIcon;
+  late BitmapDescriptor _markerOnIcon;
 
   static final PositionProvider instance = PositionProvider._internal();
   factory PositionProvider() => instance;
@@ -23,6 +26,13 @@ class PositionProvider with ChangeNotifier {
   bool _isPermissionGranted = false;
 
   Position get myPosition => _myPosition;
+  BitmapDescriptor get markerOffIcon => _markerOffIcon;
+  BitmapDescriptor get markerOnIcon => _markerOnIcon;
+
+  Future<void> init() async {
+    await initMyPosition();
+    await initMarkerIcon();
+  }
 
   Future<void> initMyPosition() async {
     await getLocationPermission();
@@ -49,6 +59,16 @@ class PositionProvider with ChangeNotifier {
     } else {
       _myPosition = _kwuPosition;
     }
+    notifyListeners();
+  }
+
+  Future<void> initMarkerIcon() async {
+    _markerOffIcon = await BitmapDescriptor.asset(
+        const ImageConfiguration(size: Size(30, 35)),
+        "assets/imgs/img_30_marker_off.png");
+    _markerOnIcon = await BitmapDescriptor.asset(
+        const ImageConfiguration(size: Size(50, 58)),
+        "assets/imgs/img_50_marker_on.png");
     notifyListeners();
   }
 }

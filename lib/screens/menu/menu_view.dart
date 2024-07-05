@@ -104,20 +104,9 @@ class MenuView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // if (viewModel.menu!.description != null)
-                              //   Text(
-                              //     viewModel.menu!.description!,
-                              //     style: const TextStyle(
-                              //         fontSize: 12,
-                              //         fontWeight: FontWeight.w500,
-                              //         color: KwangColor.grey600),
-                              //   ),
-                              // if (viewModel.menu!.description != null)
-                              //   const SizedBox(
-                              //     height: 4,
-                              //   ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () => context.push("/storeDetail",
+                                    extra: viewModel.menu!.store.id),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,6 +133,18 @@ class MenuView extends StatelessWidget {
                                 softWrap: true,
                                 overflow: TextOverflow.visible,
                               ),
+                              if (viewModel.menu!.description.isValidDesc())
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 4, bottom: 8),
+                                  child: Text(
+                                    viewModel.menu!.description!,
+                                    style: KwangStyle.body2M.copyWith(
+                                      color: KwangColor.grey700,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                                  ),
+                                ),
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment:
@@ -178,12 +179,6 @@ class MenuView extends StatelessWidget {
                               )
                             ],
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
-                          width: MediaQuery.of(context).size.width - 40,
-                          height: 1,
-                          color: KwangColor.grey300,
                         ),
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -342,12 +337,8 @@ class MenuView extends StatelessWidget {
                                 vertical: 16, horizontal: 20),
                             child: Text("유의사항", style: KwangStyle.header2)),
                         Container(
-                          margin: EdgeInsets.only(
-                              top: 8,
-                              bottom:
-                                  MediaQuery.of(context).viewPadding.bottom +
-                                      102),
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.fromLTRB(20, 8, 20,
+                              MediaQuery.of(context).padding.bottom + 158),
                           child: Column(
                             children: viewModel.menu!.cautions
                                 .map((e) => BulletString(
@@ -360,7 +351,6 @@ class MenuView extends StatelessWidget {
                                 .toList(),
                           ),
                         ),
-                        const SizedBox(height: 40),
                       ],
                     ),
                   ],
@@ -371,35 +361,6 @@ class MenuView extends StatelessWidget {
         context: context,
         child: const MenuBottomSheet(),
       ),
-
-      // Container(
-      //   padding: EdgeInsets.fromLTRB(
-      //       20, 11, 20, 11 + MediaQuery.of(context).viewPadding.bottom),
-      //   decoration: const BoxDecoration(
-      //     color: Colors.white,
-      //     border: Border(
-      //       top: BorderSide(width: 1.0, color: KwangColor.grey300),
-      //     ),
-      //   ),
-      //   child: GestureDetector(
-      //     onTap: () {
-      //       showDialog(
-      //           context: context,
-      //           builder: (context) =>
-      //               const CustomAlertDialog(type: AlertType.developing));
-      //     },
-      //     child: Container(
-      //       height: 44,
-      //       alignment: Alignment.center,
-      //       decoration: BoxDecoration(
-      //         color: KwangColor.primary400,
-      //         borderRadius: BorderRadius.circular(8),
-      //       ),
-      //       child: Text("전화하기",
-      //           style: KwangStyle.btn2B.copyWith(color: Colors.white)),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

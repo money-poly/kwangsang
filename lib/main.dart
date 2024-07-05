@@ -15,7 +15,7 @@ void main() async {
   await dotenv.load(fileName: ".env");
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   FlutterNativeSplash.preserve(widgetsBinding: widgetBinding);
-  await PositionProvider.instance.initMyPosition();
+  await PositionProvider.instance.init();
   AnalyticsConfig().init();
   FlutterNativeSplash.remove();
   runApp(MultiProvider(providers: [
