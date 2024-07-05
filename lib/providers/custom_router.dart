@@ -96,8 +96,8 @@ class CustomRouter {
         GoRoute(
           path: "/menuMore",
           name: "더보기",
-          builder: (context, state) => ChangeNotifierProvider(
-            create: (_) => MenuBottomSheetViewModel(),
+          builder: (context, state) => ChangeNotifierProvider.value(
+            value: state.extra as MenuBottomSheetViewModel,
             child: const MenuMoreView(),
           ),
         ),

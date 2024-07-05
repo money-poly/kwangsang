@@ -278,7 +278,10 @@ class MenuView extends StatelessWidget {
                                       var bottomSheetModel = context
                                           .read<MenuBottomSheetViewModel>();
                                       bottomSheetModel.hideCounter();
-                                      await context.push("/menuMore");
+                                      await context.push(
+                                        "/menuMore",
+                                        extra: bottomSheetModel,
+                                      );
                                       bottomSheetModel.revealCounter();
                                     },
                                     child: Text(
