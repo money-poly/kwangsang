@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:immersion_kwangsang/constants/routes.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_simple_model.dart';
 import 'package:immersion_kwangsang/screens/menu/menu_bottom_sheet.dart';
@@ -105,8 +106,9 @@ class MenuView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               GestureDetector(
-                                onTap: () => context.push("/storeDetail",
-                                    extra: viewModel.menu!.store.id),
+                                onTap: () => context.push(
+                                  '${Routes.storeDetail}/${viewModel.menu!.store.id}',
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -279,7 +281,7 @@ class MenuView extends StatelessWidget {
                                           .read<MenuBottomSheetViewModel>();
                                       bottomSheetModel.hideCounter();
                                       await context.push(
-                                        "/menuMore",
+                                        Routes.menuMore,
                                         extra: bottomSheetModel,
                                       );
                                       bottomSheetModel.revealCounter();
@@ -317,9 +319,9 @@ class MenuView extends StatelessWidget {
                                       "options": {}
                                     },
                                   );
-                                  await context.push("/menuDetail",
-                                      extra:
-                                          viewModel.menu!.anotherMenus[idx].id);
+                                  await context.push(
+                                    "${Routes.menuDetail}/${viewModel.menu!.anotherMenus[idx].id}",
+                                  );
                                 },
                                 child: CountableMenuCard(
                                   menu: viewModel.menu!.anotherMenus[idx],

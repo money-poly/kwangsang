@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/constants/routes.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_simple_model.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
@@ -278,7 +279,9 @@ class MapStoreView extends StatelessWidget {
                                       "options": {}
                                     },
                                   );
-                                  context.push("/menuDetail", extra: e.id);
+                                  context.push(
+                                    "${Routes.menuDetail}/${e.id}",
+                                  );
                                 },
                                 child: MenuCard(
                                   menu: e,
