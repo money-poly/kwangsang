@@ -32,7 +32,7 @@ class MapService {
     if (res.statusCode != 200) {
       throw Exception("Failed to load store");
     } else {
-      return Store.fromStoreJson(jsonDecode(res.body)["data"]);
+      return Store.fromJson(jsonDecode(res.body)["data"]);
     }
   }
 

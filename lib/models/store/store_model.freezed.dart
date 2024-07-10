@@ -20,10 +20,10 @@ Store _$StoreFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Store {
-  @JsonKey(name: 'storeName')
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'menu')
   MenuSimple get maxDiscountMenu => throw _privateConstructorUsedError;
+  int? get maxDiscount => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
   List<Tag>? get tags => throw _privateConstructorUsedError;
@@ -41,8 +41,9 @@ abstract class $StoreCopyWith<$Res> {
       _$StoreCopyWithImpl<$Res, Store>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'storeName') String name,
+      {String name,
       @JsonKey(name: 'menu') MenuSimple maxDiscountMenu,
+      int? maxDiscount,
       String? description,
       String? category,
       List<Tag>? tags,
@@ -66,6 +67,7 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
   $Res call({
     Object? name = null,
     Object? maxDiscountMenu = null,
+    Object? maxDiscount = freezed,
     Object? description = freezed,
     Object? category = freezed,
     Object? tags = freezed,
@@ -80,6 +82,10 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
           ? _value.maxDiscountMenu
           : maxDiscountMenu // ignore: cast_nullable_to_non_nullable
               as MenuSimple,
+      maxDiscount: freezed == maxDiscount
+          ? _value.maxDiscount
+          : maxDiscount // ignore: cast_nullable_to_non_nullable
+              as int?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -116,8 +122,9 @@ abstract class _$$StoreImplCopyWith<$Res> implements $StoreCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'storeName') String name,
+      {String name,
       @JsonKey(name: 'menu') MenuSimple maxDiscountMenu,
+      int? maxDiscount,
       String? description,
       String? category,
       List<Tag>? tags,
@@ -140,6 +147,7 @@ class __$$StoreImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? maxDiscountMenu = null,
+    Object? maxDiscount = freezed,
     Object? description = freezed,
     Object? category = freezed,
     Object? tags = freezed,
@@ -154,6 +162,10 @@ class __$$StoreImplCopyWithImpl<$Res>
           ? _value.maxDiscountMenu
           : maxDiscountMenu // ignore: cast_nullable_to_non_nullable
               as MenuSimple,
+      maxDiscount: freezed == maxDiscount
+          ? _value.maxDiscount
+          : maxDiscount // ignore: cast_nullable_to_non_nullable
+              as int?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -178,8 +190,9 @@ class __$$StoreImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$StoreImpl implements _Store {
   _$StoreImpl(
-      {@JsonKey(name: 'storeName') required this.name,
+      {required this.name,
       @JsonKey(name: 'menu') required this.maxDiscountMenu,
+      this.maxDiscount,
       this.description,
       this.category,
       final List<Tag>? tags,
@@ -190,11 +203,12 @@ class _$StoreImpl implements _Store {
       _$$StoreImplFromJson(json);
 
   @override
-  @JsonKey(name: 'storeName')
   final String name;
   @override
   @JsonKey(name: 'menu')
   final MenuSimple maxDiscountMenu;
+  @override
+  final int? maxDiscount;
   @override
   final String? description;
   @override
@@ -215,7 +229,7 @@ class _$StoreImpl implements _Store {
 
   @override
   String toString() {
-    return 'Store(name: $name, maxDiscountMenu: $maxDiscountMenu, description: $description, category: $category, tags: $tags, imgUrl: $imgUrl)';
+    return 'Store(name: $name, maxDiscountMenu: $maxDiscountMenu, maxDiscount: $maxDiscount, description: $description, category: $category, tags: $tags, imgUrl: $imgUrl)';
   }
 
   @override
@@ -226,6 +240,8 @@ class _$StoreImpl implements _Store {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.maxDiscountMenu, maxDiscountMenu) ||
                 other.maxDiscountMenu == maxDiscountMenu) &&
+            (identical(other.maxDiscount, maxDiscount) ||
+                other.maxDiscount == maxDiscount) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.category, category) ||
@@ -240,6 +256,7 @@ class _$StoreImpl implements _Store {
       runtimeType,
       name,
       maxDiscountMenu,
+      maxDiscount,
       description,
       category,
       const DeepCollectionEquality().hash(_tags),
@@ -261,8 +278,9 @@ class _$StoreImpl implements _Store {
 
 abstract class _Store implements Store {
   factory _Store(
-      {@JsonKey(name: 'storeName') required final String name,
+      {required final String name,
       @JsonKey(name: 'menu') required final MenuSimple maxDiscountMenu,
+      final int? maxDiscount,
       final String? description,
       final String? category,
       final List<Tag>? tags,
@@ -271,11 +289,12 @@ abstract class _Store implements Store {
   factory _Store.fromJson(Map<String, dynamic> json) = _$StoreImpl.fromJson;
 
   @override
-  @JsonKey(name: 'storeName')
   String get name;
   @override
   @JsonKey(name: 'menu')
   MenuSimple get maxDiscountMenu;
+  @override
+  int? get maxDiscount;
   @override
   String? get description;
   @override
