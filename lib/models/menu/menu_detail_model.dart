@@ -73,7 +73,7 @@ class MenuDetail extends Equatable {
         regularPrice: json['price'],
         store: StoreMenu.fromJson(json['store']),
         anotherMenus: (json['anotherMenus'] as List)
-            .map((e) => Menu.fromDetailJson(e))
+            .map((e) => Menu.fromJson(e))
             .toList(),
         view: json['viewCount'],
         cautions: json['caution'].cast<String>(),

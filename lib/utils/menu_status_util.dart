@@ -1,7 +1,9 @@
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 
-MenuStatus strToMenuStatus(String str) {
+MenuStatus? strToMenuStatus(String? str) {
   switch (str) {
+    case null:
+      return null;
     case 'sale':
       return MenuStatus.sale;
     case 'hidden':

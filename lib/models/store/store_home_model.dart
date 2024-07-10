@@ -9,9 +9,6 @@ class StoreHome with _$StoreHome {
   factory StoreHome({
     required String name,
     String? category,
-    @JsonKey(
-      fromJson: Menu.fromHomeJson,
-    )
     required Menu menu,
   }) = _StoreHome;
 

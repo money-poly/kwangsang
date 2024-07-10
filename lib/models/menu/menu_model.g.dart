@@ -7,8 +7,8 @@ part of 'menu_model.dart';
 // **************************************************************************
 
 _$MenuImpl _$$MenuImplFromJson(Map<String, dynamic> json) => _$MenuImpl(
-      id: (json['menuId'] as num).toInt(),
-      name: json['menuName'] as String,
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
       discountRate: (json['discountRate'] as num).toInt(),
       discountPrice: (json['sellingPrice'] as num).toInt(),
       regularPrice: (json['price'] as num?)?.toInt(),
@@ -23,7 +23,7 @@ _$MenuImpl _$$MenuImplFromJson(Map<String, dynamic> json) => _$MenuImpl(
       origins: (json['origins'] as List<dynamic>?)
           ?.map((e) => Origin.fromJson(e as Map<String, dynamic>))
           .toList(),
-      status: $enumDecodeNullable(_$MenuStatusEnumMap, json['status']),
+      status: strToMenuStatus(json['status'] as String?),
       count: (json['count'] as num?)?.toInt(),
       expiredDate: json['expiredDate'] == null
           ? null
@@ -32,8 +32,8 @@ _$MenuImpl _$$MenuImplFromJson(Map<String, dynamic> json) => _$MenuImpl(
 
 Map<String, dynamic> _$$MenuImplToJson(_$MenuImpl instance) =>
     <String, dynamic>{
-      'menuId': instance.id,
-      'menuName': instance.name,
+      'id': instance.id,
+      'name': instance.name,
       'discountRate': instance.discountRate,
       'sellingPrice': instance.discountPrice,
       'price': instance.regularPrice,

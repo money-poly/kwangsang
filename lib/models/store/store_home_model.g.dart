@@ -10,7 +10,7 @@ _$StoreHomeImpl _$$StoreHomeImplFromJson(Map<String, dynamic> json) =>
     _$StoreHomeImpl(
       name: json['name'] as String,
       category: json['category'] as String?,
-      menu: Menu.fromHomeJson(json['menu'] as Map<String, dynamic>),
+      menu: Menu.fromJson(json['menu'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$StoreHomeImplToJson(_$StoreHomeImpl instance) =>
