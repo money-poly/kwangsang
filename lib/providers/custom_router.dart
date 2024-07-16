@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/constants/routes.dart';
+import 'package:immersion_kwangsang/screens/home/category_view.dart';
+import 'package:immersion_kwangsang/screens/home/category_view_model.dart';
+import 'package:immersion_kwangsang/screens/home/franchise_view.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
+import 'package:immersion_kwangsang/screens/home/recommend/widgets/item_category.dart';
 import 'package:immersion_kwangsang/screens/login/login_view.dart';
 import 'package:immersion_kwangsang/screens/login/login_view_model.dart';
 import 'package:immersion_kwangsang/screens/login/non_member_view.dart';
@@ -34,6 +38,7 @@ class CustomRouter {
     final nav = Provider.of<NavViewModel>(context);
     router = GoRouter(
       initialLocation: isVisited ? Routes.nav : Routes.onBoarding,
+      initialExtra: ItemCategory.korean,
       observers: [RouterObserver()],
       routes: [
         GoRoute(
@@ -125,6 +130,19 @@ class CustomRouter {
           name: "주문조회",
           builder: (context, state) => const OrderFindView(),
         ),
+        GoRoute(
+          path: Routes.category,
+          name: "카테고리",
+          builder: (context, state) => ChangeNotifierProvider(
+            create: (_) => CategoryViewModel(state.extra as ItemCategory),
+            child: const CategoryView(),
+          ),
+        ),
+        GoRoute(
+          path: Routes.franchise,
+          name: "프랜차이즈",
+          builder: (context, state) => const FranchiseView(),
+        )
       ],
     );
   }

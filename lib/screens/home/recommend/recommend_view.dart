@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:immersion_kwangsang/constants/routes.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/recommend/widgets/item_ranking_row.dart';
@@ -110,8 +112,14 @@ class _RecommendViewState extends State<RecommendView>
                       childAspectRatio:
                           ((sWidth - 100) / 4) / (((sWidth - 100) / 4) + 25),
                     ),
-                    itemBuilder: (context, idx) => ItemCategoryCol(
-                      category: ItemCategory.values[idx],
+                    itemBuilder: (context, idx) => GestureDetector(
+                      onTap: () {
+                        context.push(Routes.category,
+                            extra: ItemCategory.values[idx]);
+                      },
+                      child: ItemCategoryCol(
+                        category: ItemCategory.values[idx],
+                      ),
                     ),
                     itemCount: ItemCategory.values.length,
                   ),

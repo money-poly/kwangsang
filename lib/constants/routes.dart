@@ -3,6 +3,10 @@ class Routes {
   static const String onBoarding = '/on-boarding';
   static const String search = '/search';
 
+  /// ### Extra - Required
+  static const String category = '/category';
+  static const String franchise = '$category/franchise';
+
   /// ### Path parameter - Required
   /// `/:storeId` [int]
   static const String storeDetail = '/store-detail';
