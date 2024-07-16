@@ -253,7 +253,7 @@ class _RecommendViewState extends State<RecommendView>
                         child: CountAndSortTitle(
                             title: "${5000.price()} 이하 상품이에요",
                             count: 9,
-                            sort: "거리순",
+                            sort: Order.last,
                             onTap: () {}),
                       ),
                       GridView.builder(
@@ -299,7 +299,7 @@ class _RecommendViewState extends State<RecommendView>
                     child: CountAndSortTitle(
                       title: "전체 세일 상품이에요",
                       count: 159,
-                      sort: "거리순",
+                      sort: Order.distance,
                       onTap: () {},
                     ),
                   ),
