@@ -38,7 +38,8 @@ mixin _$Menu {
   int? get view => throw _privateConstructorUsedError;
   List<Tag>? get tags => throw _privateConstructorUsedError;
   List<Origin>? get origins => throw _privateConstructorUsedError;
-  MenuStatus? get status => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: EMenuStatus.fromJson, toJson: EMenuStatus.toJson)
+  EMenuStatus? get status => throw _privateConstructorUsedError;
   int? get count => throw _privateConstructorUsedError;
   DateTime? get expiredDate => throw _privateConstructorUsedError;
 
@@ -64,7 +65,8 @@ abstract class $MenuCopyWith<$Res> {
       @ViewSerializer() int? view,
       List<Tag>? tags,
       List<Origin>? origins,
-      MenuStatus? status,
+      @JsonKey(fromJson: EMenuStatus.fromJson, toJson: EMenuStatus.toJson)
+      EMenuStatus? status,
       int? count,
       DateTime? expiredDate});
 }
@@ -145,7 +147,7 @@ class _$MenuCopyWithImpl<$Res, $Val extends Menu>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as MenuStatus?,
+              as EMenuStatus?,
       count: freezed == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -177,7 +179,8 @@ abstract class _$$MenuImplCopyWith<$Res> implements $MenuCopyWith<$Res> {
       @ViewSerializer() int? view,
       List<Tag>? tags,
       List<Origin>? origins,
-      MenuStatus? status,
+      @JsonKey(fromJson: EMenuStatus.fromJson, toJson: EMenuStatus.toJson)
+      EMenuStatus? status,
       int? count,
       DateTime? expiredDate});
 }
@@ -255,7 +258,7 @@ class __$$MenuImplCopyWithImpl<$Res>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as MenuStatus?,
+              as EMenuStatus?,
       count: freezed == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -283,6 +286,7 @@ class _$MenuImpl implements _Menu {
       @ViewSerializer() this.view,
       final List<Tag>? tags,
       final List<Origin>? origins,
+      @JsonKey(fromJson: EMenuStatus.fromJson, toJson: EMenuStatus.toJson)
       this.status,
       this.count,
       this.expiredDate})
@@ -338,7 +342,8 @@ class _$MenuImpl implements _Menu {
   }
 
   @override
-  final MenuStatus? status;
+  @JsonKey(fromJson: EMenuStatus.fromJson, toJson: EMenuStatus.toJson)
+  final EMenuStatus? status;
   @override
   final int? count;
   @override
@@ -421,7 +426,8 @@ abstract class _Menu implements Menu {
       @ViewSerializer() final int? view,
       final List<Tag>? tags,
       final List<Origin>? origins,
-      final MenuStatus? status,
+      @JsonKey(fromJson: EMenuStatus.fromJson, toJson: EMenuStatus.toJson)
+      final EMenuStatus? status,
       final int? count,
       final DateTime? expiredDate}) = _$MenuImpl;
 
@@ -457,7 +463,8 @@ abstract class _Menu implements Menu {
   @override
   List<Origin>? get origins;
   @override
-  MenuStatus? get status;
+  @JsonKey(fromJson: EMenuStatus.fromJson, toJson: EMenuStatus.toJson)
+  EMenuStatus? get status;
   @override
   int? get count;
   @override
