@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:immersion_kwangsang/enums/purchase_info_phase.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -54,7 +55,12 @@ class _ProgressBarPainter extends CustomPainter {
   }) {
     var isPassed = true;
     List<TextSpan> textSpan = [];
-    for (var phase in EPurchaseInfoPhase.values) {
+    for (var phase in EPurchaseInfoPhase.values
+        .where(
+          (phase) => (phase != EPurchaseInfoPhase.cancel &&
+              phase != EPurchaseInfoPhase.reject),
+        )
+        .toList()) {
       textSpan.add(
         TextSpan(
           text: phase.progressText,

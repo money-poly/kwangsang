@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:immersion_kwangsang/enums/purchase_info_phase.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
@@ -26,15 +27,15 @@ class PurchaseInfoMap extends StatelessWidget {
             vertical: 16,
           ),
           child: Text(
-            viewModel.phase == EPurchaseInfoPhase.pending ||
-                    viewModel.phase == EPurchaseInfoPhase.completed
+            viewModel.phase == EPurchaseInfoPhase.request ||
+                    viewModel.phase == EPurchaseInfoPhase.success
                 ? '가게 정보'
                 : '픽업 전 다시 한번 확인하세요',
             style: KwangStyle.header2,
           ),
         ),
         const SizedBox(height: 8),
-        if (viewModel.phase != EPurchaseInfoPhase.completed)
+        if (viewModel.phase != EPurchaseInfoPhase.success)
           Container(
             width: MediaQuery.of(context).size.width - 40,
             margin: const EdgeInsets.only(
