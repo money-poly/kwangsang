@@ -38,7 +38,6 @@ class CustomRouter {
     final nav = Provider.of<NavViewModel>(context);
     router = GoRouter(
       initialLocation: isVisited ? Routes.nav : Routes.onBoarding,
-      initialExtra: ItemCategory.korean,
       observers: [RouterObserver()],
       routes: [
         GoRoute(
