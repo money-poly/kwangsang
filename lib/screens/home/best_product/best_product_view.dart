@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:immersion_kwangsang/enums/category.dart';
 import 'package:immersion_kwangsang/enums/menu_sort_option.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';

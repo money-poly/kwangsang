@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:immersion_kwangsang/models/menu/menu_model.dart';
+import 'package:immersion_kwangsang/enums/menu_status.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 
@@ -8,7 +8,7 @@ class MenuStatusWidget extends StatelessWidget {
   const MenuStatusWidget(
       {super.key, required this.status, this.isSelectable = true});
 
-  final MenuStatus status;
+  final EMenuStatus status;
   final bool isSelectable;
   @override
   Widget build(BuildContext context) {

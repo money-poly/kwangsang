@@ -23,7 +23,7 @@ _$MenuImpl _$$MenuImplFromJson(Map<String, dynamic> json) => _$MenuImpl(
       origins: (json['origins'] as List<dynamic>?)
           ?.map((e) => Origin.fromJson(e as Map<String, dynamic>))
           .toList(),
-      status: $enumDecodeNullable(_$MenuStatusEnumMap, json['status']),
+      status: EMenuStatus.fromJson(json['status'] as String?),
       count: (json['count'] as num?)?.toInt(),
       expiredDate: json['expiredDate'] == null
           ? null
@@ -43,7 +43,7 @@ Map<String, dynamic> _$$MenuImplToJson(_$MenuImpl instance) =>
       'view': const ViewSerializer().toJson(instance.view),
       'tags': instance.tags,
       'origins': instance.origins,
-      'status': _$MenuStatusEnumMap[instance.status],
+      'status': EMenuStatus.toJson(instance.status),
       'count': instance.count,
       'expiredDate': instance.expiredDate?.toIso8601String(),
     };
@@ -53,9 +53,3 @@ Value? _$JsonConverterFromJson<Json, Value>(
   Value? Function(Json json) fromJson,
 ) =>
     json == null ? null : fromJson(json as Json);
-
-const _$MenuStatusEnumMap = {
-  MenuStatus.sale: 'sale',
-  MenuStatus.hidden: 'hidden',
-  MenuStatus.soldout: 'soldout',
-};
