@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:immersion_kwangsang/enums/menu_status.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
@@ -37,7 +38,7 @@ class MenuCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         if (menu.status != null &&
-                            menu.status == MenuStatus.soldout)
+                            menu.status == EMenuStatus.soldout)
                           Padding(
                             padding: const EdgeInsets.only(right: 8),
                             child: MenuStatusWidget(
@@ -72,7 +73,7 @@ class MenuCard extends StatelessWidget {
                             "${menu.discountRate}%",
                             style: KwangStyle.btn2B.copyWith(
                                 color: menu.status != null &&
-                                        menu.status == MenuStatus.soldout
+                                        menu.status == EMenuStatus.soldout
                                     ? KwangColor.grey600
                                     : KwangColor.red),
                           ),
@@ -106,13 +107,13 @@ class MenuCard extends StatelessWidget {
                                 Border.all(color: KwangColor.grey300, width: 1),
                             borderRadius: BorderRadius.circular(4),
                             color: menu.status != null &&
-                                    menu.status == MenuStatus.soldout
+                                    menu.status == EMenuStatus.soldout
                                 ? KwangColor.black.withOpacity(0.4)
                                 : Colors.transparent,
                           ),
                           alignment: Alignment.center,
                           child: menu.status != null &&
-                                  menu.status == MenuStatus.soldout
+                                  menu.status == EMenuStatus.soldout
                               ? Text(
                                   menu.status!.str,
                                   style: KwangStyle.body1M.copyWith(

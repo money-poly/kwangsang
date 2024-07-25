@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:immersion_kwangsang/enums/category.dart';
+import 'package:immersion_kwangsang/enums/menu_sort_option.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/menu_rank_card.dart';
 import 'package:immersion_kwangsang/widgets/rounded_selectable_button.dart';
+import 'package:immersion_kwangsang/widgets/sort_bottom_sheet.dart';
 
 class BestProductView extends StatefulWidget {
   const BestProductView({super.key});
@@ -64,11 +67,19 @@ class _BestProductViewState extends State<BestProductView>
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            SortButtonSheet.open(
+                              context,
+                              onChanged: (selectedOption) {
+                                // TODO: change viewModel's option
+                                print(selectedOption);
+                              },
+                            );
+                          },
                           child: Row(
                             children: [
                               Text(
-                                Order.name.str,
+                                EMenuSortOption.price.text,
                                 style: KwangStyle.btn2,
                               ),
                               const SizedBox(width: 4),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:immersion_kwangsang/enums/purchase_info_phase.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/purchase_info_view_model.dart';
 import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
 import 'package:immersion_kwangsang/screens/purchase_info/widgets/purchase_info_detail.dart';
@@ -50,8 +51,8 @@ class PurchaseInfoView extends StatelessWidget {
             const PurchaseInfoProgressWidget(),
             const CardHSpliter(),
             const PurchaseInfoMap(),
-            if (viewModel.phase == EPurchaseInfoPhase.accepted ||
-                viewModel.phase == EPurchaseInfoPhase.pickup)
+            if (viewModel.phase == EPurchaseInfoPhase.approve ||
+                viewModel.phase == EPurchaseInfoPhase.prepare)
               const PurchaseInfoMapDetail(),
             const SizedBox(height: 6),
             const CardHSpliter(),
@@ -59,12 +60,12 @@ class PurchaseInfoView extends StatelessWidget {
             const CardHSpliter(),
             const PurchaseInfoMethod(),
             SizedBox(height: MediaQuery.paddingOf(context).bottom),
-            if (viewModel.phase == EPurchaseInfoPhase.pending)
+            if (viewModel.phase == EPurchaseInfoPhase.request)
               const SizedBox(height: 90),
           ],
         ),
       ),
-      bottomSheet: viewModel.phase == EPurchaseInfoPhase.pending
+      bottomSheet: viewModel.phase == EPurchaseInfoPhase.request
           ? Container(
               height: 84 + MediaQuery.paddingOf(context).bottom,
               padding: const EdgeInsets.only(
