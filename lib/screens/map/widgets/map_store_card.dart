@@ -48,7 +48,7 @@ class MapStoreCard extends StatelessWidget {
                             colorFilter: const ColorFilter.mode(
                                 KwangColor.red, BlendMode.srcIn)),
                         Text(
-                          "최대 ${store.maxDiscountMenu.discountRate}%",
+                          "최대 ${store.maxDiscount}%",
                           style:
                               KwangStyle.btn2SB.copyWith(color: KwangColor.red),
                         )

@@ -95,7 +95,7 @@ class StoreDetail extends Equatable {
       pickUpTime: json['detail']['pickUpTime'],
       openTime: json['detail']['operationTimes']['startedAt'],
       closeTime: json['detail']['operationTimes']['endedAt'],
-      menu: (json['menus'] as List).map((e) => Menu.fromStoreJson(e)).toList(),
+      menu: (json['menus'] as List).map((e) => Menu.fromJson(e)).toList(),
       notes: (json['caution'] as List).map((e) => e.toString()).toList(),
       origins: origins,
       phone: json['detail']['phone'],

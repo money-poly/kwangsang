@@ -7,8 +7,8 @@ part of 'menu_model.dart';
 // **************************************************************************
 
 _$MenuImpl _$$MenuImplFromJson(Map<String, dynamic> json) => _$MenuImpl(
-      id: (json['menuId'] as num).toInt(),
-      name: json['menuName'] as String,
+      id: (json['id'] as num).toInt(),
+      name: json['name'] as String,
       discountRate: (json['discountRate'] as num).toInt(),
       discountPrice: (json['sellingPrice'] as num).toInt(),
       regularPrice: (json['price'] as num?)?.toInt(),
@@ -32,8 +32,8 @@ _$MenuImpl _$$MenuImplFromJson(Map<String, dynamic> json) => _$MenuImpl(
 
 Map<String, dynamic> _$$MenuImplToJson(_$MenuImpl instance) =>
     <String, dynamic>{
-      'menuId': instance.id,
-      'menuName': instance.name,
+      'id': instance.id,
+      'name': instance.name,
       'discountRate': instance.discountRate,
       'sellingPrice': instance.discountPrice,
       'price': instance.regularPrice,

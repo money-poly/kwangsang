@@ -20,9 +20,7 @@ Menu _$MenuFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Menu {
-  @JsonKey(name: 'menuId')
   int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'menuName')
   String get name => throw _privateConstructorUsedError;
   int get discountRate => throw _privateConstructorUsedError;
   @JsonKey(name: 'sellingPrice')
@@ -54,8 +52,8 @@ abstract class $MenuCopyWith<$Res> {
       _$MenuCopyWithImpl<$Res, Menu>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'menuId') int id,
-      @JsonKey(name: 'menuName') String name,
+      {int id,
+      String name,
       int discountRate,
       @JsonKey(name: 'sellingPrice') int discountPrice,
       @JsonKey(name: 'price') int? regularPrice,
@@ -168,8 +166,8 @@ abstract class _$$MenuImplCopyWith<$Res> implements $MenuCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'menuId') int id,
-      @JsonKey(name: 'menuName') String name,
+      {int id,
+      String name,
       int discountRate,
       @JsonKey(name: 'sellingPrice') int discountPrice,
       @JsonKey(name: 'price') int? regularPrice,
@@ -275,8 +273,8 @@ class __$$MenuImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MenuImpl implements _Menu {
   _$MenuImpl(
-      {@JsonKey(name: 'menuId') required this.id,
-      @JsonKey(name: 'menuName') required this.name,
+      {required this.id,
+      required this.name,
       required this.discountRate,
       @JsonKey(name: 'sellingPrice') required this.discountPrice,
       @JsonKey(name: 'price') this.regularPrice,
@@ -297,10 +295,8 @@ class _$MenuImpl implements _Menu {
       _$$MenuImplFromJson(json);
 
   @override
-  @JsonKey(name: 'menuId')
   final int id;
   @override
-  @JsonKey(name: 'menuName')
   final String name;
   @override
   final int discountRate;
@@ -415,8 +411,8 @@ class _$MenuImpl implements _Menu {
 
 abstract class _Menu implements Menu {
   factory _Menu(
-      {@JsonKey(name: 'menuId') required final int id,
-      @JsonKey(name: 'menuName') required final String name,
+      {required final int id,
+      required final String name,
       required final int discountRate,
       @JsonKey(name: 'sellingPrice') required final int discountPrice,
       @JsonKey(name: 'price') final int? regularPrice,
@@ -434,10 +430,8 @@ abstract class _Menu implements Menu {
   factory _Menu.fromJson(Map<String, dynamic> json) = _$MenuImpl.fromJson;
 
   @override
-  @JsonKey(name: 'menuId')
   int get id;
   @override
-  @JsonKey(name: 'menuName')
   String get name;
   @override
   int get discountRate;

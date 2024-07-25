@@ -22,7 +22,6 @@ StoreHome _$StoreHomeFromJson(Map<String, dynamic> json) {
 mixin _$StoreHome {
   String get name => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: Menu.fromHomeJson)
   Menu get menu => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,10 +35,7 @@ abstract class $StoreHomeCopyWith<$Res> {
   factory $StoreHomeCopyWith(StoreHome value, $Res Function(StoreHome) then) =
       _$StoreHomeCopyWithImpl<$Res, StoreHome>;
   @useResult
-  $Res call(
-      {String name,
-      String? category,
-      @JsonKey(fromJson: Menu.fromHomeJson) Menu menu});
+  $Res call({String name, String? category, Menu menu});
 
   $MenuCopyWith<$Res> get menu;
 }
@@ -94,10 +90,7 @@ abstract class _$$StoreHomeImplCopyWith<$Res>
       __$$StoreHomeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String name,
-      String? category,
-      @JsonKey(fromJson: Menu.fromHomeJson) Menu menu});
+  $Res call({String name, String? category, Menu menu});
 
   @override
   $MenuCopyWith<$Res> get menu;
@@ -138,10 +131,7 @@ class __$$StoreHomeImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$StoreHomeImpl implements _StoreHome {
-  _$StoreHomeImpl(
-      {required this.name,
-      this.category,
-      @JsonKey(fromJson: Menu.fromHomeJson) required this.menu});
+  _$StoreHomeImpl({required this.name, this.category, required this.menu});
 
   factory _$StoreHomeImpl.fromJson(Map<String, dynamic> json) =>
       _$$StoreHomeImplFromJson(json);
@@ -151,7 +141,6 @@ class _$StoreHomeImpl implements _StoreHome {
   @override
   final String? category;
   @override
-  @JsonKey(fromJson: Menu.fromHomeJson)
   final Menu menu;
 
   @override
@@ -190,10 +179,9 @@ class _$StoreHomeImpl implements _StoreHome {
 
 abstract class _StoreHome implements StoreHome {
   factory _StoreHome(
-          {required final String name,
-          final String? category,
-          @JsonKey(fromJson: Menu.fromHomeJson) required final Menu menu}) =
-      _$StoreHomeImpl;
+      {required final String name,
+      final String? category,
+      required final Menu menu}) = _$StoreHomeImpl;
 
   factory _StoreHome.fromJson(Map<String, dynamic> json) =
       _$StoreHomeImpl.fromJson;
@@ -203,7 +191,6 @@ abstract class _StoreHome implements StoreHome {
   @override
   String? get category;
   @override
-  @JsonKey(fromJson: Menu.fromHomeJson)
   Menu get menu;
   @override
   @JsonKey(ignore: true)
