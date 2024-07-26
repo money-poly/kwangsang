@@ -7,9 +7,11 @@ part of 'store_model.dart';
 // **************************************************************************
 
 _$StoreImpl _$$StoreImplFromJson(Map<String, dynamic> json) => _$StoreImpl(
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String,
-      maxDiscountMenu:
-          MenuSimple.fromJson(json['menu'] as Map<String, dynamic>),
+      maxDiscountMenu: json['menu'] == null
+          ? null
+          : MenuSimple.fromJson(json['menu'] as Map<String, dynamic>),
       maxDiscount: (json['maxDiscount'] as num?)?.toInt(),
       description: json['description'] as String?,
       category: json['category'] as String?,
@@ -21,6 +23,7 @@ _$StoreImpl _$$StoreImplFromJson(Map<String, dynamic> json) => _$StoreImpl(
 
 Map<String, dynamic> _$$StoreImplToJson(_$StoreImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'menu': instance.maxDiscountMenu,
       'maxDiscount': instance.maxDiscount,

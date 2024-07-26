@@ -8,8 +8,9 @@ part 'store_model.g.dart';
 @freezed
 class Store with _$Store {
   factory Store({
+    int? id,
     required String name,
-    @JsonKey(name: 'menu') required MenuSimple maxDiscountMenu,
+    @JsonKey(name: 'menu') MenuSimple? maxDiscountMenu,
     int? maxDiscount,
     String? description,
     String? category,
