@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/enums/category.dart';
-import 'package:immersion_kwangsang/enums/menu_sort_option.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
-import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
+import 'package:immersion_kwangsang/screens/home/best_product/best_product_view_model.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/widgets/menu_rank_card.dart';
 import 'package:immersion_kwangsang/widgets/rounded_selectable_button.dart';
 import 'package:immersion_kwangsang/widgets/sort_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 class BestProductView extends StatefulWidget {
   const BestProductView({super.key});
@@ -19,9 +19,28 @@ class BestProductView extends StatefulWidget {
 
 class _BestProductViewState extends State<BestProductView>
     with AutomaticKeepAliveClientMixin {
+  void _onTapCatetory(ECategory category) {
+    var viewModel = context.read<BestProductViewModel>();
+    viewModel.changeCategory(category);
+  }
+
+  void _onTapSortWidget() {
+    var viewModel = context.read<BestProductViewModel>();
+    SortButtonSheet.open(
+      context,
+      selectedOption: viewModel.currentSortType,
+      onChanged: (selectedOption) {
+        viewModel.changeSortOption(selectedOption);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    final viewModel = context.watch<BestProductViewModel>();
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -45,7 +64,9 @@ class _BestProductViewState extends State<BestProductView>
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) => RoundedSelectableButton(
                       text: ECategory.values[index].title,
-                      isSelected: ECategory.values[index] == ECategory.all,
+                      isSelected:
+                          ECategory.values[index] == viewModel.currentCategory,
+                      onTap: () => _onTapCatetory(ECategory.values[index]),
                     ),
                     separatorBuilder: (context, index) => const SizedBox(
                       width: 10,
@@ -67,19 +88,12 @@ class _BestProductViewState extends State<BestProductView>
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {
-                            SortButtonSheet.open(
-                              context,
-                              onChanged: (selectedOption) {
-                                // TODO: change viewModel's option
-                                print(selectedOption);
-                              },
-                            );
-                          },
+                          behavior: HitTestBehavior.translucent,
+                          onTap: _onTapSortWidget,
                           child: Row(
                             children: [
                               Text(
-                                EMenuSortOption.price.text,
+                                viewModel.currentSortType.text,
                                 style: KwangStyle.btn2,
                               ),
                               const SizedBox(width: 4),

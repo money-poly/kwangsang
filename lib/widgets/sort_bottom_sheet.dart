@@ -52,6 +52,9 @@ class SortButtonSheet extends StatelessWidget {
                 isSelected: selectedOption == option,
               ),
             ),
+          SizedBox(
+            height: MediaQuery.viewPaddingOf(context).bottom,
+          )
         ],
       ),
     );

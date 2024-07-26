@@ -67,3 +67,7 @@ enum ECategory {
     }
   }
 }
+
+extension ECategoryExtension on ECategory {
+  String? get key => ECategory.toJson(this);
+}
