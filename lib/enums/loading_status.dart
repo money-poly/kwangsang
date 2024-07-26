@@ -3,4 +3,5 @@ enum ELoadingStatus {
   loading,
   loaded,
   error,
+  done,
 }

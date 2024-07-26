@@ -43,3 +43,7 @@ enum EMenuSortOption {
     }
   }
 }
+
+extension EMenuSortOptionExtension on EMenuSortOption {
+  String? get key => EMenuSortOption.toJson(this);
+}

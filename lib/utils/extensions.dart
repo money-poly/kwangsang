@@ -36,3 +36,13 @@ extension DescriptionValidator on String? {
     return true;
   }
 }
+
+extension DateTimeMMSS on DateTime {
+  String toMMSS() {
+    var ediDate = '';
+    ediDate += hour.toString().padLeft(2, '0');
+    ediDate += ':';
+    ediDate += minute.toString().padLeft(2, '0');
+    return ediDate;
+  }
+}

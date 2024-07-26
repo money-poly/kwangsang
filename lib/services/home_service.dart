@@ -63,7 +63,7 @@ class HomeService {
     int? lastValue,
   }) async {
     // Build RestAPI uri
-    var uri = "/menus/top-orders?type=$sortType&category=${category.key}";
+    var uri = "/menus/top-orders?type=${sortType.key}&category=${category.key}";
     if (lastId != null) {
       uri += "&lastId=$lastId";
     }
@@ -99,14 +99,16 @@ class HomeService {
     print('[HomeService / GET] $uri');
     await Future.delayed(const Duration(seconds: 1));
 
+    // throw Exception('Unexpected custom error');
+
     var resModel = [
       for (var i in List.generate(
-          lastId == null ? 6 : 20, (idx) => lastId ?? 0 + idx + 1))
+          lastId == null ? 6 : 20, (idx) => (lastId ?? 0) + idx + 1))
         MenuListItemModel(
           menu: Menu(
             id: i,
             name: 'Menu $i',
-            discountRate: (i * 10) % 10,
+            discountRate: (i * 10) % 100,
             discountPrice: i * 1000,
             imgUrl: i % 2 == 0
                 ? null
