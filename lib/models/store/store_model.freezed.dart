@@ -20,9 +20,10 @@ Store _$StoreFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Store {
+  int? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'menu')
-  MenuSimple get maxDiscountMenu => throw _privateConstructorUsedError;
+  MenuSimple? get maxDiscountMenu => throw _privateConstructorUsedError;
   int? get maxDiscount => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
@@ -41,15 +42,16 @@ abstract class $StoreCopyWith<$Res> {
       _$StoreCopyWithImpl<$Res, Store>;
   @useResult
   $Res call(
-      {String name,
-      @JsonKey(name: 'menu') MenuSimple maxDiscountMenu,
+      {int? id,
+      String name,
+      @JsonKey(name: 'menu') MenuSimple? maxDiscountMenu,
       int? maxDiscount,
       String? description,
       String? category,
       List<Tag>? tags,
       @JsonKey(name: 'storePictureUrl') String? imgUrl});
 
-  $MenuSimpleCopyWith<$Res> get maxDiscountMenu;
+  $MenuSimpleCopyWith<$Res>? get maxDiscountMenu;
 }
 
 /// @nodoc
@@ -65,8 +67,9 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = null,
-    Object? maxDiscountMenu = null,
+    Object? maxDiscountMenu = freezed,
     Object? maxDiscount = freezed,
     Object? description = freezed,
     Object? category = freezed,
@@ -74,14 +77,18 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
     Object? imgUrl = freezed,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      maxDiscountMenu: null == maxDiscountMenu
+      maxDiscountMenu: freezed == maxDiscountMenu
           ? _value.maxDiscountMenu
           : maxDiscountMenu // ignore: cast_nullable_to_non_nullable
-              as MenuSimple,
+              as MenuSimple?,
       maxDiscount: freezed == maxDiscount
           ? _value.maxDiscount
           : maxDiscount // ignore: cast_nullable_to_non_nullable
@@ -107,8 +114,12 @@ class _$StoreCopyWithImpl<$Res, $Val extends Store>
 
   @override
   @pragma('vm:prefer-inline')
-  $MenuSimpleCopyWith<$Res> get maxDiscountMenu {
-    return $MenuSimpleCopyWith<$Res>(_value.maxDiscountMenu, (value) {
+  $MenuSimpleCopyWith<$Res>? get maxDiscountMenu {
+    if (_value.maxDiscountMenu == null) {
+      return null;
+    }
+
+    return $MenuSimpleCopyWith<$Res>(_value.maxDiscountMenu!, (value) {
       return _then(_value.copyWith(maxDiscountMenu: value) as $Val);
     });
   }
@@ -122,8 +133,9 @@ abstract class _$$StoreImplCopyWith<$Res> implements $StoreCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String name,
-      @JsonKey(name: 'menu') MenuSimple maxDiscountMenu,
+      {int? id,
+      String name,
+      @JsonKey(name: 'menu') MenuSimple? maxDiscountMenu,
       int? maxDiscount,
       String? description,
       String? category,
@@ -131,7 +143,7 @@ abstract class _$$StoreImplCopyWith<$Res> implements $StoreCopyWith<$Res> {
       @JsonKey(name: 'storePictureUrl') String? imgUrl});
 
   @override
-  $MenuSimpleCopyWith<$Res> get maxDiscountMenu;
+  $MenuSimpleCopyWith<$Res>? get maxDiscountMenu;
 }
 
 /// @nodoc
@@ -145,8 +157,9 @@ class __$$StoreImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = null,
-    Object? maxDiscountMenu = null,
+    Object? maxDiscountMenu = freezed,
     Object? maxDiscount = freezed,
     Object? description = freezed,
     Object? category = freezed,
@@ -154,14 +167,18 @@ class __$$StoreImplCopyWithImpl<$Res>
     Object? imgUrl = freezed,
   }) {
     return _then(_$StoreImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      maxDiscountMenu: null == maxDiscountMenu
+      maxDiscountMenu: freezed == maxDiscountMenu
           ? _value.maxDiscountMenu
           : maxDiscountMenu // ignore: cast_nullable_to_non_nullable
-              as MenuSimple,
+              as MenuSimple?,
       maxDiscount: freezed == maxDiscount
           ? _value.maxDiscount
           : maxDiscount // ignore: cast_nullable_to_non_nullable
@@ -190,8 +207,9 @@ class __$$StoreImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$StoreImpl implements _Store {
   _$StoreImpl(
-      {required this.name,
-      @JsonKey(name: 'menu') required this.maxDiscountMenu,
+      {this.id,
+      required this.name,
+      @JsonKey(name: 'menu') this.maxDiscountMenu,
       this.maxDiscount,
       this.description,
       this.category,
@@ -203,10 +221,12 @@ class _$StoreImpl implements _Store {
       _$$StoreImplFromJson(json);
 
   @override
+  final int? id;
+  @override
   final String name;
   @override
   @JsonKey(name: 'menu')
-  final MenuSimple maxDiscountMenu;
+  final MenuSimple? maxDiscountMenu;
   @override
   final int? maxDiscount;
   @override
@@ -229,7 +249,7 @@ class _$StoreImpl implements _Store {
 
   @override
   String toString() {
-    return 'Store(name: $name, maxDiscountMenu: $maxDiscountMenu, maxDiscount: $maxDiscount, description: $description, category: $category, tags: $tags, imgUrl: $imgUrl)';
+    return 'Store(id: $id, name: $name, maxDiscountMenu: $maxDiscountMenu, maxDiscount: $maxDiscount, description: $description, category: $category, tags: $tags, imgUrl: $imgUrl)';
   }
 
   @override
@@ -237,6 +257,7 @@ class _$StoreImpl implements _Store {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StoreImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.maxDiscountMenu, maxDiscountMenu) ||
                 other.maxDiscountMenu == maxDiscountMenu) &&
@@ -254,6 +275,7 @@ class _$StoreImpl implements _Store {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      id,
       name,
       maxDiscountMenu,
       maxDiscount,
@@ -278,8 +300,9 @@ class _$StoreImpl implements _Store {
 
 abstract class _Store implements Store {
   factory _Store(
-      {required final String name,
-      @JsonKey(name: 'menu') required final MenuSimple maxDiscountMenu,
+      {final int? id,
+      required final String name,
+      @JsonKey(name: 'menu') final MenuSimple? maxDiscountMenu,
       final int? maxDiscount,
       final String? description,
       final String? category,
@@ -289,10 +312,12 @@ abstract class _Store implements Store {
   factory _Store.fromJson(Map<String, dynamic> json) = _$StoreImpl.fromJson;
 
   @override
+  int? get id;
+  @override
   String get name;
   @override
   @JsonKey(name: 'menu')
-  MenuSimple get maxDiscountMenu;
+  MenuSimple? get maxDiscountMenu;
   @override
   int? get maxDiscount;
   @override

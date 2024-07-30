@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:immersion_kwangsang/constants/routes.dart';
+import 'package:immersion_kwangsang/screens/home/best_product/best_product_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/category_view.dart';
 import 'package:immersion_kwangsang/screens/home/category_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/franchise_view.dart';
@@ -49,6 +50,9 @@ class CustomRouter {
                   create: (_) => HomeViewModel(TickerProviderImpl())),
               ChangeNotifierProvider(create: (_) => MapMainViewModel()),
               ChangeNotifierProvider(create: (_) => OrderViewModel()),
+              ChangeNotifierProvider(
+                create: (_) => BestProductViewModel(),
+              )
             ],
             child: const NavView(),
           ),

@@ -11,15 +11,18 @@ import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 class MenuRankCard extends StatelessWidget {
   final Menu menu;
   final int rank;
+  final Function()? buildCallback;
 
   const MenuRankCard({
     super.key,
     required this.menu,
     required this.rank,
+    this.buildCallback,
   });
 
   @override
   Widget build(BuildContext context) {
+    buildCallback?.call();
     return Container(
       height: 80,
       decoration: const BoxDecoration(color: KwangColor.grey100),

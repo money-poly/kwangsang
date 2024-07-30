@@ -37,7 +37,7 @@ class ViewSerializer implements JsonConverter<int?, Map<String, dynamic>> {
 
   @override
   int? fromJson(Map<String, dynamic> json) {
-    return json['viewCount'] ?? json['view'];
+    return json['viewCount'] ?? json['view']['viewCount'];
   }
 
   @override
