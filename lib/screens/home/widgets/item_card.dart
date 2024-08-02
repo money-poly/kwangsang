@@ -20,12 +20,20 @@ enum ItemCardType {
 }
 
 class ItemCard extends StatelessWidget {
-  const ItemCard({super.key, required this.type, required this.menu});
+  const ItemCard({
+    super.key,
+    required this.type,
+    required this.menu,
+    this.buildCallback,
+  });
 
   final ItemCardType type;
   final Menu menu;
+  final Function()? buildCallback;
+
   @override
   Widget build(BuildContext context) {
+    buildCallback?.call();
     final miniWidth = (MediaQuery.of(context).size.width - 48) / 3;
     final verticalWidth = (MediaQuery.of(context).size.width - 44) / 2;
     switch (type) {
