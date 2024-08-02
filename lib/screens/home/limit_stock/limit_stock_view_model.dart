@@ -3,6 +3,7 @@ import 'package:immersion_kwangsang/enums/category.dart';
 import 'package:immersion_kwangsang/enums/loading_status.dart';
 import 'package:immersion_kwangsang/enums/menu_sort_option.dart';
 import 'package:immersion_kwangsang/models/menu/menu_limit_stock_model.dart';
+import 'package:immersion_kwangsang/models/menu/menu_listitem_model.dart';
 import 'package:immersion_kwangsang/services/home_service.dart';
 
 class LimitStockViewModel with ChangeNotifier {
@@ -11,14 +12,30 @@ class LimitStockViewModel with ChangeNotifier {
   LimitStockViewModel() {
     _service = HomeService();
 
+    _lastStatus = ELoadingStatus.init;
+    _lastMenu = const [];
+
     _controller = ScrollController();
     _limitStatus = ELoadingStatus.init;
     _sortType = EMenuSortOption.price;
     _category = ECategory.all;
-    _limitMenu = MenuLimitStockModel(menus: [], totalCount: 0);
+    _limitMenu = MenuLimitStockModel(menus: const [], totalCount: 0);
+
+    getLastItem(getAll: false);
   }
 
   // 마지막 찬스!
+  bool _expendList = false;
+  bool get expandList => _expendList;
+  bool _getAllDone = false;
+
+  late ELoadingStatus _lastStatus;
+  ELoadingStatus get lastStatus => _lastStatus;
+  String? _lastErrorMessage;
+  String? get lastErrorMessage => _lastErrorMessage;
+
+  late List<MenuListItemModel> _lastMenu;
+  List<MenuListItemModel> get lastMenu => _lastMenu;
 
   // 곧 품절이에요
   late final ScrollController _controller;
@@ -39,6 +56,52 @@ class LimitStockViewModel with ChangeNotifier {
   // (&lastId=$id&lastValue=$regularPrice)
   late MenuLimitStockModel _limitMenu;
   MenuLimitStockModel get limitMenu => _limitMenu;
+
+  void getLastItem({
+    required bool getAll,
+  }) async {
+    if (_lastStatus == ELoadingStatus.loading) return;
+
+    _expendList = getAll;
+    _lastStatus = ELoadingStatus.loading;
+    notifyListeners();
+
+    try {
+      var newItems = await _service.getMenusLastItem(getAll: getAll);
+
+      if (newItems.isEmpty) {
+        _lastStatus = ELoadingStatus.done;
+      } else {
+        _lastMenu = newItems;
+        _lastStatus = ELoadingStatus.loaded;
+      }
+    } catch (e) {
+      _lastStatus = ELoadingStatus.error;
+      _lastErrorMessage = e.toString();
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  void toggleExpendList() {
+    if (_lastStatus == ELoadingStatus.loading) return;
+
+    _expendList = !_expendList;
+    notifyListeners();
+
+    if (!_getAllDone) {
+      getLastItem(getAll: true);
+      _getAllDone = true;
+    }
+
+    if (!_expendList) {
+      _controller.animateTo(
+        0,
+        duration: Durations.short4,
+        curve: Curves.ease,
+      );
+    }
+  }
 
   void getMoreLimitItem() async {
     if (_limitStatus == ELoadingStatus.loading) return;
@@ -83,7 +146,7 @@ class LimitStockViewModel with ChangeNotifier {
     if (_limitStatus == ELoadingStatus.loading) return;
 
     _category = category;
-    _limitMenu = MenuLimitStockModel(menus: [], totalCount: 0);
+    _limitMenu = MenuLimitStockModel(menus: const [], totalCount: 0);
     _limitStatus = ELoadingStatus.init;
     getMoreLimitItem();
   }
@@ -92,7 +155,7 @@ class LimitStockViewModel with ChangeNotifier {
     if (_limitStatus == ELoadingStatus.loading) return;
 
     _sortType = sortOption;
-    _limitMenu = MenuLimitStockModel(menus: [], totalCount: 0);
+    _limitMenu = MenuLimitStockModel(menus: const [], totalCount: 0);
     _limitStatus = ELoadingStatus.init;
     getMoreLimitItem();
   }
