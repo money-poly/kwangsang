@@ -37,10 +37,28 @@ extension DescriptionValidator on String? {
   }
 }
 
-extension DateTimeMMSS on DateTime {
-  String toMMSS() {
+extension DateTimeHHMM on DateTime {
+  String toHHMM() {
     var ediDate = '';
     ediDate += hour.toString().padLeft(2, '0');
+    ediDate += ':';
+    ediDate += minute.toString().padLeft(2, '0');
+    return ediDate;
+  }
+
+  String toKoHHMM() {
+    var ediDate = '';
+    if (hour < 12) {
+      ediDate += '오전 ${hour.toString().padLeft(2, '0')}';
+    } else {
+      var h = 0;
+      if (hour == 12) {
+        h = hour;
+      } else {
+        h = hour - 12;
+      }
+      ediDate += '오후 ${h.toString().padLeft(2, '0')}';
+    }
     ediDate += ':';
     ediDate += minute.toString().padLeft(2, '0');
     return ediDate;
