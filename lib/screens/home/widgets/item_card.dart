@@ -156,10 +156,13 @@ class ItemCard extends StatelessWidget {
                     size: miniWidth,
                   ),
                 ),
-                const Positioned(
+                Positioned(
                   right: 4,
                   top: 4,
-                  child: DiscountWidget(size: 32, discountRate: 50),
+                  child: DiscountWidget(
+                    size: 32,
+                    discountRate: menu.discountRate,
+                  ),
                 ),
               ],
             ),
@@ -171,7 +174,7 @@ class ItemCard extends StatelessWidget {
                 children: [
                   Text(menu.name, style: KwangStyle.body2M),
                   Text(
-                    menu.discountPrice.price(),
+                    menu.regularPrice.price(),
                     style: KwangStyle.body2.copyWith(
                       color: KwangColor.grey600,
                       decoration: TextDecoration.lineThrough,
@@ -179,7 +182,7 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    menu.regularPrice.price(), // [TODO] 정가로 교체
+                    menu.discountPrice.price(),
                     style: KwangStyle.btn2B,
                   ),
                   const SizedBox(height: 4),
