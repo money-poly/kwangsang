@@ -37,7 +37,7 @@ extension DescriptionValidator on String? {
   }
 }
 
-extension DateTimeHHMM on DateTime {
+extension DateTimeHHMMSS on DateTime {
   String toHHMM() {
     var ediDate = '';
     ediDate += hour.toString().padLeft(2, '0');
@@ -61,6 +61,26 @@ extension DateTimeHHMM on DateTime {
     }
     ediDate += ':';
     ediDate += minute.toString().padLeft(2, '0');
+    return ediDate;
+  }
+
+  String countDownHHMMSS() {
+    var now = DateTime.now();
+    var diff = difference(now).inSeconds;
+    var diffH = diff ~/ (60 * 60);
+    var diffM = (diff ~/ 60) % 60;
+    var diffS = diff % 60;
+
+    if (diff < 0) {
+      return '00:00:00';
+    }
+
+    var ediDate = '';
+    ediDate += diffH.toString().padLeft(2, '0');
+    ediDate += ':';
+    ediDate += diffM.toString().padLeft(2, '0');
+    ediDate += ':';
+    ediDate += diffS.toString().padLeft(2, '0');
     return ediDate;
   }
 }
