@@ -7,6 +7,7 @@ import 'package:immersion_kwangsang/screens/home/category_view.dart';
 import 'package:immersion_kwangsang/screens/home/category_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/franchise_view.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
+import 'package:immersion_kwangsang/screens/home/new_product/new_product_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/recommend/widgets/item_category.dart';
 import 'package:immersion_kwangsang/screens/login/login_view.dart';
 import 'package:immersion_kwangsang/screens/login/login_view_model.dart';
@@ -51,8 +52,11 @@ class CustomRouter {
               ChangeNotifierProvider(create: (_) => MapMainViewModel()),
               ChangeNotifierProvider(create: (_) => OrderViewModel()),
               ChangeNotifierProvider(
+                create: (_) => NewProductViewModel(),
+              ),
+              ChangeNotifierProvider(
                 create: (_) => BestProductViewModel(),
-              )
+              ),
             ],
             child: const NavView(),
           ),

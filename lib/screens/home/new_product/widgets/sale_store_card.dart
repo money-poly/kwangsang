@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
+import 'package:immersion_kwangsang/models/menu/menu_new_product_model.dart';
+import 'package:immersion_kwangsang/screens/home/new_product/widgets/sale_countdown.dart';
 import 'package:immersion_kwangsang/screens/home/widgets/item_card.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
+import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
 
 class SaleStoreCard extends StatelessWidget {
-  const SaleStoreCard({super.key});
+  final DateTime saleTime;
+  final MenuNewProductStoreItemModel storeItem;
+
+  const SaleStoreCard({
+    super.key,
+    required this.saleTime,
+    required this.storeItem,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,7 @@ class SaleStoreCard extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            '파리바게트 광운대점',
+                            storeItem.store.name,
                             style: KwangStyle.body2M.copyWith(
                               color: KwangColor.grey800,
                             ),
@@ -50,7 +59,7 @@ class SaleStoreCard extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      '오후 8:30 세일 시작',
+                      '${saleTime.toKoHHMM()} 세일 시작',
                       style: KwangStyle.body2M.copyWith(
                         color: KwangColor.grey700,
                       ),
@@ -68,12 +77,7 @@ class SaleStoreCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 6),
-                  Text(
-                    '00:15:34',
-                    style: KwangStyle.btn2SB.copyWith(
-                      color: KwangColor.red,
-                    ),
-                  ),
+                  SaleCountDown(saleTime: saleTime),
                   const SizedBox(width: 8),
                 ],
               ),
@@ -82,16 +86,20 @@ class SaleStoreCard extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              for (var item in List.generate(3, (index) => index))
-                ItemCard(
-                  type: ItemCardType.miniSoon,
-                  menu: Menu(
-                    id: item,
-                    name: "고구마 휘낭시에",
-                    imgUrl:
-                        "https://image.idus.com/image/files/8a8f31577e754c079c372824a103b2a9_512.jpg",
-                    discountRate: 50,
-                    discountPrice: 1000,
+              for (var (idx, menu) in storeItem.menus.indexed)
+                Padding(
+                  padding: EdgeInsets.only(right: idx < 2 ? 2 : 0),
+                  child: ItemCard(
+                    type: ItemCardType.miniSoon,
+                    menu: Menu(
+                      id: menu.id,
+                      name: menu.name,
+                      imgUrl: menu.imgUrl,
+                      discountRate: menu.discountRate,
+                      discountPrice: menu.discountPrice,
+                      regularPrice: menu.regularPrice,
+                      count: menu.count,
+                    ),
                   ),
                 ),
             ],

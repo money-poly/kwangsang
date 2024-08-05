@@ -3,6 +3,7 @@ import 'package:immersion_kwangsang/enums/category.dart';
 import 'package:immersion_kwangsang/enums/menu_sort_option.dart';
 import 'package:immersion_kwangsang/models/menu/menu_listitem_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
+import 'package:immersion_kwangsang/models/menu/menu_new_product_model.dart';
 import 'package:immersion_kwangsang/models/store/store_home_model.dart';
 import 'package:immersion_kwangsang/models/store/store_model.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
@@ -54,6 +55,81 @@ class HomeService {
       }
       return menuMap;
     }
+  }
+
+  Future<List<MenuNewProductModel>> getMenusUpcomingSales() async {
+    // Build RestAPI uri
+    var uri = "/menus2/upcoming-sales";
+    uri += "?lat=${position.latitude}&lon=${position.longitude}";
+
+    // TODO: Connect API (remove mock code)
+    // API call and get response
+    // var res = await _api.req(
+    //   uri,
+    //   HttpMethod.get,
+    //   type: UrlType.dev,
+    // );
+
+    // // Check success
+    // if (res.statusCode != 200) {
+    //   throw Exception("Failed to get MenusTopOrders");
+    // }
+
+    // var resData = jsonDecode(res.body);
+    // if (!resData['success']) {
+    //   throw Exception(resData['message']);
+    // }
+
+    // // Parse data
+    // var resModel = (resData['data'] as List<dynamic>)
+    //     .map((saleList) => MenuNewProductModel.fromJson(saleList))
+    //     .toList();
+
+    /** MOCK CODE START */
+    print('[HomeService / GET] $uri');
+    await Future.delayed(const Duration(seconds: 1));
+
+    // throw Exception('Unexpected custom error');
+
+    var tmpDt =
+        DateTime.now().copyWith(second: 0, millisecond: 0, microsecond: 0);
+    tmpDt = tmpDt.subtract(Duration(
+      minutes: tmpDt.minute % 30 - 30,
+    ));
+
+    var resModel = [
+      for (var i in List.generate(5, (idx) => idx + 1))
+        MenuNewProductModel(
+          saleTime: tmpDt.add(Duration(minutes: 30 * (i - 1))),
+          stores: [
+            for (var j in List.generate(i, (idx) => idx + 1))
+              MenuNewProductStoreItemModel(
+                store: Store(
+                  id: 10 * i + j,
+                  name: 'store ${10 * i + j}',
+                ),
+                menus: [
+                  for (var k in List.generate(j % 2 + 2, (idx) => idx + 1))
+                    Menu(
+                      id: 100 * i + 10 * j + k,
+                      imgUrl: k % 2 == 0
+                          ? null
+                          : "https://image.idus.com/image/files/8a8f31577e754c079c372824a103b2a9_512.jpg",
+                      name: 'menu ${100 * i + 10 * j + k}',
+                      regularPrice: 10000,
+                      discountRate: 10,
+                      discountPrice: 9000,
+                      count: k,
+                      view: 100 * i + 10 * j + k,
+                    )
+                ],
+              )
+          ],
+        )
+    ];
+    /** MOCK CODE END */
+
+    return resModel;
   }
 
   Future<List<MenuListItemModel>> getMenusTopOrders({
