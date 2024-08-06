@@ -34,6 +34,14 @@ class _NewProductViewState extends State<NewProductView>
       body: Builder(
         builder: (context) {
           if (viewModel.status == ELoadingStatus.done) {
+            if (viewModel.newProducts.isEmpty) {
+              return Center(
+                child: _errorBody(
+                  isEmpty: true,
+                  message: "현재 판매 중인 상품이 없습니다.\n새로운 상품을 준비 중이니, 잠시만 기다려주세요.",
+                ),
+              );
+            }
             return _scrollBody(viewModel);
           }
           if (viewModel.status == ELoadingStatus.error) {
