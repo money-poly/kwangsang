@@ -61,59 +61,30 @@ class HomeService {
     required bool getAll,
   }) async {
     // Build RestAPI uri
-    var uri = "/menus/last-item?final=$getAll";
+    var uri = "/menus2/last-item?final=$getAll";
     uri += "&lat=${position.latitude}&lon=${position.longitude}";
 
-    // TODO: Connect API (remove mock code)
-    // // API call and get response
-    // var res = await _api.req(
-    //   uri,
-    //   HttpMethod.get,
-    //   type: UrlType.dev,
-    // );
+    // API call and get response
+    var res = await _api.req(
+      uri,
+      HttpMethod.get,
+      type: UrlType.dev,
+    );
 
-    // // Check success
-    // if (res.statusCode != 200) {
-    //   throw Exception("Failed to get MenusLastItem");
-    // }
+    // Check success
+    if (res.statusCode != 200) {
+      throw Exception("Failed to get MenusLastItem");
+    }
 
-    // var resData = jsonDecode(res.body);
-    // if (!resData['success']) {
-    //   throw Exception(resData['message']);
-    // }
+    var resData = jsonDecode(res.body);
+    if (!resData['success']) {
+      throw Exception(resData['message']);
+    }
 
-    // // Parse data
-    // var resModel = (resData['data'] as List<dynamic>)
-    //     .map((menuListItem) => MenuListItemModel.fromJson(menuListItem))
-    //     .toList();
-
-    /** MOCK CODE START */
-    print('[HomeService / GET] $uri');
-    await Future.delayed(const Duration(seconds: 1));
-
-    // throw Exception('Unexpected custom error');
-
-    var resModel = [
-      for (var i in List.generate(getAll ? 10 : 2, (idx) => idx + 1))
-        MenuListItemModel(
-          menu: Menu(
-            id: i,
-            name: 'Menu $i',
-            discountRate: (i * 10) % 100,
-            discountPrice: i * 1000,
-            imgUrl: i % 2 == 0
-                ? null
-                : "https://image.idus.com/image/files/8a8f31577e754c079c372824a103b2a9_512.jpg",
-            regularPrice: (i + 1) * 1000,
-            count: 1,
-          ),
-          store: Store(
-            id: i,
-            name: 'Store $i',
-          ),
-        ),
-    ];
-    /** MOCK CODE END */
+    // Parse data
+    var resModel = (resData['data']['menus'] as List<dynamic>)
+        .map((menuListItem) => MenuListItemModel.fromJson(menuListItem))
+        .toList();
 
     return resModel;
   }
@@ -125,7 +96,7 @@ class HomeService {
     int? lastValue,
   }) async {
     // Build RestAPI uri
-    var uri = "/menus/low-stock?type=${sortType.key}&category=${category.key}";
+    var uri = "/menus2/low-stock?type=${sortType.key}&category=${category.key}";
     if (lastId != null) {
       uri += "&lastId=$lastId";
     }
@@ -134,62 +105,25 @@ class HomeService {
     }
     uri += "&lat=${position.latitude}&lon=${position.longitude}";
 
-    // TODO: Connect API (remove mock code)
     // // API call and get response
-    // var res = await _api.req(
-    //   uri,
-    //   HttpMethod.get,
-    //   type: UrlType.dev,
-    // );
-
-    // // Check success
-    // if (res.statusCode != 200) {
-    //   throw Exception("Failed to get MenusLowStock");
-    // }
-
-    // var resData = jsonDecode(res.body);
-    // if (!resData['success']) {
-    //   throw Exception(resData['message']);
-    // }
-
-    // // Parse data
-    // var resModel = (resData['data'] as List<dynamic>)
-    //     .map((menuListItem) => MenuListItemModel.fromJson(menuListItem))
-    //     .toList();
-
-    /** MOCK CODE START */
-    print('[HomeService / GET] $uri');
-    await Future.delayed(const Duration(seconds: 1));
-
-    // throw Exception('Unexpected custom error');
-
-    var resItems = [
-      for (var i in List.generate(
-          lastId == null ? 6 : 20, (idx) => (lastId ?? 0) + idx + 1))
-        MenuListItemModel(
-          menu: Menu(
-            id: i,
-            name: 'Menu $i',
-            discountRate: (i * 10) % 100,
-            discountPrice: i * 1000,
-            imgUrl: i % 2 == 0
-                ? null
-                : "https://image.idus.com/image/files/8a8f31577e754c079c372824a103b2a9_512.jpg",
-            regularPrice: (i + 1) * 1000,
-            count: i,
-            view: i,
-          ),
-          store: Store(
-            id: i,
-            name: 'Store $i',
-          ),
-        ),
-    ];
-    var resModel = MenuLimitStockModel(
-      menus: resItems,
-      totalCount: 100,
+    var res = await _api.req(
+      uri,
+      HttpMethod.get,
+      type: UrlType.dev,
     );
-    /** MOCK CODE END */
+
+    // Check success
+    if (res.statusCode != 200) {
+      throw Exception("Failed to get MenusLowStock");
+    }
+
+    var resData = jsonDecode(res.body);
+    if (!resData['success']) {
+      throw Exception(resData['message']);
+    }
+
+    // Parse data
+    var resModel = MenuLimitStockModel.fromJson(resData['data']);
 
     return resModel;
   }
