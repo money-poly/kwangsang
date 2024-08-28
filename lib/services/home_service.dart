@@ -4,8 +4,8 @@ import 'package:immersion_kwangsang/enums/menu_sort_option.dart';
 import 'package:immersion_kwangsang/models/menu/menu_limit_stock_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_listitem_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
+import 'package:immersion_kwangsang/models/menu/menu_new_product_model.dart';
 import 'package:immersion_kwangsang/models/store/store_home_model.dart';
-import 'package:immersion_kwangsang/models/store/store_model.dart';
 import 'package:immersion_kwangsang/providers/position_provider.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/services/api.dart';
@@ -56,6 +56,37 @@ class HomeService {
       return menuMap;
     }
   }
+  
+  Future<List<MenuNewProductModel>> getMenusUpcomingSales() async {
+    // Build RestAPI uri
+    var uri = "/menus2/upcoming-sales";
+    uri += "?lat=${position.latitude}&lon=${position.longitude}";
+    
+    // API call and get response
+    var res = await _api.req(
+      uri,
+      HttpMethod.get,
+      type: UrlType.dev,
+    );
+
+    // Check success
+    if (res.statusCode != 200) {
+      throw Exception("Failed to get MenusTopOrders");
+    }
+
+    var resData = jsonDecode(res.body);
+    if (!resData['success']) {
+      throw Exception(resData['message']);
+    }
+
+    // Parse data
+    var resModel = (resData['data'] as List<dynamic>)
+        .map((saleList) => MenuNewProductModel.fromJson(saleList))
+        .toList();
+
+    return resModel;
+  }
+
 
   Future<List<MenuListItemModel>> getMenusLastItem({
     required bool getAll,
@@ -135,7 +166,8 @@ class HomeService {
     int? lastValue,
   }) async {
     // Build RestAPI uri
-    var uri = "/menus/top-orders?type=${sortType.key}&category=${category.key}";
+    var uri =
+        "/menus2/top-orders?type=${sortType.key}&category=${category.key}";
     if (lastId != null) {
       uri += "&lastId=$lastId";
     }
@@ -144,58 +176,29 @@ class HomeService {
     }
     uri += "&lat=${position.latitude}&lon=${position.longitude}";
 
-    // TODO: Connect API (remove mock code)
     // // API call and get response
-    // var res = await _api.req(
-    //   uri,
-    //   HttpMethod.get,
-    //   type: UrlType.dev,
-    // );
+    var res = await _api.req(
+      uri,
+      HttpMethod.get,
+      type: UrlType.dev,
+    );
 
-    // // Check success
-    // if (res.statusCode != 200) {
-    //   throw Exception("Failed to get MenusTopOrders");
-    // }
+    print(res.body);
 
-    // var resData = jsonDecode(res.body);
-    // if (!resData['success']) {
-    //   throw Exception(resData['message']);
-    // }
+    // Check success
+    if (res.statusCode != 200) {
+      throw Exception("Failed to get MenusTopOrders");
+    }
 
-    // // Parse data
-    // var resModel = (resData['data'] as List<dynamic>)
-    //     .map((menuListItem) => MenuListItemModel.fromJson(menuListItem))
-    //     .toList();
+    var resData = jsonDecode(res.body);
+    if (!resData['success']) {
+      throw Exception(resData['message']);
+    }
 
-    /** MOCK CODE START */
-    print('[HomeService / GET] $uri');
-    await Future.delayed(const Duration(seconds: 1));
-
-    // throw Exception('Unexpected custom error');
-
-    var resModel = [
-      for (var i in List.generate(
-          lastId == null ? 6 : 20, (idx) => (lastId ?? 0) + idx + 1))
-        MenuListItemModel(
-          menu: Menu(
-            id: i,
-            name: 'Menu $i',
-            discountRate: (i * 10) % 100,
-            discountPrice: i * 1000,
-            imgUrl: i % 2 == 0
-                ? null
-                : "https://image.idus.com/image/files/8a8f31577e754c079c372824a103b2a9_512.jpg",
-            regularPrice: (i + 1) * 1000,
-            count: i,
-            view: i,
-          ),
-          store: Store(
-            id: i,
-            name: 'Store $i',
-          ),
-        ),
-    ];
-    /** MOCK CODE END */
+    // Parse data
+    var resModel = (resData['data'] as List<dynamic>)
+        .map((menuListItem) => MenuListItemModel.fromJson(menuListItem))
+        .toList();
 
     return resModel;
   }

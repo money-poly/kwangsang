@@ -101,7 +101,7 @@ class _BestProductViewState extends State<BestProductView>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${viewModel.lastUpdateTime.toMMSS()} 업데이트',
+                        '${viewModel.lastUpdateTime.toHHMM()} 업데이트',
                         style: KwangStyle.body2M.copyWith(
                           color: KwangColor.grey600,
                         ),

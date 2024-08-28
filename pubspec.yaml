@@ -56,6 +56,8 @@ dependencies:
   freezed_annotation: ^2.4.1
   json_annotation: ^4.9.0
   equatable: ^2.0.5
+  flutter_sticky_header: ^0.6.5
+  sliver_tools: ^0.2.12
 
 dev_dependencies:
   flutter_test:
