@@ -4,6 +4,7 @@ import 'package:immersion_kwangsang/enums/category.dart';
 import 'package:immersion_kwangsang/enums/loading_status.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/screens/home/best_product/best_product_view_model.dart';
+import 'package:immersion_kwangsang/screens/home/widgets/list_error_widget.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
 import 'package:immersion_kwangsang/utils/extensions.dart';
@@ -145,9 +146,10 @@ class _BestProductViewState extends State<BestProductView>
   Widget _listBody(BestProductViewModel viewModel) {
     if (viewModel.status == ELoadingStatus.done &&
         viewModel.menuItems.isEmpty) {
-      return _errorBody(
-        isEmpty: true,
+      return ListErrorWidget(
+        isEmptyList: true,
         message: "현재 판매 중인 상품이 없습니다.\n새로운 상품을 준비 중이니, 잠시만 기다려주세요.",
+        onTapRetry: () => _getItems(callAfterPostFrame: false),
       );
     }
 
@@ -163,8 +165,9 @@ class _BestProductViewState extends State<BestProductView>
             if (viewModel.status == ELoadingStatus.error) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: _errorBody(
+                child: ListErrorWidget(
                   message: viewModel.errorMessage!,
+                  onTapRetry: () => _getItems(callAfterPostFrame: false),
                 ),
               );
             }
@@ -211,58 +214,6 @@ class _BestProductViewState extends State<BestProductView>
         itemCount: viewModel.menuItems.length +
             (viewModel.status == ELoadingStatus.done ? 0 : 1),
       ),
-    );
-  }
-
-  Widget _errorBody({
-    required String message,
-    bool isEmpty = false,
-  }) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          "assets/imgs/img_86_bird_exclamation.png",
-          width: 86,
-          height: 86,
-        ),
-        if (isEmpty)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              "판매 중인 상품이 없어요",
-              style: KwangStyle.header2,
-            ),
-          ),
-        Text(
-          message.replaceAll('Exception: ', ''),
-          style: KwangStyle.body1M.copyWith(
-            color: KwangColor.grey600,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 20),
-        GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: () => _getItems(callAfterPostFrame: false),
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 8,
-              horizontal: 20,
-            ),
-            decoration: BoxDecoration(
-              color: KwangColor.primary400,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Text(
-              '재시도',
-              style: KwangStyle.btn2B.copyWith(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:immersion_kwangsang/enums/category.dart';
 import 'package:immersion_kwangsang/enums/menu_sort_option.dart';
+import 'package:immersion_kwangsang/models/menu/menu_limit_stock_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_listitem_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
 import 'package:immersion_kwangsang/models/menu/menu_new_product_model.dart';
@@ -55,12 +56,12 @@ class HomeService {
       return menuMap;
     }
   }
-
+  
   Future<List<MenuNewProductModel>> getMenusUpcomingSales() async {
     // Build RestAPI uri
     var uri = "/menus2/upcoming-sales";
     uri += "?lat=${position.latitude}&lon=${position.longitude}";
-
+    
     // API call and get response
     var res = await _api.req(
       uri,
@@ -82,6 +83,78 @@ class HomeService {
     var resModel = (resData['data'] as List<dynamic>)
         .map((saleList) => MenuNewProductModel.fromJson(saleList))
         .toList();
+
+    return resModel;
+  }
+
+
+  Future<List<MenuListItemModel>> getMenusLastItem({
+    required bool getAll,
+  }) async {
+    // Build RestAPI uri
+    var uri = "/menus2/last-item?final=$getAll";
+    uri += "&lat=${position.latitude}&lon=${position.longitude}";
+
+    // API call and get response
+    var res = await _api.req(
+      uri,
+      HttpMethod.get,
+      type: UrlType.dev,
+    );
+
+    // Check success
+    if (res.statusCode != 200) {
+      throw Exception("Failed to get MenusLastItem");
+    }
+
+    var resData = jsonDecode(res.body);
+    if (!resData['success']) {
+      throw Exception(resData['message']);
+    }
+
+    // Parse data
+    var resModel = (resData['data']['menus'] as List<dynamic>)
+        .map((menuListItem) => MenuListItemModel.fromJson(menuListItem))
+        .toList();
+
+    return resModel;
+  }
+
+  Future<MenuLimitStockModel> getMenusLowStock({
+    required EMenuSortOption sortType,
+    required ECategory category,
+    int? lastId,
+    int? lastValue,
+  }) async {
+    // Build RestAPI uri
+    var uri = "/menus2/low-stock?type=${sortType.key}&category=${category.key}";
+    if (lastId != null) {
+      uri += "&lastId=$lastId";
+    }
+    if (lastValue != null) {
+      uri += "&lastValue=$lastValue";
+    }
+    uri += "&lat=${position.latitude}&lon=${position.longitude}";
+
+    // // API call and get response
+    var res = await _api.req(
+      uri,
+      HttpMethod.get,
+      type: UrlType.dev,
+    );
+
+    // Check success
+    if (res.statusCode != 200) {
+      throw Exception("Failed to get MenusLowStock");
+    }
+
+    var resData = jsonDecode(res.body);
+    if (!resData['success']) {
+      throw Exception(resData['message']);
+    }
+
+    // Parse data
+    var resModel = MenuLimitStockModel.fromJson(resData['data']);
 
     return resModel;
   }

@@ -8,6 +8,7 @@ import 'package:immersion_kwangsang/screens/home/category_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/franchise_view.dart';
 import 'package:immersion_kwangsang/screens/home/home_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/new_product/new_product_view_model.dart';
+import 'package:immersion_kwangsang/screens/home/limit_stock/limit_stock_view_model.dart';
 import 'package:immersion_kwangsang/screens/home/recommend/widgets/item_category.dart';
 import 'package:immersion_kwangsang/screens/login/login_view.dart';
 import 'package:immersion_kwangsang/screens/login/login_view_model.dart';
@@ -51,9 +52,8 @@ class CustomRouter {
                   create: (_) => HomeViewModel(TickerProviderImpl())),
               ChangeNotifierProvider(create: (_) => MapMainViewModel()),
               ChangeNotifierProvider(create: (_) => OrderViewModel()),
-              ChangeNotifierProvider(
-                create: (_) => NewProductViewModel(),
-              ),
+              ChangeNotifierProvider(create: (_) => NewProductViewModel()),
+              ChangeNotifierProvider(create: (_) => LimitStockViewModel()),
               ChangeNotifierProvider(
                 create: (_) => BestProductViewModel(),
               ),
