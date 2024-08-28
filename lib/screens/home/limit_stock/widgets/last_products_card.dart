@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:immersion_kwangsang/enums/loading_status.dart';
 import 'package:immersion_kwangsang/models/menu/menu_model.dart';
+import 'package:immersion_kwangsang/screens/home/limit_stock/limit_stock_view_model.dart';
+import 'package:immersion_kwangsang/screens/home/limit_stock/widgets/last_item_widget.dart';
+import 'package:immersion_kwangsang/screens/home/widgets/list_error_widget.dart';
 import 'package:immersion_kwangsang/styles/color.dart';
 import 'package:immersion_kwangsang/styles/txt.dart';
-import 'package:immersion_kwangsang/utils/extensions.dart';
 import 'package:immersion_kwangsang/widgets/card_h_spliter.dart';
-import 'package:immersion_kwangsang/widgets/count_tag_widget.dart';
-import 'package:immersion_kwangsang/widgets/custom_network_image.dart';
+import 'package:provider/provider.dart';
+import 'dart:math' as math;
 
 class LastProductsCard extends StatelessWidget {
   const LastProductsCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<LimitStockViewModel>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 16,
@@ -57,244 +62,118 @@ class LastProductsCard extends StatelessWidget {
                     end: Alignment.bottomRight,
                   ),
                 ),
-                child: ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => _LastProductItem(
-                    menu: Menu(
-                      id: index,
-                      store: 'GS25',
-                      name: '우유생크림빵',
-                      imgUrl: null,
-                      discountRate: 10,
-                      discountPrice: 2520,
-                      regularPrice: 11000,
-                      count: 1,
+                child: Builder(builder: (context) {
+                  if (viewModel.lastStatus == ELoadingStatus.error) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ListErrorWidget(
+                          message: viewModel.lastErrorMessage!,
+                          onTapRetry: () => viewModel.getLastItem(
+                              getAll: viewModel.expandList),
+                        ),
+                      ),
+                    );
+                  }
+
+                  if (viewModel.lastMenu.isEmpty) {
+                    if (viewModel.lastStatus == ELoadingStatus.done) {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: ListErrorWidget(
+                          isEmptyList: true,
+                          message:
+                              "현재 판매 중인 상품이 없습니다.\n새로운 상품을 준비 중이니, 잠시만 기다려주세요.",
+                          onTapRetry: () => viewModel.getLastItem(
+                              getAll: viewModel.expandList),
+                        ),
+                      );
+                    }
+                    return const SizedBox(
+                      height: 160,
+                      width: double.infinity,
+                    );
+                  }
+
+                  return ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final menu = viewModel.lastMenu[index].menu;
+                      final store = viewModel.lastMenu[index].store;
+                      return LastItemWidget(
+                        menu: Menu(
+                          id: menu.id,
+                          store: store.name,
+                          name: menu.name,
+                          imgUrl: menu.imgUrl,
+                          discountRate: menu.discountRate,
+                          discountPrice: menu.discountPrice,
+                          regularPrice: menu.regularPrice,
+                          count: menu.count,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      child: CardHSpliter(
+                        size: 1,
+                        color: KwangColor.grey500,
+                      ),
                     ),
-                  ),
-                  separatorBuilder: (context, index) => const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 14),
-                    child: CardHSpliter(
-                      size: 1,
-                      color: KwangColor.grey500,
-                    ),
-                  ),
-                  itemCount: 2,
-                ),
+                    itemCount: viewModel.expandList
+                        ? viewModel.lastMenu.length
+                        : math.min(2, viewModel.lastMenu.length),
+                  );
+                }),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          Center(
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: 36,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1,
-                    color: KwangColor.grey400,
+          if (viewModel.lastStatus == ELoadingStatus.loading)
+            const Center(
+              child: CircularProgressIndicator(
+                color: KwangColor.primary400,
+              ),
+            )
+          else if (viewModel.lastStatus == ELoadingStatus.loaded)
+            Center(
+              child: GestureDetector(
+                onTap: viewModel.toggleExpendList,
+                child: Container(
+                  height: 36,
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: KwangColor.grey400,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '상품 더 보기',
-                      style: KwangStyle.btn3SB.copyWith(
-                        color: KwangColor.grey600,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      size: 20,
-                      color: KwangColor.grey600,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _LastProductItem extends StatelessWidget {
-  final Menu menu;
-
-  const _LastProductItem({
-    required this.menu,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 92,
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 1,
-                color: KwangColor.grey500,
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            clipBehavior: Clip.hardEdge,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: CustomNetworkImage(
-                imageUrl: menu.imgUrl,
-                width: 92,
-                height: 92,
-              ),
-            ),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        menu.store ?? '',
-                        style: KwangStyle.body2M.copyWith(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        viewModel.expandList ? '접기' : '상품 더 보기',
+                        style: KwangStyle.btn3SB.copyWith(
                           color: KwangColor.grey600,
                         ),
                       ),
-                    ),
-                    CountTagWidget(count: menu.count ?? 0),
-                  ],
-                ),
-                Text(
-                  menu.name,
-                  style: KwangStyle.btn2SB,
-                ),
-                const Expanded(child: SizedBox()),
-                CustomPaint(
-                  size: const Size.fromHeight(38),
-                  painter: _DiscountPainter(
-                    regualarPrice: menu.regularPrice!,
-                    discountPrice: menu.discountPrice,
-                    discountRate: menu.discountRate,
+                      Icon(
+                        viewModel.expandList
+                            ? Icons.keyboard_arrow_up_rounded
+                            : Icons.keyboard_arrow_down_rounded,
+                        size: 20,
+                        color: KwangColor.grey600,
+                      ),
+                    ],
                   ),
-                )
-              ],
+                ),
+              ),
             ),
-          ),
         ],
       ),
     );
-  }
-}
-
-class _DiscountPainter extends CustomPainter {
-  final int regualarPrice;
-  final int discountPrice;
-  final int discountRate;
-
-  _DiscountPainter({
-    required this.regualarPrice,
-    required this.discountPrice,
-    required this.discountRate,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Paint discountPrice
-    var discountPricePainter = TextPainter()
-      ..text = TextSpan(
-        text: '${discountPrice.price()}원',
-        style: KwangStyle.header3,
-      )
-      ..textDirection = TextDirection.ltr
-      ..textAlign = TextAlign.center
-      ..layout();
-    var xCenter = size.width - discountPricePainter.width;
-    var yCenter = size.height - discountPricePainter.height;
-    var offset = Offset(xCenter, yCenter);
-    discountPricePainter.paint(canvas, offset);
-
-    // Paint discountRate
-    var discountRatePainter = TextPainter()
-      ..text = TextSpan(
-        text: '$discountRate%',
-        style: KwangStyle.header3.copyWith(
-          color: KwangColor.red,
-        ),
-      )
-      ..textDirection = TextDirection.ltr
-      ..textAlign = TextAlign.center
-      ..layout();
-    xCenter = xCenter - 6 - discountRatePainter.width;
-    yCenter = size.height - discountRatePainter.height;
-    offset = Offset(xCenter, yCenter);
-    discountRatePainter.paint(canvas, offset);
-
-    // Paint regularPrice
-    var regularPricePainter = TextPainter()
-      ..text = TextSpan(
-        text: '${regualarPrice.price()}원',
-        style: KwangStyle.btn3.copyWith(
-          color: KwangColor.grey700,
-          fontWeight: FontWeight.w600,
-        ),
-      )
-      ..textDirection = TextDirection.ltr
-      ..textAlign = TextAlign.center
-      ..layout();
-    var regXCenter = 0.0;
-    var regYCenter = 0.0;
-    offset = Offset(regXCenter, regYCenter);
-    regularPricePainter.paint(canvas, offset);
-
-    // Paint discountLine
-    var line = Paint()
-      ..color = KwangColor.grey700
-      ..strokeCap = StrokeCap.butt
-      ..strokeWidth = 1;
-
-    var lineStartOffset = Offset(
-      regXCenter,
-      regYCenter + regularPricePainter.height / 2,
-    );
-    var lineEndOffset = Offset(
-      regXCenter + regularPricePainter.width + 10,
-      regYCenter + regularPricePainter.height / 2,
-    );
-    canvas.drawLine(lineStartOffset, lineEndOffset, line);
-
-    lineStartOffset = lineEndOffset;
-    lineEndOffset = Offset(
-      lineStartOffset.dx - 20,
-      yCenter + discountRatePainter.height / 2,
-    );
-    canvas.drawLine(lineStartOffset, lineEndOffset, line);
-
-    lineStartOffset = lineEndOffset;
-    lineEndOffset = Offset(
-      xCenter - 10,
-      lineStartOffset.dy,
-    );
-    canvas.drawLine(lineStartOffset, lineEndOffset, line);
-
-    var trianglePath = Path()
-      ..moveTo(lineEndOffset.dx, lineEndOffset.dy)
-      ..lineTo(lineEndOffset.dx, lineEndOffset.dy + 4)
-      ..lineTo(lineEndOffset.dx + 4, lineEndOffset.dy)
-      ..lineTo(lineEndOffset.dx, lineEndOffset.dy - 4)
-      ..lineTo(lineEndOffset.dx, lineEndOffset.dy);
-    canvas.drawPath(trianglePath, line);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }
